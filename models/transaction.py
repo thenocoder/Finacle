@@ -15,7 +15,7 @@ from flask_login import (
 )
 
 from extensions import db
-from models.transaction import Transaction
+
 
 
 transaction_bp = Blueprint(
