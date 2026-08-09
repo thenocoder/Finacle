@@ -1,54 +1,201 @@
 from datetime import datetime
 
+from flask import (
+    Blueprint,
+    render_template,
+    request,
+    redirect,
+    url_for,
+    flash
+)
+
+from flask_login import login_required, current_user
+
 from extensions import db
+from models.transaction import Transaction
 
 
-class Transaction(db.Model):
-    __tablename__ = "transactions"
+# ==========================================================
+# Transaction Blueprint
+# ==========================================================
 
-    id = db.Column(db.Integer, primary_key=True)
+transaction_bp = Blueprint(
+    "transactions",
+    __name__,
+    url_prefix="/transactions"
+)
 
-    user_id = db.Column(
-        db.Integer,
-        db.ForeignKey("users.id"),
-        nullable=False
+
+# ==========================================================
+# View All Transactions
+# ==========================================================
+
+@transaction_bp.route("/")
+@login_required
+def transactions():
+
+    transaction_list = (
+        Transaction.query
+        .filter_by(user_id=current_user.id)
+        .order_by(Transaction.date.desc())
+        .all()
     )
 
-    type = db.Column(
-        db.String(20),
-        nullable=False
+    return render_template(
+        "transactions/transactions.html",
+        transactions=transaction_list
     )
 
-    title = db.Column(
-        db.String(100),
-        nullable=False
+
+# ==========================================================
+# Add Transaction
+# ==========================================================
+
+@transaction_bp.route("/add", methods=["GET", "POST"])
+@login_required
+def add_transaction():
+
+    if request.method == "POST":
+
+        transaction = Transaction(
+
+            user_id=current_user.id,
+
+            type=request.form["type"],
+
+            title=request.form["title"],
+
+            category=request.form["category"],
+
+            amount=float(
+                request.form["amount"]
+            ),
+
+            payment_method=request.form.get(
+                "payment_method"
+            ),
+
+            date=datetime.strptime(
+                request.form["date"],
+                "%Y-%m-%d"
+            ).date(),
+
+            notes=request.form.get("notes")
+
+        )
+
+        db.session.add(transaction)
+        db.session.commit()
+
+        flash(
+            "Transaction added successfully.",
+            "success"
+        )
+
+        return redirect(
+            url_for("transactions.transactions")
+        )
+
+    return render_template(
+        "transactions/add_transaction.html"
     )
 
-    category = db.Column(
-        db.String(100),
-        nullable=False
+
+# ==========================================================
+# Edit Transaction
+# ==========================================================
+
+@transaction_bp.route(
+    "/edit/<int:id>",
+    methods=["GET", "POST"]
+)
+@login_required
+def edit_transaction(id):
+
+    transaction = Transaction.query.get_or_404(id)
+
+    if transaction.user_id != current_user.id:
+
+        flash(
+            "Unauthorized access.",
+            "danger"
+        )
+
+        return redirect(
+            url_for("transactions.transactions")
+        )
+
+    if request.method == "POST":
+
+        transaction.type = request.form["type"]
+
+        transaction.title = request.form["title"]
+
+        transaction.category = request.form["category"]
+
+        transaction.amount = float(
+            request.form["amount"]
+        )
+
+        transaction.payment_method = request.form.get(
+            "payment_method"
+        )
+
+        transaction.date = datetime.strptime(
+            request.form["date"],
+            "%Y-%m-%d"
+        ).date()
+
+        transaction.notes = request.form.get(
+            "notes"
+        )
+
+        db.session.commit()
+
+        flash(
+            "Transaction updated successfully.",
+            "success"
+        )
+
+        return redirect(
+            url_for("transactions.transactions")
+        )
+
+    return render_template(
+        "transactions/edit_transaction.html",
+        transaction=transaction
     )
 
-    amount = db.Column(
-        db.Float,
-        nullable=False
+
+# ==========================================================
+# Delete Transaction
+# ==========================================================
+
+@transaction_bp.route("/delete/<int:id>")
+@login_required
+def delete_transaction(id):
+
+    transaction = Transaction.query.get_or_404(id)
+
+    if transaction.user_id != current_user.id:
+
+        flash(
+            "Unauthorized access.",
+            "danger"
+        )
+
+        return redirect(
+            url_for("transactions.transactions")
+        )
+
+    db.session.delete(transaction)
+    db.session.commit()
+
+    flash(
+        "Transaction deleted successfully.",
+        "success"
     )
 
-    payment_method = db.Column(
-        db.String(50),
-        nullable=False
-    )
-
-    date = db.Column(
-        db.Date,
-        nullable=False
-    )
-
-    notes = db.Column(
-        db.Text
-    )
-
-    created_at = db.Column(
-        db.DateTime,
-        default=datetime.utcnow
+    return redirect(
+        url_for("transactions.transactions")
     )
