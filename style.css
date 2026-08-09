@@ -1,0 +1,5385 @@
+/* =========================================================
+   GLOBAL FOUNDATION
+========================================================= */
+
+:root{
+
+    /* Brand */
+
+    --primary:#2563eb;
+    --primary-dark:#1d4ed8;
+    --primary-light:#eff6ff;
+
+    /* Status */
+
+    --success:#16a34a;
+    --danger:#dc2626;
+    --warning:#f59e0b;
+    --info:#0891b2;
+
+    /* Neutral */
+
+    --white:#ffffff;
+
+    --background:#f8fafc;
+
+    --surface:#ffffff;
+
+    --surface-alt:#f1f5f9;
+
+    --border:#e2e8f0;
+
+    /* Typography */
+
+    --text:#0f172a;
+
+    --text-light:#475569;
+
+    --text-muted:#94a3b8;
+
+    /* Radius */
+
+    --radius-sm:10px;
+
+    --radius:18px;
+
+    --radius-lg:22px;
+
+    --radius-xl:26px;
+
+    /* Shadows */
+
+    --shadow-xs:0 2px 8px rgba(15,23,42,.04);
+
+    --shadow-sm:0 6px 18px rgba(15,23,42,.06);
+
+    --shadow:0 12px 30px rgba(15,23,42,.08);
+
+    --shadow-lg:0 20px 50px rgba(15,23,42,.12);
+
+    /* Layout */
+
+    --sidebar-width:270px;
+
+    --navbar-height:74px;
+
+    --transition:.28s cubic-bezier(.4,0,.2,1);
+
+}
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*,
+*::before,
+*::after{
+
+    box-sizing:border-box;
+
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    margin:0;
+
+    background:var(--background);
+
+    color:var(--text);
+
+    font-family:
+        Inter,
+        "Segoe UI",
+        Roboto,
+        sans-serif;
+
+    line-height:1.65;
+
+    overflow-x:hidden;
+
+    text-rendering:optimizeLegibility;
+
+    -moz-osx-font-smoothing:grayscale;
+
+    -webkit-font-smoothing:antialiased;
+
+}
+
+/* =========================================================
+   TYPOGRAPHY
+========================================================= */
+
+h1,h2,h3,h4,h5,h6{
+
+    color:var(--text);
+
+    font-weight:700;
+
+    line-height:1.25;
+
+    margin-bottom:.6rem;
+
+}
+
+h1{
+
+    font-size:2.25rem;
+
+}
+
+h2{
+
+    font-size:1.85rem;
+
+}
+
+h3{
+
+    font-size:1.5rem;
+
+}
+
+h4{
+
+    font-size:1.25rem;
+
+}
+
+h5{
+
+    font-size:1.1rem;
+
+}
+
+h6{
+
+    font-size:1rem;
+
+}
+
+p{
+
+    color:var(--text-light);
+
+    margin-bottom:1rem;
+
+}
+
+small{
+
+    color:var(--text-muted);
+
+}
+
+a{
+
+    color:inherit;
+
+    text-decoration:none;
+
+    transition:var(--transition);
+
+}
+
+img{
+
+    display:block;
+
+    max-width:100%;
+
+}
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar{
+
+    width:9px;
+
+    height:9px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#eef2f7;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#cbd5e1;
+
+    border-radius:999px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#94a3b8;
+
+}
+
+/* =========================================================
+   MAIN LAYOUT
+========================================================= */
+
+.main-content {
+
+    margin-left: var(--finacle-sidebar-width);
+
+    width: calc(100% - var(--finacle-sidebar-width));
+
+    min-height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+/* =========================================================
+   CONTAINERS
+========================================================= */
+
+.container-fluid{
+
+    padding:28px;
+
+}
+
+.dashboard-page{
+
+    width:100%;
+    padding-top:28px;
+
+    max-width:1700px;
+
+    margin:0 auto;
+
+}
+
+/* =========================================================
+   COMMON CARDS
+========================================================= */
+/* ==========================================================
+                    DASHBOARD CARD
+========================================================== */
+.dashboard-card{
+
+    position:relative;
+
+    background:#fff;
+
+    border-radius:22px;
+
+    padding:28px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+    min-height:170px;
+
+    border:1px solid #e8eef9;
+
+    box-shadow:0 12px 35px rgba(20,40,120,.08);
+
+    transition:.3s;
+
+    overflow:hidden;
+
+}
+
+.dashboard-card,
+.card-icon,
+.card-content h2{
+
+    transition:all .30s ease;
+
+}
+
+.dashboard-card h2{
+
+    transition:.3s ease;
+
+}
+
+
+.dashboard-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:4px;
+
+}
+
+.dashboard-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:-120%;
+
+    width:80%;
+
+    height:100%;
+
+    background:
+
+    linear-gradient(
+
+        90deg,
+
+        transparent,
+
+        rgba(255,255,255,.45),
+
+        transparent
+
+    );
+
+    transition:.8s;
+
+}
+.dashboard-card:hover::after{
+
+    left:140%;
+
+}
+
+.dashboard-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 20px 45px rgba(37,99,235,.15);
+
+}
+
+.dashboard-card:hover::before{
+
+    height:6px;
+
+}
+
+.dashboard-card:hover .card-icon{
+
+    transform:scale(1.08) rotate(-8deg);
+
+}
+
+/* =========================================================
+   CARD HEADER
+========================================================= */
+
+.card-header-custom{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+    padding:20px 24px;
+    border-bottom:1px solid var(--border);
+    background:var(--surface);
+}
+
+.card-content span{
+
+    display:block;
+
+    font-size:.82rem;
+
+    font-weight:700;
+
+    letter-spacing:1px;
+
+    color:#64748b;
+
+    text-transform:uppercase;
+
+    margin-bottom:10px;
+
+}
+
+.card-content{
+
+    flex:1;
+
+    min-width:0;
+
+}
+
+.card-content h2{
+
+    margin:0;
+
+    font-size:2rem;
+
+    font-weight:800;
+
+    color:#0f172a;
+
+    line-height:1.2;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+}
+
+.card-content small{
+
+    display:block;
+
+    margin-top:10px;
+
+    color:#94a3b8;
+
+    font-size:.95rem;
+
+}
+
+.card-header-custom h4{
+    margin:0;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:18px;
+    font-weight:700;
+    color:var(--text);
+}
+
+.card-body{
+
+    padding:24px;
+
+}
+/* ==========================
+        Income
+========================== */
+
+.income-card{
+
+    border-top:5px solid #22c55e;
+
+}
+
+.expense-card{
+
+    border-top:5px solid #ef4444;
+
+}
+
+.balance-card{
+
+    border-top:5px solid #2563eb;
+
+}
+
+.transaction-card{
+
+    border-top:5px solid #8b5cf6;
+
+}
+
+.income-card::before{
+
+    background:#22c55e;
+
+}
+
+.expense-card::before{
+
+    background:#ef4444;
+
+}
+
+.balance-card::before{
+
+    background:#2563eb;
+
+}
+
+.transaction-card::before{
+
+    background:#8b5cf6;
+
+}
+
+.income-card .card-icon{
+
+    background:#dcfce7;
+
+    color:#16a34a;
+
+    box-shadow:0 10px 22px rgba(34,197,94,.18);
+
+}
+
+/* ==========================
+        Expense
+========================== */
+
+.expense-card .card-icon{
+
+    background:#fee2e2;
+
+    color:#dc2626;
+
+    box-shadow:0 10px 22px rgba(239,68,68,.18);
+
+}
+
+/* ==========================
+        Balance
+========================== */
+
+.balance-card .card-icon{
+
+    background:#dbeafe;
+
+    color:#2563eb;
+
+    box-shadow:0 10px 22px rgba(37,99,235,.18);
+
+}
+
+/* ==========================
+        Transactions
+========================== */
+
+.transaction-card .card-icon{
+
+    background:#ede9fe;
+
+    color:#7c3aed;
+
+    box-shadow:0 10px 22px rgba(124,58,237,.18);
+
+}
+/* =========================================================
+   COMMON TABLE
+========================================================= */
+
+.table{
+
+    margin-bottom:0;
+
+}
+
+.table thead{
+
+    background:#f8fafc;
+
+}
+
+.table thead th{
+
+    border:none;
+
+    padding:15px 18px;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+    letter-spacing:.4px;
+
+    color:var(--text-light);
+
+}
+
+.table tbody td{
+
+    padding:15px 18px;
+
+    vertical-align:middle;
+
+    border-top:1px solid var(--border);
+
+}
+
+/* =========================================================
+   FADE ANIMATION
+========================================================= */
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+/* =========================================================
+   DASHBOARD HERO
+========================================================= */
+/* =========================================================
+                    DASHBOARD HERO
+========================================================= */
+/* ==========================================================
+                        HERO
+========================================================== */
+
+.dashboard-hero{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:48px 50px;
+
+    border-radius:28px;
+
+    background:
+        linear-gradient(135deg,#2563eb 0%,#1d4ed8 45%,#1e40af 100%);
+
+    color:#fff;
+
+   box-shadow:
+
+0 12px 32px rgba(15,23,42,.06);
+
+    border:1px solid rgba(255,255,255,.08);
+
+}
+  
+.dashboard-hero::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:320px;
+
+    height:320px;
+
+    border-radius:50%;
+
+    top:-120px;
+
+    right:-80px;
+
+    background:rgba(255,255,255,.08);
+
+    filter:blur(20px);
+
+    pointer-events:none;
+
+}
+/* =========================================================
+   HERO BUTTONS
+========================================================= */
+.hero-actions{
+
+    display:flex;
+
+    gap:16px;
+
+    flex-wrap:wrap;
+
+}
+
+.hero-actions .btn{
+
+    padding:14px 28px;
+
+    border-radius:16px;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    transition:.30s ease;
+
+    box-shadow:0 12px 28px rgba(0,0,0,.12);
+
+}
+
+.hero-actions .btn i{
+
+    margin-right:8px;
+
+    font-size:1rem;
+
+}
+
+.hero-actions .btn:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 18px 40px rgba(0,0,0,.18);
+
+}
+
+.hero-actions .btn-light{
+
+    color:#1d4ed8;
+
+    background:linear-gradient(
+
+180deg,
+
+#ffffff,
+
+#fbfdff
+
+);
+
+    border:none;
+
+}
+.hero-actions .btn-outline-light{
+
+    border:2px solid rgba(255,255,255,.45);
+
+    color:#ffffff;
+
+    background:transparent;
+
+}
+.hero-actions .btn-outline-light:hover{
+
+    background:linear-gradient(
+
+180deg,
+
+#ffffff,
+
+#fbfdff
+
+);
+
+    color:#1d4ed8;
+
+}
+
+.hero-actions .btn-primary{
+
+    background:#fff;
+
+    color:#1d4ed8;
+
+    border:none;
+
+}
+
+.hero-actions .btn-outline-primary{
+
+    border:2px solid rgba(255,255,255,.45);
+
+    color:#fff;
+
+    background:transparent;
+
+}
+.hero-actions .btn-outline-primary:hover{
+
+    background:#fff;
+
+    color:#1d4ed8;
+
+}
+/* =========================================================
+   SUMMARY CARDS
+========================================================= */
+
+.summary-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:1.2rem;
+
+    padding:1.6rem;
+
+    height:100%;
+
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:20px;
+
+    box-shadow:var(--shadow);
+
+    transition:var(--transition);
+
+}
+
+.summary-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:var(--shadow-lg);
+
+}
+
+.summary-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:5px;
+
+    height:100%;
+
+}
+
+.summary-card.income::after{
+
+    background:#16a34a;
+
+}
+
+.summary-card.expense::after{
+
+    background:#dc2626;
+
+}
+
+.summary-card.savings::after{
+
+    background:#2563eb;
+
+}
+
+.summary-card.score::after{
+
+    background:#7c3aed;
+
+}
+
+.summary-content{
+
+    flex:1;
+
+}
+
+.summary-label{
+
+    margin-bottom:.45rem;
+
+    color:var(--text-light);
+
+    font-size:.85rem;
+
+    font-weight:600;
+
+    text-transform:uppercase;
+
+    letter-spacing:.4px;
+
+}
+
+.summary-value{
+
+    margin:0;
+
+    color:var(--text);
+
+    font-size:2rem;
+
+    font-weight:800;
+
+}
+
+.summary-change{
+
+    margin-top:.55rem;
+
+    font-size:.88rem;
+
+    font-weight:600;
+
+}
+
+.summary-change.positive{
+
+    color:var(--success);
+
+}
+
+.summary-change.negative{
+
+    color:var(--danger);
+
+}
+
+/* =========================================================
+   CARD ICONS
+========================================================= */
+
+.summary-icon{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    width:70px;
+
+    height:70px;
+
+    border-radius:20px;
+
+    font-size:1.55rem;
+
+    flex-shrink:0;
+
+}
+
+.summary-card.income .summary-icon{
+
+    background:#dcfce7;
+
+    color:#15803d;
+
+}
+
+.summary-card.expense .summary-icon{
+
+    background:#fee2e2;
+
+    color:#b91c1c;
+
+}
+
+.summary-card.savings .summary-icon{
+
+    background:#dbeafe;
+
+    color:#1d4ed8;
+
+}
+
+.summary-card.score .summary-icon{
+
+    background:#ede9fe;
+
+    color:#6d28d9;
+
+}
+
+/* =========================================================
+   FINANCIAL HEALTH
+========================================================= */
+
+.financial-health{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:1.25rem;
+
+}
+
+.health-score{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+}
+
+.health-score h3{
+
+    margin:0;
+
+    font-size:2rem;
+
+    font-weight:800;
+
+}
+
+.health-score span{
+
+    color:var(--text-light);
+
+    font-weight:600;
+
+}
+
+.metric-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:1rem;
+
+}
+
+.metric-item{
+
+    padding:1rem;
+
+    border-radius:16px;
+
+    background:#f8fafc;
+
+    border:1px solid var(--border);
+
+}
+
+.metric-title{
+
+    margin-bottom:.35rem;
+
+    color:var(--text-light);
+
+    font-size:.82rem;
+
+    text-transform:uppercase;
+
+    font-weight:700;
+
+}
+
+.metric-value{
+
+    font-size:1.15rem;
+
+    font-weight:700;
+
+    color:var(--text);
+
+}
+
+/* =========================================================
+   PROGRESS BAR
+========================================================= */
+
+.progress{
+
+    overflow:hidden;
+
+    height:10px;
+
+    border-radius:999px;
+
+    background:#e2e8f0;
+
+}
+
+.progress-bar{
+
+    border-radius:999px;
+
+    transition:width .6s ease;
+
+}
+
+/* =========================================================
+   BADGES
+========================================================= */
+
+.badge-soft-success{
+
+    color:#166534;
+
+    background:#dcfce7;
+
+}
+
+.badge-soft-danger{
+
+    color:#991b1b;
+
+    background:#fee2e2;
+
+}
+
+.badge-soft-warning{
+
+    color:#92400e;
+
+    background:#fef3c7;
+
+}
+
+.badge-soft-primary{
+
+    color:#1d4ed8;
+
+    background:#dbeafe;
+
+}
+
+.badge-soft-success,
+.badge-soft-danger,
+.badge-soft-warning,
+.badge-soft-primary{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:.4rem .8rem;
+
+    border-radius:999px;
+
+    font-size:.78rem;
+
+    font-weight:700;
+
+}
+/* =========================================================
+   CHART CARDS
+========================================================= */
+
+.chart-card{
+
+    display:flex;
+
+    flex-direction:column;
+
+    height:100%;
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:20px;
+
+    box-shadow:var(--shadow);
+
+    overflow:hidden;
+
+    transition:var(--transition);
+
+}
+
+.chart-card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:var(--shadow-lg);
+
+}
+
+.chart-header{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:1rem;
+
+    padding:1.25rem 1.5rem;
+
+    border-bottom:1px solid var(--border);
+
+    background:#fff;
+
+}
+
+.chart-header h5{
+
+    margin:0;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:.6rem;
+
+    font-size:1.05rem;
+
+    font-weight:700;
+
+}
+
+.chart-body{
+
+    position:relative;
+
+    padding:1.5rem;
+
+    min-height:360px;
+
+}
+
+/* =========================================================
+   CHART CANVAS
+========================================================= */
+
+.chart-body canvas{
+
+    width:100% !important;
+
+    max-width:100%;
+
+    height:320px !important;
+
+}
+
+/* =========================================================
+   CHART LEGEND
+========================================================= */
+
+.chart-legend{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:1rem;
+
+    margin-top:1.25rem;
+
+}
+
+.legend-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:.55rem;
+
+    font-size:.9rem;
+
+    color:var(--text-light);
+
+}
+
+.legend-color{
+
+    width:12px;
+
+    height:12px;
+
+    border-radius:50%;
+
+}
+
+/* =========================================================
+   FINANCIAL OVERVIEW
+========================================================= */
+
+.overview-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:1rem;
+
+    margin-top:1rem;
+
+}
+
+.overview-item{
+
+    padding:1rem;
+
+    border-radius:16px;
+
+    border:1px solid var(--border);
+
+    background:#f8fafc;
+
+}
+
+.overview-title{
+
+    margin-bottom:.35rem;
+
+    font-size:.82rem;
+
+    font-weight:600;
+
+    color:var(--text-light);
+
+    text-transform:uppercase;
+
+}
+
+.overview-value{
+
+    font-size:1.35rem;
+
+    font-weight:700;
+
+    color:var(--text);
+
+}
+
+/* =========================================================
+   MONTHLY ANALYTICS
+========================================================= */
+
+.analytics-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+
+    gap:1rem;
+
+}
+
+.analytics-card{
+
+    position:relative;
+
+    background:linear-gradient(
+
+180deg,
+
+#ffffff,
+
+#fbfdff
+
+);
+
+    border:1px solid #e8edf5;
+
+    border-radius:24px;
+
+    padding:28px;
+
+    overflow:hidden;
+
+    box-shadow:0 10px 30px rgba(15,23,42,.06);
+
+    transition:all .30s ease;
+
+}
+
+.analytics-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 20px 45px rgba(15,23,42,.12);
+
+}
+
+.analytics-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    top:0;
+
+    width:4px;
+
+    height:100%;
+
+    background:linear-gradient(
+        180deg,
+        #2563eb,
+        #60a5fa
+    );
+
+}
+
+.analytics-label{
+
+    margin-bottom:10px;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    letter-spacing:.5px;
+
+    text-transform:uppercase;
+
+    color:#64748b;
+
+}
+
+.analytics-value{
+
+    font-size:2rem;
+
+    font-weight:800;
+
+    line-height:1.15;
+
+    color:#0f172a;
+
+}
+.analytics-change{
+
+    margin-top:12px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    color:#94a3b8;
+
+}
+/* =========================================================
+   TABLE CARD
+========================================================= */
+
+.table-card{
+
+    overflow:hidden;
+
+}
+
+.table-responsive{
+
+    overflow-x:auto;
+
+}
+
+.table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+.table thead{
+
+    background:#f8fafc;
+
+}
+
+.table thead th{
+
+    padding:1rem;
+
+    border:none;
+
+    font-size:.82rem;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+    letter-spacing:.4px;
+
+    color:var(--text-light);
+
+}
+
+.table tbody td{
+
+    padding:1rem;
+
+    border-top:1px solid var(--border);
+
+    color:var(--text);
+
+    vertical-align:middle;
+
+}
+
+.table tbody tr{
+
+    transition:background .2s ease;
+
+}
+
+.table tbody tr:hover{
+
+    background:#f8fafc;
+
+}
+
+/* =========================================================
+   STATUS COLORS
+========================================================= */
+
+.text-income{
+
+    color:var(--success);
+
+    font-weight:700;
+
+}
+
+.text-expense{
+
+    color:var(--danger);
+
+    font-weight:700;
+
+}
+
+.text-saving{
+
+    color:var(--primary);
+
+    font-weight:700;
+
+}
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.empty-state{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    min-height:250px;
+
+    text-align:center;
+
+    color:var(--text-muted);
+
+}
+
+.empty-state i{
+
+    margin-bottom:1rem;
+
+    font-size:3rem;
+
+    opacity:.35;
+
+}
+
+.empty-state h5{
+
+    margin-bottom:.5rem;
+
+}
+
+.empty-state p{
+
+    max-width:320px;
+
+    margin:0;
+
+}
+/* =========================================================
+   AI FINANCIAL INTELLIGENCE
+========================================================= */
+
+.ai-panel{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:1.5rem;
+
+}
+
+.ai-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:linear-gradient(
+
+180deg,
+
+#ffffff,
+
+#fbfdff
+
+);
+
+    border:1px solid var(--border);
+
+    border-radius:20px;
+
+    box-shadow:var(--shadow);
+
+    transition:var(--transition);
+
+}
+
+.ai-card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:var(--shadow-lg);
+
+}
+
+.ai-card-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:1rem;
+
+    padding:1.25rem 1.5rem;
+
+    border-bottom:1px solid var(--border);
+
+}
+
+.ai-card-header h5{
+
+    margin:0;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:.6rem;
+
+    font-size:1.05rem;
+
+    font-weight:700;
+
+}
+
+.ai-card-body{
+
+    padding:1.5rem;
+
+}
+
+/* =========================================================
+   AI SCORE
+========================================================= */
+
+.ai-score{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-bottom:1.5rem;
+
+}
+
+.ai-score-value{
+
+    font-size:2.4rem;
+
+    font-weight:800;
+
+    color:var(--primary);
+
+}
+
+.ai-score-label{
+
+    color:var(--text-light);
+
+    font-weight:600;
+
+}
+
+/* =========================================================
+   EXPENSE PREDICTION
+========================================================= */
+
+.prediction-card{
+
+    padding:1.25rem;
+
+    border-radius:16px;
+
+    background:#f8fafc;
+
+    border:1px solid var(--border);
+
+}
+
+.prediction-title{
+
+    margin-bottom:.5rem;
+
+    font-weight:700;
+
+}
+
+.prediction-value{
+
+    font-size:1.8rem;
+
+    font-weight:800;
+
+    color:var(--primary);
+
+}
+
+.prediction-description{
+
+    margin-top:.6rem;
+
+    color:var(--text-light);
+
+}
+
+/* =========================================================
+   SMART ALLOCATION
+========================================================= */
+
+.allocation-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:1rem;
+
+}
+
+.allocation-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:1rem 1.2rem;
+
+    border:1px solid var(--border);
+
+    border-radius:16px;
+
+    background:#fff;
+
+}
+
+.allocation-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:.9rem;
+
+}
+
+.allocation-icon{
+
+    width:46px;
+
+    height:46px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:12px;
+
+    background:#eff6ff;
+
+    color:var(--primary);
+
+    font-size:1.1rem;
+
+}
+
+.allocation-title{
+
+    font-weight:700;
+
+}
+
+.allocation-subtitle{
+
+    font-size:.82rem;
+
+    color:var(--text-light);
+
+}
+
+.allocation-value{
+
+    font-weight:800;
+
+    color:var(--primary);
+
+}
+
+/* =========================================================
+   FINANCIAL DNA
+========================================================= */
+
+.dna-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+    gap:1rem;
+
+}
+
+.dna-card{
+
+    padding:1.2rem;
+
+    border-radius:20px;
+
+    border:1px solid var(--border);
+
+    background:#f8fafc;
+
+}
+
+.dna-title{
+
+    margin-bottom:.4rem;
+
+    font-size:.85rem;
+
+    text-transform:uppercase;
+
+    color:var(--text-light);
+
+    font-weight:700;
+
+}
+
+.dna-value{
+
+    font-size:1.35rem;
+
+    font-weight:800;
+
+}
+
+/* =========================================================
+   SPENDING BEHAVIOUR
+========================================================= */
+
+.behaviour-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:1rem;
+
+}
+
+.behaviour-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:1rem;
+
+    border-radius:16px;
+
+    background:#f8fafc;
+
+    border:1px solid var(--border);
+
+}
+
+.behaviour-title{
+
+    font-weight:600;
+
+}
+
+.behaviour-score{
+
+    font-weight:800;
+
+    color:var(--primary);
+
+}
+
+/* =========================================================
+   LARGEST TRANSACTIONS
+========================================================= */
+
+.transaction-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:.9rem;
+
+}
+
+.transaction-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:1rem 1.2rem;
+
+    border:1px solid var(--border);
+
+    border-radius:16px;
+
+    transition:var(--transition);
+
+}
+
+.transaction-item:hover{
+
+    background:#f8fafc;
+
+}
+
+.transaction-name{
+
+    font-weight:700;
+
+}
+
+.transaction-date{
+
+    font-size:.82rem;
+
+    color:var(--text-light);
+
+}
+
+.transaction-amount{
+
+    font-weight:800;
+
+    color:var(--danger);
+
+}
+
+/* =========================================================
+   REPORT SUMMARY
+========================================================= */
+
+.report-summary{
+
+    padding:1.5rem;
+
+    border-radius:20px;
+
+    background:#eff6ff;
+
+    border:1px solid #bfdbfe;
+
+}
+
+.report-summary h5{
+
+    margin-bottom:.75rem;
+
+}
+
+.report-summary p{
+
+    margin-bottom:0;
+
+    color:#334155;
+
+}
+
+/* =========================================================
+   QUICK ACTIONS
+========================================================= */
+
+/*==================================
+        QUICK ACTIONS
+===================================*/
+
+.quick-actions{
+
+    margin-top:40px;
+
+    padding:0;
+
+}
+
+.quick-actions-header{
+
+    margin-bottom:28px;
+
+}
+
+.quick-actions-header .section-label{
+
+    display:block;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+    letter-spacing:2px;
+
+    color:#2563eb;
+
+    margin-bottom:8px;
+
+}
+
+.quick-actions-header h2{
+
+    font-size:42px;
+
+    font-weight:800;
+
+    color:#0f172a;
+
+    margin:0;
+
+}
+
+
+/* Cards Layout */
+
+.quick-actions-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:22px;
+
+}
+
+
+/* Individual Card */
+
+.quick-card{
+
+    background:#fff;
+
+    border-radius:22px;
+
+    padding:28px;
+
+    border:1px solid #edf2f7;
+
+    transition:.30s;
+
+    text-decoration:none;
+
+    color:inherit;
+
+    box-shadow:0 10px 25px rgba(15,23,42,.05);
+
+}
+
+
+.quick-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 20px 45px rgba(37,99,235,.12);
+
+    border-color:#2563eb;
+
+}
+
+
+.quick-icon{
+
+    width:64px;
+
+    height:64px;
+
+    border-radius:18px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:linear-gradient(135deg,#2563eb,#4f46e5);
+
+    color:#fff;
+
+    font-size:28px;
+
+    margin-bottom:22px;
+
+}
+
+
+.quick-card h4{
+
+    font-size:26px;
+
+    font-weight:700;
+
+    margin-bottom:10px;
+
+    color:#0f172a;
+
+}
+
+
+.quick-card p{
+
+    font-size:16px;
+
+    color:#64748b;
+
+    line-height:1.7;
+
+    margin:0;
+
+}
+
+
+/* Responsive */
+
+@media(max-width:1200px){
+
+    .quick-actions-grid{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+
+@media(max-width:768px){
+
+    .quick-actions-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+  
+
+  
+/* =========================================================
+   AI INSIGHT ALERT
+========================================================= */
+
+.ai-insight{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:1rem;
+
+    padding:1.2rem;
+
+    border-left:5px solid var(--primary);
+
+    border-radius:16px;
+
+    background:#f8fafc;
+
+}
+
+.ai-insight i{
+
+    font-size:1.3rem;
+
+    color:var(--primary);
+
+    margin-top:.15rem;
+
+}
+
+.ai-insight-content h6{
+
+    margin-bottom:.4rem;
+
+}
+
+.ai-insight-content p{
+
+    margin:0;
+
+    color:var(--text-light);
+
+}
+/* =========================================================
+   BUTTON ENHANCEMENTS
+========================================================= */
+
+.btn{
+
+    font-weight:600;
+
+    border-radius:12px;
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+
+}
+
+.btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 8px 18px rgba(15,23,42,.12);
+
+}
+
+.btn-lg{
+
+    padding:.85rem 1.5rem;
+
+}
+
+/* =========================================================
+   FORM CONTROLS
+========================================================= */
+
+.form-control,
+.form-select{
+
+    border:1px solid var(--border);
+
+    border-radius:12px;
+
+    padding:.75rem .95rem;
+
+    transition:.25s ease;
+
+}
+
+.form-control:focus,
+.form-select:focus{
+
+    border-color:var(--primary);
+
+    box-shadow:0 0 0 .2rem rgba(37,99,235,.12);
+
+}
+
+/* =========================================================
+   ICON BUTTON
+========================================================= */
+
+.icon-btn{
+
+    width:42px;
+
+    height:42px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:12px;
+
+    transition:.25s ease;
+
+}
+
+.icon-btn:hover{
+
+    transform:rotate(8deg);
+
+}
+
+/* =========================================================
+   UTILITIES
+========================================================= */
+
+.shadow-soft{
+
+    box-shadow:var(--shadow)!important;
+
+}
+
+.rounded-xl{
+
+    border-radius:20px!important;
+
+}
+
+.border-soft{
+
+    border:1px solid var(--border)!important;
+
+}
+
+.text-soft{
+
+    color:var(--text-light)!important;
+
+}
+
+/* =========================================================
+   FADE ANIMATION
+========================================================= */
+
+.dashboard-hero,
+.dashboard-card,
+.chart-card,
+.table-card,
+.quick-card{
+
+    animation:fadeUp .45s ease both;
+
+}
+
+/* =========================================================
+   LARGE DEVICES
+========================================================= */
+
+@media (max-width:1400px){
+
+    .dashboard-page{
+
+        max-width:100%;
+
+    }
+
+}
+
+/* =========================================================
+   TABLETS
+========================================================= */
+
+@media (max-width:992px){
+
+    .dashboard-hero{
+
+        padding:1.8rem;
+
+    }
+
+   .hero-title{
+
+    margin-top:20px;
+
+    margin-bottom:18px;
+
+    font-size:3rem;
+
+    font-weight:800;
+
+    line-height:1.15;
+
+    color:#fff;
+
+}
+
+.hero-title span{
+
+    font-weight:900;
+
+    color:#ffffff;
+
+}
+
+    .chart-body{
+
+        min-height:300px;
+
+    }
+
+    .dashboard-card{
+
+        height:auto;
+
+    }
+
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width:768px){
+
+    .container-fluid{
+
+        padding:18px;
+
+    }
+
+    .dashboard-hero{
+
+        text-align:center;
+
+        padding:1.5rem;
+
+    }
+
+    .hero-title{
+
+        font-size:1.7rem;
+
+    }
+
+   .hero-subtitle{
+
+    max-width:620px;
+
+    margin-bottom:32px;
+
+    font-size:1.08rem;
+
+    line-height:1.8;
+
+    color:rgba(255,255,255,.92);
+
+}
+
+.hero-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:8px 18px;
+
+    border-radius:999px;
+
+    background:rgba(255,255,255,.14);
+
+    color:#fff;
+
+    font-size:.82rem;
+
+    font-weight:700;
+
+    letter-spacing:.6px;
+
+    text-transform:uppercase;
+
+    -webkit-backdrop-filter: blur(12px);
+backdrop-filter: blur(12px);
+
+}
+
+.wave{
+
+    display:inline-block;
+
+    margin-left:8px;
+
+    animation:wave 2.8s infinite;
+
+}
+
+@keyframes wave{
+
+    0%{transform:rotate(0deg);}
+
+    10%{transform:rotate(14deg);}
+
+    20%{transform:rotate(-8deg);}
+
+    30%{transform:rotate(14deg);}
+
+    40%{transform:rotate(-4deg);}
+
+    50%{transform:rotate(10deg);}
+
+    60%{transform:rotate(0deg);}
+
+    100%{transform:rotate(0deg);}
+
+}
+    .chart-body{
+
+        min-height:260px;
+
+        padding:1rem;
+
+    }
+
+    .card-header-custom{
+
+        padding:1rem;
+
+    }
+
+    .card-body{
+
+        padding:1rem;
+
+    }
+
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width:576px){
+
+    .hero-title{
+
+        font-size:1.45rem;
+
+    }
+
+    .dashboard-card{
+
+        text-align:center;
+
+    }
+
+  .card-icon{
+
+    width:68px;
+
+    height:68px;
+
+    border-radius:18px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-shrink:0;
+
+    font-size:28px;
+
+}
+
+   
+
+    .btn-lg{
+
+        width:100%;
+
+        margin-bottom:.75rem;
+
+    }
+
+    .table{
+
+        font-size:.88rem;
+
+    }
+
+}
+
+/* =========================================================
+   PRINT / PDF
+========================================================= */
+
+@media print{
+
+    body{
+
+        background:#fff!important;
+
+    }
+
+    .dashboard-hero{
+
+        box-shadow:none;
+
+    }
+
+    .btn{
+
+        display:none!important;
+
+    }
+
+    .chart-card,
+    .dashboard-card,
+    .table-card,
+    .quick-card{
+
+        box-shadow:none!important;
+
+        border:1px solid #ddd;
+
+        page-break-inside:avoid;
+
+    }
+
+    .table{
+
+        font-size:11px;
+
+    }
+
+}
+/* =========================================================
+   APPLICATION LAYOUT
+========================================================= */
+
+.app-layout{
+    display:flex;
+    min-height:100vh;
+    background:#f8fafc;
+}
+
+
+.main-content{
+
+    margin-left:300px;
+
+    width:calc(100% - 300px);
+
+    min-height:100vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+.topbar{
+    position:sticky;
+    top:0;
+    z-index:999;
+    background:linear-gradient(
+
+180deg,
+
+#ffffff,
+
+#fbfdff
+
+);
+    border-bottom:1px solid #e2e8f0;
+}
+
+.content-wrapper{
+    flex:1;
+    padding:30px;
+}
+/* =========================================================
+                    SIDEBAR
+========================================================= */
+/* ==========================================================
+                    FINACLE SIDEBAR
+                    CORE DESIGN SYSTEM
+========================================================== */
+
+:root {
+    --finacle-sidebar-width: 248px;
+}
+
+
+/* ==========================================================
+                        SIDEBAR
+========================================================== */
+
+.sidebar {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: var(--finacle-sidebar-width);
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #fbfcfe;
+
+    border-right: 1px solid #e5e7eb;
+
+    box-shadow:
+        4px 0 24px rgba(15, 23, 42, 0.035);
+
+    overflow: hidden;
+
+    z-index: 1000;
+
+}
+
+
+/* ==========================================================
+                         BRAND
+========================================================== */
+
+.sidebar-header {
+
+    padding: 20px 18px;
+
+    border-bottom: 1px solid #eef2f7;
+
+}
+
+
+.brand {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    text-decoration: none;
+
+}
+
+
+.brand-icon {
+
+    width: 46px;
+    height: 46px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #1d4ed8
+        );
+
+    color: #ffffff;
+
+    font-size: 20px;
+
+    box-shadow:
+        0 8px 20px rgba(37, 99, 235, 0.20);
+
+}
+
+
+.brand-text {
+
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+}
+
+
+.brand-text h2 {
+
+    margin: 0;
+
+    color: #0f172a;
+
+    font-size: 17px;
+
+    line-height: 1.2;
+
+    font-weight: 800;
+
+    letter-spacing: 0.7px;
+
+}
+
+
+.brand-text p {
+
+    margin: 3px 0 0;
+
+    color: #64748b;
+
+    font-size: 10.5px;
+
+    line-height: 1.4;
+
+    font-weight: 500;
+
+    white-space: nowrap;
+
+}
+
+
+/* ==========================================================
+                       NAVIGATION
+========================================================== */
+
+.sidebar-nav {
+
+    flex: 1;
+
+    overflow-y: auto;
+
+    padding: 18px 12px;
+
+}
+
+
+/* Scrollbar */
+
+.sidebar-nav::-webkit-scrollbar {
+
+    width: 4px;
+
+}
+
+.sidebar-nav::-webkit-scrollbar-track {
+
+    background: transparent;
+
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+
+    background: #d7dde7;
+
+    border-radius: 10px;
+
+}
+
+
+/* ==========================================================
+                       NAV SECTION
+========================================================== */
+
+.nav-section {
+
+    margin-bottom: 18px;
+
+}
+
+
+.nav-title {
+
+    margin: 0 0 7px;
+
+    padding: 0 12px;
+
+    color: #94a3b8;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    line-height: 1.4;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1.15px;
+
+}
+
+
+/* ==========================================================
+                       NAV ITEM
+========================================================== */
+
+.nav-item {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    width: 100%;
+
+    min-height: 42px;
+
+    padding: 10px 12px;
+
+    margin-bottom: 3px;
+
+    border-radius: 10px;
+
+    color: #475569;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    line-height: 1.2;
+
+    text-decoration: none;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease;
+
+}
+
+
+.nav-item i {
+
+    width: 20px;
+
+    flex-shrink: 0;
+
+    color: #64748b;
+
+    font-size: 17px;
+
+    text-align: center;
+
+    transition:
+        color 0.18s ease;
+
+}
+
+
+.nav-item span {
+
+    flex: 1;
+
+    white-space: nowrap;
+
+}
+
+
+/* ==========================================================
+                          HOVER
+========================================================== */
+
+.nav-item:hover {
+
+    background: #f1f5f9;
+
+    color: #2563eb;
+
+}
+
+
+.nav-item:hover i {
+
+    color: #2563eb;
+
+}
+
+
+/* ==========================================================
+                         ACTIVE
+========================================================== */
+
+.nav-item.active {
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    font-weight: 700;
+
+}
+
+
+.nav-item.active::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+
+    top: 8px;
+    bottom: 8px;
+
+    width: 3px;
+
+    border-radius: 0 4px 4px 0;
+
+    background: #2563eb;
+
+}
+
+
+.nav-item.active i {
+
+    color: #2563eb;
+
+}
+
+
+/* ==========================================================
+                       BOTTOM AREA
+========================================================== */
+
+.sidebar-bottom {
+
+    padding: 14px 12px 16px;
+
+    border-top: 1px solid #e5e7eb;
+
+    background: #fbfcfe;
+
+}
+
+
+/* ==========================================================
+                       PROFILE
+========================================================== */
+
+.sidebar-profile {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 8px 8px 12px;
+
+}
+
+
+.profile-avatar {
+
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #1d4ed8
+        );
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+}
+
+
+.profile-content {
+
+    min-width: 0;
+
+}
+
+
+.profile-content h5 {
+
+    margin: 0;
+
+    overflow: hidden;
+
+    color: #0f172a;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    line-height: 1.3;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+}
+
+
+.profile-content p {
+
+    margin: 2px 0 0;
+
+    color: #94a3b8;
+
+    font-size: 11px;
+
+    line-height: 1.3;
+
+}
+
+
+/* ==========================================================
+                    BOTTOM NAV ITEMS
+========================================================== */
+
+.sidebar-bottom-item {
+
+    margin-bottom: 2px;
+
+}
+
+
+.sidebar-bottom-item.logout {
+
+    color: #64748b;
+
+}
+
+
+.sidebar-bottom-item.logout:hover {
+
+    background: #fef2f2;
+
+    color: #dc2626;
+
+}
+
+
+.sidebar-bottom-item.logout:hover i {
+
+    color: #dc2626;
+
+}
+
+/* =========================================================
+                        TOPBAR
+========================================================= */
+
+.topbar{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:24px;
+
+    padding:24px 40px;
+
+    background:linear-gradient(
+
+180deg,
+
+#ffffff,
+
+#fbfdff
+
+);
+
+    border-bottom:1px solid #e5e7eb;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:900;
+
+}
+
+/* ==========================================
+                LEFT
+========================================== */
+
+.topbar-left{
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+}
+
+.page-label{
+
+    display:inline-block;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    color:#2563eb;
+
+    text-transform:uppercase;
+
+    letter-spacing:1.4px;
+
+    margin-bottom:8px;
+
+}
+
+.page-title{
+
+    margin:0;
+
+    font-size:30px;
+
+    font-weight:800;
+
+    color:#0f172a;
+
+    line-height:1.2;
+
+}
+
+.page-subtitle{
+
+    margin-top:8px;
+
+    font-size:15px;
+
+    color:#64748b;
+
+    line-height:1.6;
+
+}
+
+/* ==========================================
+                RIGHT
+========================================== */
+
+.topbar-right{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+}
+/* =========================================================
+                BRAND
+========================================================= */
+
+
+
+.brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+    text-decoration:none;
+
+}
+
+.brand-icon{
+
+    width:60px;
+
+    height:60px;
+
+    border-radius:20px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #1d4ed8
+    );
+
+    color:#ffffff;
+
+    font-size:24px;
+
+    box-shadow:0 15px 35px rgba(37,99,235,.25);
+
+    flex-shrink:0;
+}
+
+.brand-text{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.brand-text h2{
+
+    margin:0;
+
+    color:#0f172a;
+
+    font-size:18px;
+
+    font-weight:800;
+
+    letter-spacing:.8px;
+
+}
+
+.brand-text p{
+    margin-top:4px;
+    
+
+    color:#64748b;
+
+    font-size:13px;
+
+    font-weight:500;
+
+    line-height:1.5;
+
+}
+
+/* =========================================================
+                NAVIGATION
+========================================================= */
+
+
+
+/* ==========================================
+                DIVIDER
+========================================== */
+
+.nav-section:not(:last-child){
+
+    padding-bottom:12px;
+
+    border-bottom:1px solid #eef2f7;
+
+}
+
+
+.profile-avatar{
+
+    width:48px;
+
+    height:48px;
+
+    border-radius:50%;
+
+    background:#2563eb;
+
+    color:#fff;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:18px;
+
+    font-weight:700;
+
+}
+
+.profile-content h5{
+
+    margin:0;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    color:#0f172a;
+
+}
+
+.profile-content p{
+
+    margin:3px 0 0;
+
+    font-size:13px;
+
+    color:#64748b;
+
+}
+
+/* =========================================================
+   FINACLE — GLOBAL DARK THEME
+   FINAL UI OVERRIDE
+   NO BACKEND / LOGIC CHANGES
+========================================================= */
+
+
+/* =========================================================
+   CORE APPLICATION
+========================================================= */
+
+body.dark-mode {
+    background: #0b1220 !important;
+    color: #e5e7eb !important;
+}
+
+body.dark-mode .app-layout,
+body.dark-mode .main-content,
+body.dark-mode .content-wrapper {
+    background: #0b1220 !important;
+    color: #e5e7eb !important;
+}
+
+
+/* =========================================================
+   GLOBAL TEXT
+========================================================= */
+
+body.dark-mode .main-content h1,
+body.dark-mode .main-content h2,
+body.dark-mode .main-content h3,
+body.dark-mode .main-content h4,
+body.dark-mode .main-content h5,
+body.dark-mode .main-content h6 {
+    color: #f8fafc !important;
+}
+
+body.dark-mode .main-content p {
+    color: #94a3b8 !important;
+}
+
+body.dark-mode .main-content span,
+body.dark-mode .main-content label {
+    color: #cbd5e1;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+
+
+body.dark-mode .brand-text h2,
+body.dark-mode .brand h2 {
+    color: #f8fafc !important;
+}
+
+body.dark-mode .brand-text p,
+body.dark-mode .brand p {
+    color: #94a3b8 !important;
+}
+
+body.dark-mode .nav-title {
+    color: #64748b !important;
+}
+
+body.dark-mode .nav-item {
+    color: #cbd5e1 !important;
+}
+
+body.dark-mode .nav-item i {
+    color: #94a3b8 !important;
+}
+
+body.dark-mode .nav-item:hover {
+    background: #172033 !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .nav-item.active {
+    background: #172554 !important;
+    color: #60a5fa !important;
+}
+
+body.dark-mode .nav-item.active i {
+    color: #60a5fa !important;
+}
+
+
+
+body.dark-mode .profile-content h5 {
+    color: #f8fafc !important;
+}
+
+body.dark-mode .profile-content p {
+    color: #94a3b8 !important;
+}
+
+
+/* =========================================================
+   TOPBAR
+========================================================= */
+
+body.dark-mode .topbar {
+    background: #0f172a !important;
+    border-color: #1e293b !important;
+}
+
+body.dark-mode .search-box,
+body.dark-mode .search-input {
+    background: #172033 !important;
+    border-color: #334155 !important;
+    color: #f8fafc !important;
+}
+
+body.dark-mode .search-input::placeholder {
+    color: #64748b !important;
+}
+
+body.dark-mode .notification-btn,
+body.dark-mode .theme-toggle {
+    background: #172033 !important;
+    border-color: #334155 !important;
+    color: #cbd5e1 !important;
+}
+
+
+/* =========================================================
+   UNIVERSAL CARD SURFACES
+========================================================= */
+
+/*
+   This is the important part.
+
+   Existing pages use different card class names.
+   We therefore cover the common Finacle card patterns.
+*/
+
+body.dark-mode .main-content .card,
+body.dark-mode .main-content .dashboard-card,
+body.dark-mode .main-content .stat-card,
+body.dark-mode .main-content .summary-card,
+body.dark-mode .main-content .summary-card,
+body.dark-mode .main-content .overview-card,
+body.dark-mode .main-content .analytics-card,
+body.dark-mode .main-content .chart-card,
+body.dark-mode .main-content .report-card,
+body.dark-mode .main-content .report-summary-card,
+body.dark-mode .main-content .settings-card,
+body.dark-mode .main-content .account-card,
+body.dark-mode .main-content .privacy-card,
+body.dark-mode .main-content .transaction-card,
+body.dark-mode .main-content .activity-card,
+body.dark-mode .main-content .financial-card {
+    background: #111827 !important;
+    border-color: #263244 !important;
+    color: #e5e7eb !important;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.20) !important;
+}
+
+
+/* =========================================================
+   DASHBOARD STAT CARDS
+========================================================= */
+
+body.dark-mode .stat-card *,
+body.dark-mode .dashboard-card *,
+body.dark-mode .summary-card * {
+    border-color: #263244;
+}
+
+body.dark-mode .stat-card h1,
+body.dark-mode .stat-card h2,
+body.dark-mode .stat-card h3,
+body.dark-mode .stat-card h4,
+body.dark-mode .stat-card strong,
+body.dark-mode .stat-card .value,
+body.dark-mode .stat-card .stat-value,
+body.dark-mode .dashboard-card .value,
+body.dark-mode .dashboard-card .stat-value,
+body.dark-mode .summary-card .value,
+body.dark-mode .summary-card .summary-value {
+    color: #f8fafc !important;
+}
+
+body.dark-mode .stat-card .label,
+body.dark-mode .stat-card .stat-label,
+body.dark-mode .dashboard-card .label,
+body.dark-mode .summary-card .label {
+    color: #94a3b8 !important;
+}
+
+body.dark-mode .stat-card small,
+body.dark-mode .dashboard-card small,
+body.dark-mode .summary-card small {
+    color: #64748b !important;
+}
+
+
+/* =========================================================
+   IMPORTANT — CUSTOM DASHBOARD CARDS
+========================================================= */
+
+/*
+   Your screenshot shows some cards that are not using
+   Bootstrap .card.
+
+   These selectors make sure their surface and typography
+   switch together.
+*/
+
+body.dark-mode .main-content [class*="stat-card"],
+body.dark-mode .main-content [class*="summary-card"],
+body.dark-mode .main-content [class*="dashboard-card"],
+body.dark-mode .main-content [class*="analytics-card"] {
+    background: #111827 !important;
+    border-color: #263244 !important;
+    color: #e5e7eb !important;
+}
+
+body.dark-mode .main-content [class*="stat-card"] h1,
+body.dark-mode .main-content [class*="stat-card"] h2,
+body.dark-mode .main-content [class*="stat-card"] h3,
+body.dark-mode .main-content [class*="stat-card"] h4,
+body.dark-mode .main-content [class*="stat-card"] strong,
+body.dark-mode .main-content [class*="summary-card"] h1,
+body.dark-mode .main-content [class*="summary-card"] h2,
+body.dark-mode .main-content [class*="summary-card"] h3,
+body.dark-mode .main-content [class*="dashboard-card"] h1,
+body.dark-mode .main-content [class*="dashboard-card"] h2,
+body.dark-mode .main-content [class*="dashboard-card"] h3 {
+    color: #f8fafc !important;
+}
+
+
+/* =========================================================
+   CHART CARDS
+========================================================= */
+
+body.dark-mode .chart-card,
+body.dark-mode .chart-container,
+body.dark-mode .chart-wrapper,
+body.dark-mode .analytics-card {
+    background: #111827 !important;
+    border-color: #263244 !important;
+}
+
+body.dark-mode .chart-card h3,
+body.dark-mode .chart-card h4 {
+    color: #f8fafc !important;
+}
+
+body.dark-mode .chart-card p,
+body.dark-mode .chart-card small {
+    color: #94a3b8 !important;
+}
+
+
+/* =========================================================
+   REPORTS
+========================================================= */
+
+body.dark-mode .reports-hero,
+body.dark-mode .reports-heading {
+    color: #e5e7eb !important;
+}
+
+body.dark-mode .reports-hero h1,
+body.dark-mode .reports-heading h1 {
+    color: #f8fafc !important;
+}
+
+body.dark-mode .reports-hero p,
+body.dark-mode .reports-heading p {
+    color: #94a3b8 !important;
+}
+
+body.dark-mode .report-summary-card {
+    background: #111827 !important;
+    border-color: #263244 !important;
+}
+
+body.dark-mode .report-summary-card h2 {
+    color: #f8fafc !important;
+}
+
+body.dark-mode .report-summary-card .summary-label {
+    color: #94a3b8 !important;
+}
+
+body.dark-mode .report-summary-card small {
+    color: #64748b !important;
+}
+
+
+/* =========================================================
+   TABLES
+========================================================= */
+
+body.dark-mode table,
+body.dark-mode .table {
+    color: #e5e7eb !important;
+    border-color: #263244 !important;
+}
+
+body.dark-mode .table thead th {
+    background: #172033 !important;
+    color: #cbd5e1 !important;
+    border-color: #334155 !important;
+}
+
+body.dark-mode .table tbody td {
+    background: #111827 !important;
+    color: #cbd5e1 !important;
+    border-color: #263244 !important;
+}
+
+body.dark-mode .table tbody tr:hover td {
+    background: #172033 !important;
+}
+
+
+/* =========================================================
+   FORMS
+========================================================= */
+
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select,
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+    background: #172033 !important;
+    border-color: #334155 !important;
+    color: #f8fafc !important;
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+    color: #64748b !important;
+}
+
+body.dark-mode label {
+    color: #cbd5e1 !important;
+}
+
+
+/* =========================================================
+   AI
+========================================================= */
+
+body.dark-mode .ai-hero,
+body.dark-mode .chat-card {
+    background: #111827 !important;
+    border-color: #263244 !important;
+}
+
+body.dark-mode .hero-title,
+body.dark-mode .chat-title h4 {
+    color: #f8fafc !important;
+}
+
+body.dark-mode .hero-subtitle,
+body.dark-mode .chat-title small {
+    color: #94a3b8 !important;
+}
+
+body.dark-mode .hero-panel {
+    background: #172033 !important;
+    border-color: #334155 !important;
+}
+
+body.dark-mode .chat-body {
+    background: #0b1220 !important;
+}
+
+body.dark-mode .message-content {
+    background: #172033 !important;
+    color: #e5e7eb !important;
+}
+
+body.dark-mode .chat-footer {
+    background: #111827 !important;
+    border-color: #263244 !important;
+}
+
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+body.dark-mode .settings-hero,
+body.dark-mode .settings-card,
+body.dark-mode .account-card,
+body.dark-mode .privacy-card {
+    background: #111827 !important;
+    border-color: #263244 !important;
+}
+
+body.dark-mode .settings-hero h1,
+body.dark-mode .settings-card h2,
+body.dark-mode .account-main h3,
+body.dark-mode .privacy-card h3 {
+    color: #f8fafc !important;
+}
+
+body.dark-mode .settings-hero p,
+body.dark-mode .settings-card p,
+body.dark-mode .account-main p,
+body.dark-mode .privacy-card p {
+    color: #94a3b8 !important;
+}
+
+body.dark-mode .setting-row,
+body.dark-mode .security-item,
+body.dark-mode .settings-note {
+    background: #172033 !important;
+    border-color: #334155 !important;
+}
+
+body.dark-mode .setting-row strong,
+body.dark-mode .security-item strong {
+    color: #f8fafc !important;
+}
+
+body.dark-mode .setting-row span,
+body.dark-mode .security-item span {
+    color: #94a3b8 !important;
+}
+
+
+/* =========================================================
+   BOOTSTRAP DROPDOWNS
+========================================================= */
+
+body.dark-mode .dropdown-menu {
+    background: #111827 !important;
+    border-color: #334155 !important;
+}
+
+body.dark-mode .dropdown-item {
+    color: #cbd5e1 !important;
+}
+
+body.dark-mode .dropdown-item:hover {
+    background: #172033 !important;
+    color: #ffffff !important;
+}
+
+
+/* =========================================================
+   MODALS
+========================================================= */
+
+body.dark-mode .modal-content {
+    background: #111827 !important;
+    color: #e5e7eb !important;
+    border-color: #334155 !important;
+}
+
+body.dark-mode .modal-header,
+body.dark-mode .modal-footer {
+    border-color: #263244 !important;
+}
+
+
+/* =========================================================
+   DIVIDERS
+========================================================= */
+
+body.dark-mode hr,
+body.dark-mode .border,
+body.dark-mode [class*="divider"] {
+    border-color: #263244 !important;
+}
+
+
+/* =========================================================
+   LINKS
+========================================================= */
+
+body.dark-mode .main-content a {
+    color: #60a5fa;
+}
+
+body.dark-mode .main-content a:hover {
+    color: #93c5fd;
+}
+
+
+/* =========================================================
+   BACK TO TOP
+========================================================= */
+
+body.dark-mode #backToTop {
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.40) !important;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+body.dark-mode::-webkit-scrollbar,
+body.dark-mode *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+body.dark-mode::-webkit-scrollbar-track,
+body.dark-mode *::-webkit-scrollbar-track {
+    background: #0b1220;
+}
+
+body.dark-mode::-webkit-scrollbar-thumb,
+body.dark-mode *::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 10px;
+}
+
+body.dark-mode::-webkit-scrollbar-thumb:hover,
+body.dark-mode *::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+}
+
+
+/* =========================================================
+   FINACLE — GLOBAL DARK MODE SURFACE OVERRIDES
+   UI ONLY — DOES NOT AFFECT BACKEND
+========================================================= */
+
+
+/* =========================================================
+   1. GENERAL PAGE SURFACES
+========================================================= */
+
+body.dark-mode {
+    background: #0b1220 !important;
+    color: #e5e7eb !important;
+}
+
+
+/* =========================================================
+   2. UNIVERSAL CARDS
+========================================================= */
+
+body.dark-mode .main-content .card,
+body.dark-mode .main-content .dashboard-card,
+body.dark-mode .main-content .analytics-card,
+body.dark-mode .main-content .chart-card,
+body.dark-mode .main-content .ai-card,
+body.dark-mode .main-content .financial-card,
+body.dark-mode .main-content .summary-card,
+body.dark-mode .main-content .overview-card,
+body.dark-mode .main-content .quick-card,
+body.dark-mode .main-content .insight-card,
+body.dark-mode .main-content .table-card,
+body.dark-mode .main-content .prompt-card,
+body.dark-mode .main-content .chat-card,
+body.dark-mode .main-content .financial-dna-card,
+body.dark-mode .main-content .risk-card,
+body.dark-mode .main-content .risk-option {
+
+    background: #111827 !important;
+
+    border-color: #263244 !important;
+
+    color: #e5e7eb !important;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.20) !important;
+}
+
+
+/* =========================================================
+   3. CARD HEADERS
+========================================================= */
+
+body.dark-mode .main-content .card-header,
+body.dark-mode .main-content .card-header-custom,
+body.dark-mode .main-content .chat-header,
+body.dark-mode .main-content .chart-card .card-header-custom,
+body.dark-mode .main-content .ai-card .card-header-custom {
+
+    background: #111827 !important;
+
+    border-color: #263244 !important;
+
+    color: #f8fafc !important;
+}
+
+
+/* =========================================================
+   4. CARD BODY
+========================================================= */
+
+body.dark-mode .main-content .card-body,
+body.dark-mode .main-content .chat-body,
+body.dark-mode .main-content .chart-body {
+
+    background: transparent !important;
+
+    color: #cbd5e1 !important;
+}
+
+
+/* =========================================================
+   5. HEADINGS
+========================================================= */
+
+body.dark-mode .main-content .card h1,
+body.dark-mode .main-content .card h2,
+body.dark-mode .main-content .card h3,
+body.dark-mode .main-content .card h4,
+body.dark-mode .main-content .card h5,
+body.dark-mode .main-content .card h6,
+
+body.dark-mode .main-content .dashboard-card h1,
+body.dark-mode .main-content .dashboard-card h2,
+body.dark-mode .main-content .dashboard-card h3,
+body.dark-mode .main-content .dashboard-card h4,
+body.dark-mode .main-content .dashboard-card h5,
+body.dark-mode .main-content .dashboard-card h6,
+
+body.dark-mode .main-content .ai-card h1,
+body.dark-mode .main-content .ai-card h2,
+body.dark-mode .main-content .ai-card h3,
+body.dark-mode .main-content .ai-card h4,
+body.dark-mode .main-content .ai-card h5,
+body.dark-mode .main-content .ai-card h6,
+
+body.dark-mode .main-content .chat-card h1,
+body.dark-mode .main-content .chat-card h2,
+body.dark-mode .main-content .chat-card h3,
+body.dark-mode .main-content .chat-card h4,
+body.dark-mode .main-content .chat-card h5,
+body.dark-mode .main-content .chat-card h6 {
+
+    color: #f8fafc !important;
+}
+
+
+/* =========================================================
+   6. NORMAL TEXT
+========================================================= */
+
+body.dark-mode .main-content .card p,
+body.dark-mode .main-content .card span,
+body.dark-mode .main-content .card label,
+body.dark-mode .main-content .card small,
+
+body.dark-mode .main-content .dashboard-card p,
+body.dark-mode .main-content .dashboard-card span,
+body.dark-mode .main-content .dashboard-card label,
+body.dark-mode .main-content .dashboard-card small,
+
+body.dark-mode .main-content .ai-card p,
+body.dark-mode .main-content .ai-card span,
+body.dark-mode .main-content .ai-card small,
+
+body.dark-mode .main-content .chat-card p,
+body.dark-mode .main-content .chat-card span,
+body.dark-mode .main-content .chat-card small {
+
+    color: #cbd5e1 !important;
+}
+
+
+/* =========================================================
+   7. MUTED TEXT
+========================================================= */
+
+body.dark-mode .main-content .text-muted {
+
+    color: #94a3b8 !important;
+}
+
+
+/* =========================================================
+   8. WHITE / LIGHT BACKGROUNDS
+========================================================= */
+
+body.dark-mode .main-content .bg-white,
+body.dark-mode .main-content .bg-light {
+
+    background: #111827 !important;
+}
+
+
+/* =========================================================
+   9. LIST GROUPS
+========================================================= */
+
+body.dark-mode .main-content .list-group,
+body.dark-mode .main-content .list-group-item {
+
+    background: #111827 !important;
+
+    border-color: #263244 !important;
+
+    color: #cbd5e1 !important;
+}
+
+
+body.dark-mode .main-content .list-group-item strong {
+
+    color: #f8fafc !important;
+}
+
+
+/* =========================================================
+   10. TABLES
+========================================================= */
+
+body.dark-mode .main-content table {
+
+    background: #111827 !important;
+
+    color: #cbd5e1 !important;
+
+    border-color: #263244 !important;
+}
+
+
+body.dark-mode .main-content thead,
+body.dark-mode .main-content thead th {
+
+    background: #172033 !important;
+
+    color: #cbd5e1 !important;
+
+    border-color: #263244 !important;
+}
+
+
+body.dark-mode .main-content tbody td {
+
+    background: #111827 !important;
+
+    color: #cbd5e1 !important;
+
+    border-color: #263244 !important;
+}
+
+
+body.dark-mode .main-content tbody tr:hover td {
+
+    background: #172033 !important;
+}
+
+
+/* =========================================================
+   11. FORM CONTROLS
+========================================================= */
+
+body.dark-mode .main-content input,
+body.dark-mode .main-content textarea,
+body.dark-mode .main-content select,
+body.dark-mode .main-content .form-control,
+body.dark-mode .main-content .form-select {
+
+    background: #172033 !important;
+
+    border-color: #334155 !important;
+
+    color: #f8fafc !important;
+}
+
+
+body.dark-mode .main-content input::placeholder,
+body.dark-mode .main-content textarea::placeholder {
+
+    color: #64748b !important;
+}
+
+
+body.dark-mode .main-content input:focus,
+body.dark-mode .main-content textarea:focus,
+body.dark-mode .main-content select:focus,
+body.dark-mode .main-content .form-control:focus,
+body.dark-mode .main-content .form-select:focus {
+
+    background: #172033 !important;
+
+    border-color: #3b82f6 !important;
+
+    color: #f8fafc !important;
+
+    box-shadow:
+        0 0 0 0.2rem rgba(59, 130, 246, 0.15) !important;
+}
+
+
+/* =========================================================
+   12. CHAT / AI COMPONENTS
+========================================================= */
+
+body.dark-mode .main-content .chat-card {
+
+    background: #111827 !important;
+
+    border-color: #263244 !important;
+}
+
+
+body.dark-mode .main-content .chat-header {
+
+    background: #111827 !important;
+
+    border-color: #263244 !important;
+}
+
+
+body.dark-mode .main-content .chat-body {
+
+    background: #0b1220 !important;
+
+    color: #cbd5e1 !important;
+}
+
+
+body.dark-mode .main-content .chat-footer {
+
+    background: #111827 !important;
+
+    border-color: #263244 !important;
+}
+
+
+body.dark-mode .main-content .message-content {
+
+    background: #172033 !important;
+
+    color: #e5e7eb !important;
+
+    border-color: #263244 !important;
+}
+
+
+body.dark-mode .main-content .message-content h1,
+body.dark-mode .main-content .message-content h2,
+body.dark-mode .main-content .message-content h3,
+body.dark-mode .main-content .message-content h4,
+body.dark-mode .main-content .message-content h5,
+body.dark-mode .main-content .message-content h6 {
+
+    color: #f8fafc !important;
+}
+
+
+/* =========================================================
+   13. AI PANELS
+========================================================= */
+
+body.dark-mode .main-content .ai-card,
+body.dark-mode .main-content .insight-card,
+body.dark-mode .main-content .prompt-card {
+
+    background: #111827 !important;
+
+    border-color: #263244 !important;
+
+    color: #e5e7eb !important;
+}
+
+
+body.dark-mode .main-content .ai-card .card-body,
+body.dark-mode .main-content .insight-card .card-body {
+
+    background: transparent !important;
+
+    color: #cbd5e1 !important;
+}
+
+
+/* =========================================================
+   14. FINANCIAL DNA
+========================================================= */
+
+body.dark-mode .main-content .financial-dna-card {
+
+    background: #111827 !important;
+
+    border-color: #263244 !important;
+
+    color: #e5e7eb !important;
+}
+
+
+body.dark-mode .main-content .financial-dna-card .dna-header,
+body.dark-mode .main-content .financial-dna-card .dna-item {
+
+    background: #111827 !important;
+
+    border-color: #263244 !important;
+}
+
+
+body.dark-mode .main-content .financial-dna-card .dna-item span {
+
+    color: #94a3b8 !important;
+}
+
+
+body.dark-mode .main-content .financial-dna-card .dna-item strong {
+
+    color: #f8fafc !important;
+}
+
+
+/* =========================================================
+   15. RISK APPETITE / PROFILE OPTIONS
+========================================================= */
+
+body.dark-mode .main-content .risk-card,
+body.dark-mode .main-content .risk-option,
+body.dark-mode .main-content .risk-option-card,
+body.dark-mode .main-content .risk-level-card,
+body.dark-mode .main-content .risk-profile-card {
+
+    background: #111827 !important;
+
+    border-color: #263244 !important;
+
+    color: #e5e7eb !important;
+}
+
+
+body.dark-mode .main-content .risk-card *,
+body.dark-mode .main-content .risk-option *,
+body.dark-mode .main-content .risk-option-card *,
+body.dark-mode .main-content .risk-level-card *,
+body.dark-mode .main-content .risk-profile-card * {
+
+    color: inherit;
+}
+
+
+body.dark-mode .main-content .risk-card p,
+body.dark-mode .main-content .risk-option p,
+body.dark-mode .main-content .risk-option-card p {
+
+    color: #94a3b8 !important;
+}
+
+
+/* =========================================================
+   16. BOOTSTRAP LIGHT BUTTONS
+========================================================= */
+
+body.dark-mode .main-content .btn-light {
+
+    background: #172033 !important;
+
+    border-color: #334155 !important;
+
+    color: #f8fafc !important;
+}
+
+
+body.dark-mode .main-content .btn-light:hover {
+
+    background: #1e293b !important;
+
+    border-color: #475569 !important;
+
+    color: #ffffff !important;
+}
+
+
+/* =========================================================
+   17. ALERTS
+========================================================= */
+
+body.dark-mode .main-content .alert {
+
+    border-color: #263244 !important;
+}
+
+
+body.dark-mode .main-content .alert-light {
+
+    background: #172033 !important;
+
+    color: #cbd5e1 !important;
+}
+
+
+/* =========================================================
+   18. BADGES — DON'T DESTROY COLOURS
+========================================================= */
+
+body.dark-mode .main-content .badge {
+
+    border-color: transparent;
+}
+
+
+/* =========================================================
+   19. REMOVE ACCIDENTAL WHITE SHADOW / BORDERS
+========================================================= */
+
+body.dark-mode .main-content .shadow,
+body.dark-mode .main-content .shadow-sm,
+body.dark-mode .main-content .shadow-lg {
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.20) !important;
+}
+
+/* =========================================================
+   FINACLE — FINANCIAL PROFILE / ONBOARDING DARK MODE
+========================================================= */
+
+
+/* Main onboarding card */
+
+body.dark-mode .main-content .container .card {
+    background: #111827 !important;
+    border-color: #263244 !important;
+    color: #e5e7eb !important;
+}
+
+
+/* Card body */
+
+body.dark-mode .main-content .container .card-body {
+    background: #111827 !important;
+    color: #e5e7eb !important;
+}
+
+
+/* Page headings */
+
+body.dark-mode .main-content .container .card h1,
+body.dark-mode .main-content .container .card h2,
+body.dark-mode .main-content .container .card h3,
+body.dark-mode .main-content .container .card h4,
+body.dark-mode .main-content .container .card h5,
+body.dark-mode .main-content .container .card h6 {
+    color: #f8fafc !important;
+}
+
+
+/* Description / muted text */
+
+body.dark-mode .main-content .container .card .text-muted {
+    color: #94a3b8 !important;
+}
+
+
+/* =========================================================
+   RISK APPETITE OPTIONS
+========================================================= */
+
+body.dark-mode .main-content .container .form-check {
+    background: #172033 !important;
+    border: 1px solid #263244 !important;
+    border-radius: 16px !important;
+    padding: 20px 22px !important;
+    color: #e5e7eb !important;
+    transition: all .2s ease;
+}
+
+
+/* Risk option hover */
+
+body.dark-mode .main-content .container .form-check:hover {
+    background: #1e293b !important;
+    border-color: #3b82f6 !important;
+}
+
+
+/* Risk option labels */
+
+body.dark-mode .main-content .container .form-check-label {
+    color: #e5e7eb !important;
+}
+
+
+/* Risk option title */
+
+body.dark-mode .main-content .container .form-check-label strong {
+    color: #f8fafc !important;
+}
+
+
+/* Risk option description */
+
+body.dark-mode .main-content .container .form-check-label small,
+body.dark-mode .main-content .container .form-check-label .text-muted {
+    color: #94a3b8 !important;
+}
+
+
+/* Radio button */
+
+body.dark-mode .main-content .container .form-check-input {
+    background-color: #172033 !important;
+    border-color: #64748b !important;
+}
+
+
+/* Checked radio */
+
+body.dark-mode .main-content .container .form-check-input:checked {
+    background-color: #2563eb !important;
+    border-color: #2563eb !important;
+}
+
+
+/* =========================================================
+   SELECT DROPDOWNS — STEPS 2 & 3 & 4
+========================================================= */
+
+body.dark-mode .main-content .container .form-select {
+    background-color: #172033 !important;
+    border-color: #334155 !important;
+    color: #f8fafc !important;
+}
+
+
+body.dark-mode .main-content .container .form-select:focus {
+    background-color: #172033 !important;
+    border-color: #3b82f6 !important;
+    color: #f8fafc !important;
+    box-shadow: 0 0 0 .2rem rgba(59,130,246,.15) !important;
+}
+
+
+/* Dropdown options */
+
+body.dark-mode .main-content .container .form-select option {
+    background: #111827 !important;
+    color: #f8fafc !important;
+}
+
+
+/* =========================================================
+   EMERGENCY FUND INFO BOX
+========================================================= */
+
+body.dark-mode .main-content .container .alert-info {
+    background: #172033 !important;
+    border-color: #263244 !important;
+    color: #cbd5e1 !important;
+}
+
+
+/* =========================================================
+   PROGRESS BAR CONTAINER
+========================================================= */
+
+body.dark-mode .main-content .container .progress {
+    background: #1e293b !important;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+body.dark-mode .main-content .container .btn-outline-secondary {
+    background: transparent !important;
+    border-color: #475569 !important;
+    color: #cbd5e1 !important;
+}
+
+
+body.dark-mode .main-content .container .btn-outline-secondary:hover {
+    background: #1e293b !important;
+    border-color: #64748b !important;
+    color: #ffffff !important;
+}
+
+.currency-symbol {
+    display: inline !important;
+    position: static !important;
+    vertical-align: baseline !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+
+
+/* =========================================================
+   FINACLE LOGIN / REGISTER
+========================================================= */
+
+.finacle-auth-page {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(37, 99, 235, 0.08),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 85% 80%,
+            rgba(37, 99, 235, 0.06),
+            transparent 30%
+        ),
+        var(--bg);
+}
+
+
+/* AUTH CARD */
+
+.finacle-auth-card {
+    width: 100%;
+    max-width: 470px;
+
+    padding: 42px 44px 36px;
+
+    background: var(--card-bg);
+
+    border: 1px solid var(--border);
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 20px 60px rgba(15, 23, 42, 0.10);
+
+    animation: finacleAuthAppear .35s ease;
+}
+
+
+/* BRAND */
+
+.finacle-auth-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 13px;
+
+    margin-bottom: 38px;
+}
+
+.finacle-auth-logo {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 13px;
+
+    color: #fff;
+
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #1d4ed8
+    );
+
+    box-shadow:
+        0 8px 20px rgba(37, 99, 235, 0.22);
+
+    font-size: 21px;
+}
+
+.finacle-auth-name {
+    color: var(--text);
+
+    font-size: 1.15rem;
+    font-weight: 800;
+
+    letter-spacing: .04em;
+}
+
+.finacle-auth-tagline {
+    margin-top: 1px;
+
+    color: var(--text-muted);
+
+    font-size: .72rem;
+}
+
+
+/* HEADING */
+
+.finacle-auth-heading {
+    text-align: center;
+
+    margin-bottom: 30px;
+}
+
+.finacle-auth-heading h1 {
+    margin: 0;
+
+    color: var(--text);
+
+    font-size: 1.85rem;
+    font-weight: 800;
+
+    letter-spacing: -.035em;
+}
+
+.finacle-auth-heading p {
+    margin: 8px 0 0;
+
+    color: var(--text-muted);
+
+    font-size: .88rem;
+}
+
+
+/* FIELDS */
+
+.finacle-auth-field {
+    margin-bottom: 19px;
+}
+
+.finacle-auth-field label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: var(--text);
+
+    font-size: .82rem;
+    font-weight: 650;
+}
+
+.finacle-input {
+    position: relative;
+}
+
+.finacle-input i {
+    position: absolute;
+
+    left: 16px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: var(--text-muted);
+
+    font-size: .95rem;
+
+    pointer-events: none;
+}
+
+.finacle-input input {
+    width: 100%;
+    height: 51px;
+
+    padding: 0 16px 0 44px;
+
+    border: 1px solid var(--border);
+    border-radius: 11px;
+
+    outline: none;
+
+    color: var(--text);
+
+    background: var(--bg);
+
+    font-size: .88rem;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+}
+
+.finacle-input input::placeholder {
+    color: var(--text-muted);
+
+    opacity: .7;
+}
+
+.finacle-input input:focus {
+    border-color: #2563eb;
+
+    background: var(--card-bg);
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, .10);
+}
+
+
+/* BUTTON */
+
+.finacle-auth-button {
+    width: 100%;
+    height: 51px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    margin-top: 8px;
+
+    border: none;
+    border-radius: 11px;
+
+    color: #fff;
+
+    background: #2563eb;
+
+    font-size: .9rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background .2s ease,
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.finacle-auth-button:hover {
+    background: #1d4ed8;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 8px 20px rgba(37, 99, 235, .20);
+}
+
+.finacle-auth-button i {
+    transition: transform .2s ease;
+}
+
+.finacle-auth-button:hover i {
+    transform: translateX(3px);
+}
+
+
+/* FOOTER */
+
+.finacle-auth-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    margin-top: 25px;
+
+    color: var(--text-muted);
+
+    font-size: .8rem;
+}
+
+.finacle-auth-footer a {
+    color: #2563eb;
+
+    font-weight: 650;
+
+    text-decoration: none;
+}
+
+.finacle-auth-footer a:hover {
+    text-decoration: underline;
+}
+
+
+/* FLASH */
+
+.finacle-auth-card .alert {
+    border-radius: 10px;
+
+    margin-bottom: 20px;
+
+    font-size: .8rem;
+}
+
+
+/* =========================================================
+   HIDE APPLICATION NAVIGATION ON AUTH PAGES
+========================================================= */
+
+/*
+   Login/Register should not show:
+   Dashboard / Transactions / AI / Reports /
+   Settings / Logout
+*/
+
+body:has(.finacle-auth-page) .navbar,
+body:has(.finacle-auth-page) .topbar,
+body:has(.finacle-auth-page) .sidebar,
+body:has(.finacle-auth-page) .main-sidebar {
+    display: none !important;
+}
+
+
+/*
+   Remove layout spacing left behind by the
+   application's authenticated navigation.
+*/
+
+body:has(.finacle-auth-page) .main-content {
+    margin-left: 0 !important;
+    width: 100% !important;
+}
+
+body:has(.finacle-auth-page) .content-wrapper {
+    margin-left: 0 !important;
+    padding: 0 !important;
+}
+
+
+/* ANIMATION */
+
+@keyframes finacleAuthAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+/* MOBILE */
+
+@media (max-width: 576px) {
+
+    .finacle-auth-page {
+        padding: 25px 15px;
+    }
+
+    .finacle-auth-card {
+        padding: 32px 24px 28px;
+
+        border-radius: 18px;
+    }
+
+    .finacle-auth-brand {
+        margin-bottom: 30px;
+    }
+
+    .finacle-auth-heading h1 {
+        font-size: 1.6rem;
+    }
+
+}
+
+
+/* ==========================================================
+                    SIDEBAR — DARK MODE
+========================================================== */
+
+body.dark-mode .sidebar {
+
+    background: #0f172a !important;
+
+    border-color: #1e293b !important;
+
+    box-shadow:
+        4px 0 24px rgba(0, 0, 0, 0.18);
+
+}
+
+
+body.dark-mode .sidebar-header {
+
+    border-color: #1e293b !important;
+
+}
+
+
+body.dark-mode .brand-text h2 {
+
+    color: #f8fafc !important;
+
+}
+
+
+body.dark-mode .brand-text p {
+
+    color: #94a3b8 !important;
+
+}
+
+
+body.dark-mode .nav-title {
+
+    color: #64748b !important;
+
+}
+
+
+body.dark-mode .nav-item {
+
+    color: #cbd5e1 !important;
+
+}
+
+
+body.dark-mode .nav-item i {
+
+    color: #94a3b8 !important;
+
+}
+
+
+body.dark-mode .nav-item:hover {
+
+    background: #172033 !important;
+
+    color: #ffffff !important;
+
+}
+
+
+body.dark-mode .nav-item:hover i {
+
+    color: #60a5fa !important;
+
+}
+
+
+body.dark-mode .nav-item.active {
+
+    background: #172554 !important;
+
+    color: #60a5fa !important;
+
+}
+
+
+body.dark-mode .nav-item.active i {
+
+    color: #60a5fa !important;
+
+}
+
+
+body.dark-mode .sidebar-bottom {
+
+    background: #0f172a !important;
+
+    border-color: #1e293b !important;
+
+}
+
+
+body.dark-mode .profile-content h5 {
+
+    color: #f8fafc !important;
+
+}
+
+
+body.dark-mode .profile-content p {
+
+    color: #94a3b8 !important;
+
+}
+
+
+body.dark-mode .sidebar-bottom-item.logout:hover {
+
+    background: #2a171b !important;
+
+    color: #f87171 !important;
+
+}
+
+
+body.dark-mode .sidebar-bottom-item.logout:hover i {
+
+    color: #f87171 !important;
+
+}
+
+
+
+/* =========================================================
+   FINACLE — FINAL UI SPACING OVERRIDES
+   AI CARDS + GLOBAL SEARCH KBD
+   ========================================================= */
+
+
+/* =========================================================
+   1. FINACLE AI — CARD GRID
+   ========================================================= */
+
+.ai-insights {
+    width: 100% !important;
+    margin-top: 32px !important;
+    margin-bottom: 32px !important;
+}
+
+.ai-insights .ai-grid {
+    display: grid !important;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr)) !important;
+
+    gap: 24px !important;
+
+    width: 100% !important;
+
+    align-items: stretch !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+
+/* =========================================================
+   2. AI CARDS — PREVENT OVERLAP
+   ========================================================= */
+
+.ai-insights .ai-grid .ai-card {
+    position: relative !important;
+
+    width: 100% !important;
+    min-width: 0 !important;
+
+    min-height: 190px !important;
+    height: auto !important;
+
+    margin: 0 !important;
+
+    padding: 24px !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+
+    box-sizing: border-box !important;
+
+    overflow: hidden !important;
+
+    border-radius: 18px !important;
+}
+
+
+/* =========================================================
+   3. AI CARD INTERNAL SPACING
+   ========================================================= */
+
+.ai-insights .ai-card .ai-icon {
+    width: 42px !important;
+    height: 42px !important;
+
+    min-width: 42px !important;
+
+    margin: 0 0 16px 0 !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.ai-insights .ai-card h5 {
+    margin: 0 0 10px 0 !important;
+
+    line-height: 1.3 !important;
+}
+
+.ai-insights .health-score,
+.ai-insights .risk-level {
+    margin: 0 0 10px 0 !important;
+
+    line-height: 1.15 !important;
+}
+
+.ai-insights .ai-card p {
+    margin: 0 !important;
+
+    line-height: 1.55 !important;
+}
+
+
+/* =========================================================
+   4. RECOMMENDATION CARD
+   ========================================================= */
+
+.ai-insights .recommendation-card {
+    justify-content: flex-start !important;
+}
+
+
+/* =========================================================
+   5. TABLET
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .ai-insights .ai-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr)) !important;
+
+        gap: 20px !important;
+    }
+
+    .ai-insights .recommendation-card {
+        grid-column: 1 / -1 !important;
+    }
+}
+
+
+/* =========================================================
+   6. MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    .ai-insights .ai-grid {
+        grid-template-columns: 1fr !important;
+
+        gap: 16px !important;
+    }
+
+    .ai-insights .recommendation-card {
+        grid-column: auto !important;
+    }
+}
+
+
+/* =========================================================
+   7. GLOBAL SEARCH — CTRL K
+   ========================================================= */
+
+.topbar-search kbd {
+    display: inline-flex !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+
+    min-width: 44px !important;
+    height: 28px !important;
+
+    padding: 0 8px !important;
+
+    margin: 0 !important;
+
+    border: 1px solid #d8dee8 !important;
+
+    border-radius: 7px !important;
+
+    background: #f1f5f9 !important;
+
+    color: #475569 !important;
+
+    font-family: inherit !important;
+
+    font-size: 12px !important;
+    font-weight: 600 !important;
+
+    line-height: 1 !important;
+
+    box-shadow:
+        inset 0 -1px 0 rgba(15, 23, 42, 0.08) !important;
+
+    white-space: nowrap !important;
+}
+
+
+/* =========================================================
+   8. DARK MODE — CTRL K
+   ========================================================= */
+
+body.dark-mode .topbar-search kbd {
+    background: #1e293b !important;
+
+    border-color: #334155 !important;
+
+    color: #cbd5e1 !important;
+
+    box-shadow:
+        inset 0 -1px 0 rgba(0, 0, 0, 0.25) !important;
+}
+
+
+
+
+/* ==========================================================
+   FINACLE — DASHBOARD AMOUNT FIX
+   Keep currency + large amounts on one line
+========================================================== */
+
+.dashboard-page .stat-card .stat-value,
+.dashboard-page .stat-card .amount,
+.dashboard-page .stat-card h2,
+.dashboard-page .stat-card h3 {
+    white-space: nowrap !important;
+    display: flex !important;
+    align-items: baseline !important;
+    gap: 4px;
+    font-size: clamp(1.65rem, 2vw, 2.15rem) !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.5px;
+}
+
+/* If ₹ and amount are separate elements */
+.dashboard-page .stat-card .currency,
+.dashboard-page .stat-card .rupee,
+.dashboard-page .currency-symbol {
+    display: inline !important;
+    white-space: nowrap !important;
+}
+
+/* Prevent the amount container from shrinking/wrapping */
+.dashboard-page .stat-card {
+    min-width: 0 !important;
+}
+
+.dashboard-page .stat-card .stat-value {
+    min-width: 0 !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

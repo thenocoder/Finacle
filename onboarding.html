@@ -1,0 +1,982 @@
+{% extends "layouts/app.html" %}
+
+{% block title %}Smart Financial Profile | Finacle{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/financial_profile.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-9 col-xl-8">
+
+            <div class="card shadow-lg border-0 rounded-4">
+
+                <div class="card-body p-5">
+
+                    <!-- ===================================== -->
+                    <!-- Header -->
+                    <!-- ===================================== -->
+
+                    <div class="text-center mb-5">
+
+                        <div class="display-6 mb-3">
+                            💰
+                        </div>
+
+                        <h2 class="fw-bold text-primary">
+                            Smart Financial Profile
+                        </h2>
+
+                        <p class="text-muted mt-3">
+
+                            Before we generate your personalized investment
+                            strategy, we'd like to understand your financial
+                            preferences.
+
+                        </p>
+
+                    </div>
+
+                    <!-- ===================================== -->
+                    <!-- Progress -->
+                    <!-- ===================================== -->
+
+                    <div class="mb-2">
+
+                        <div class="d-flex justify-content-between">
+
+                            <small class="text-muted">
+
+                                Question
+
+                                <span id="currentStep">
+
+                                    1
+
+                                </span>
+
+                                of
+
+                                <span>
+
+                                    5
+
+                                </span>
+
+                            </small>
+
+                            <small id="progressText">
+
+                                20%
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <div class="progress mb-5">
+
+                        <div
+                            class="progress-bar progress-bar-striped progress-bar-animated"
+
+                            id="progressBar"
+
+                            style="width:20%;">
+
+                            20%
+
+                        </div>
+
+                    </div>
+
+                    <!-- ===================================== -->
+                    <!-- FORM -->
+                    <!-- ===================================== -->
+
+                    <form
+    method="POST"
+    action="{{ url_for('financial_profile.onboarding') }}"
+    id="profileForm">
+
+                        <!-- ===================================== -->
+                        <!-- STEP 1 -->
+                        <!-- ===================================== -->
+
+                        <div class="step active">
+
+                            <div class="text-center mb-4">
+
+                                <div class="display-5">
+
+                                    📈
+
+                                </div>
+
+                                <h3 class="fw-bold">
+
+                                    What is your Risk Appetite?
+
+                                </h3>
+
+                                <p class="text-muted">
+
+                                    Your answer helps us decide how aggressive
+                                    your investment strategy should be.
+
+                                </p>
+
+                            </div>
+
+                            <!-- Low -->
+
+                            <div class="form-check option-card mb-4">
+
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="risk_appetite"
+                                    value="Low"
+                                    id="riskLow"
+                                    required>
+
+                                <label
+                                    class="form-check-label"
+                                    for="riskLow">
+
+                                    <h5 class="mb-2">
+
+                                        🟢 Low Risk
+
+                                    </h5>
+
+                                    <p class="mb-2">
+
+                                        I want to protect my money even if the
+                                        returns are lower.
+
+                                    </p>
+
+                                    <div class="alert alert-light mb-0">
+
+                                        <strong>Suitable for:</strong>
+
+                                        Beginners, conservative investors,
+                                        short-term goals and people who don't
+                                        like market ups and downs.
+
+                                    </div>
+
+                                </label>
+
+                            </div>
+
+                            <!-- Medium -->
+
+                            <div class="form-check option-card mb-4">
+
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="risk_appetite"
+                                    value="Medium"
+                                    id="riskMedium">
+
+                                <label
+                                    class="form-check-label"
+                                    for="riskMedium">
+
+                                    <div class="d-flex justify-content-between">
+
+                                        <h5>
+
+                                            🟡 Medium Risk
+
+                                        </h5>
+
+                                        <span
+                                            class="badge bg-success">
+
+                                            Recommended
+
+                                        </span>
+
+                                    </div>
+
+                                    <p class="mb-2">
+
+                                        I'm comfortable with moderate market
+                                        fluctuations to earn better long-term
+                                        returns.
+
+                                    </p>
+
+                                    <div class="alert alert-light mb-0">
+
+                                        <strong>Suitable for:</strong>
+
+                                        Most salaried professionals and
+                                        long-term investors.
+
+                                    </div>
+
+                                </label>
+
+                            </div>
+
+                            <!-- High -->
+
+                            <div class="form-check option-card">
+
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="risk_appetite"
+                                    value="High"
+                                    id="riskHigh">
+
+                                <label
+                                    class="form-check-label"
+                                    for="riskHigh">
+
+                                    <h5>
+
+                                        🔴 High Risk
+
+                                    </h5>
+
+                                    <p class="mb-2">
+
+                                        I can tolerate large market swings for
+                                        potentially higher returns.
+
+                                    </p>
+
+                                    <div class="alert alert-light mb-0">
+
+                                        <strong>Suitable for:</strong>
+
+                                        Experienced investors with a long
+                                        investment horizon.
+
+                                    </div>
+
+                                </label>
+
+                            </div>
+
+                        </div>
+                                                <!-- ===================================== -->
+                        <!-- STEP 2 -->
+                        <!-- ===================================== -->
+
+                        <div class="step d-none">
+
+                            <div class="text-center mb-4">
+
+                                <div class="display-5">
+                                    🎯
+                                </div>
+
+                                <h3 class="fw-bold">
+
+                                    What is your Primary Financial Goal?
+
+                                </h3>
+
+                                <p class="text-muted">
+
+                                    This helps us recommend where your savings
+                                    should be invested.
+
+                                </p>
+
+                            </div>
+
+                            <div class="form-check option-card mb-3">
+
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="financial_goal"
+                                    value="Wealth Creation"
+                                    id="goal1"
+                                    required>
+
+                                <label
+                                    class="form-check-label"
+                                    for="goal1">
+
+                                    <h5>📈 Wealth Creation</h5>
+
+                                    <p class="mb-0">
+
+                                        Grow your money over the long term by
+                                        investing in suitable assets.
+
+                                    </p>
+
+                                </label>
+
+                            </div>
+
+                            <div class="form-check option-card mb-3">
+
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="financial_goal"
+                                    value="Emergency Fund"
+                                    id="goal2">
+
+                                <label
+                                    class="form-check-label"
+                                    for="goal2">
+
+                                    <h5>🛡 Emergency Fund</h5>
+
+                                    <p class="mb-0">
+
+                                        Build savings for unexpected situations
+                                        like medical emergencies or job loss.
+
+                                    </p>
+
+                                </label>
+
+                            </div>
+
+                            <div class="form-check option-card mb-3">
+
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="financial_goal"
+                                    value="Retirement"
+                                    id="goal3">
+
+                                <label
+                                    class="form-check-label"
+                                    for="goal3">
+
+                                    <h5>🏖 Retirement</h5>
+
+                                    <p class="mb-0">
+
+                                        Build long-term wealth for a financially
+                                        secure retirement.
+
+                                    </p>
+
+                                </label>
+
+                            </div>
+
+                            <div class="form-check option-card mb-3">
+
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="financial_goal"
+                                    value="House Purchase"
+                                    id="goal4">
+
+                                <label
+                                    class="form-check-label"
+                                    for="goal4">
+
+                                    <h5>🏠 Buy a House</h5>
+
+                                    <p class="mb-0">
+
+                                        Save systematically towards purchasing
+                                        your dream home.
+
+                                    </p>
+
+                                </label>
+
+                            </div>
+
+                            <div class="form-check option-card">
+
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="financial_goal"
+                                    value="Car Purchase"
+                                    id="goal5">
+
+                                <label
+                                    class="form-check-label"
+                                    for="goal5">
+
+                                    <h5>🚗 Buy a Car</h5>
+
+                                    <p class="mb-0">
+
+                                        Plan your finances for your next vehicle.
+
+                                    </p>
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                        <!-- ===================================== -->
+                        <!-- STEP 3 -->
+                        <!-- ===================================== -->
+
+                        <div class="step d-none">
+
+                            <div class="text-center mb-4">
+
+                                <div class="display-5">
+                                    ⏳
+                                </div>
+
+                                <h3 class="fw-bold">
+
+                                    How Long Can You Stay Invested?
+
+                                </h3>
+
+                                <p class="text-muted">
+
+                                    Longer investment periods generally allow
+                                    investments more time to grow.
+
+                                </p>
+
+                            </div>
+
+                            <div class="form-check option-card mb-4">
+
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="investment_horizon"
+                                    value="1-3 Years"
+                                    id="year1"
+                                    required>
+
+                                <label
+                                    class="form-check-label"
+                                    for="year1">
+
+                                    <h5>1–3 Years</h5>
+
+                                    <p>
+
+                                        Suitable if you need your money soon.
+
+                                    </p>
+
+                                </label>
+
+                            </div>
+
+                            <div class="form-check option-card mb-4">
+
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="investment_horizon"
+                                    value="3-5 Years"
+                                    id="year2">
+
+                                <label
+                                    class="form-check-label"
+                                    for="year2">
+
+                                    <h5>3–5 Years</h5>
+
+                                    <p>
+
+                                        Balanced option for medium-term goals.
+
+                                    </p>
+
+                                </label>
+
+                            </div>
+
+                            <div class="form-check option-card">
+
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="investment_horizon"
+                                    value="5+ Years"
+                                    id="year3">
+
+                                <label
+                                    class="form-check-label"
+                                    for="year3">
+
+                                    <div class="d-flex justify-content-between">
+
+                                        <h5>
+
+                                            5+ Years
+
+                                        </h5>
+
+                                        <span class="badge bg-success">
+
+                                            Best for Wealth
+
+                                        </span>
+
+                                    </div>
+
+                                    <p>
+
+                                        Gives investments enough time to
+                                        generate higher long-term returns.
+
+                                    </p>
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                        <!-- ===================================== -->
+                        <!-- STEP 4 -->
+                        <!-- ===================================== -->
+
+                        <div class="step d-none">
+
+                            <div class="text-center mb-4">
+
+                                <div class="display-5">
+                                    💰
+                                </div>
+
+                                <h3 class="fw-bold">
+
+                                    Emergency Fund
+
+                                </h3>
+
+                                <p class="text-muted">
+
+                                    An emergency fund protects you from
+                                    unexpected financial situations.
+
+                                </p>
+
+                            </div>
+
+                            <div class="alert alert-primary">
+
+                                <strong>💡 Tip:</strong>
+
+                                Ideally keep savings equal to
+
+                                <strong>3–6 months</strong>
+
+                                of your monthly expenses.
+
+                            </div>
+
+                            <div class="form-check option-card mb-4">
+
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="emergency_fund"
+                                    value="yes"
+                                    id="fundYes"
+                                    required>
+
+                                <label
+                                    class="form-check-label"
+                                    for="fundYes">
+
+                                    <h5>✅ Yes</h5>
+
+                                    <p>
+
+                                        I already have an emergency fund.
+
+                                    </p>
+
+                                </label>
+
+                            </div>
+
+                            <div class="form-check option-card">
+
+                                <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="emergency_fund"
+                                    value="no"
+                                    id="fundNo">
+
+                                <label
+                                    class="form-check-label"
+                                    for="fundNo">
+
+                                    <h5>❌ No</h5>
+
+                                    <p>
+
+                                        I haven't built one yet.
+
+                                    </p>
+
+                                </label>
+
+                            </div>
+
+                        </div>
+                                                <!-- ===================================== -->
+                        <!-- STEP 5 -->
+                        <!-- ===================================== -->
+
+                        <div class="step d-none">
+
+                            <div class="text-center mb-4">
+
+                                <div class="display-5">
+                                    📂
+                                </div>
+
+                                <h3 class="fw-bold">
+
+                                    Existing Investments
+
+                                </h3>
+
+                                <p class="text-muted">
+
+                                    Select every investment you currently own.
+                                    This helps Finacle avoid recommending
+                                    duplicate allocations.
+
+                                </p>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+
+                                    <div class="form-check option-card mb-3">
+
+                                        <input
+                                            class="form-check-input"
+                                            type="checkbox"
+                                            name="investments"
+                                            value="sip"
+                                            id="sip">
+
+                                        <label
+                                            class="form-check-label"
+                                            for="sip">
+
+                                            <h5>📈 SIP</h5>
+
+                                            <small class="text-muted">
+
+                                                Monthly investment into Mutual
+                                                Funds.
+
+                                            </small>
+
+                                        </label>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <div class="form-check option-card mb-3">
+
+                                        <input
+                                            class="form-check-input"
+                                            type="checkbox"
+                                            name="investments"
+                                            value="stocks"
+                                            id="stocks">
+
+                                        <label
+                                            class="form-check-label"
+                                            for="stocks">
+
+                                            <h5>📊 Stocks</h5>
+
+                                            <small class="text-muted">
+
+                                                Direct investment in company
+                                                shares.
+
+                                            </small>
+
+                                        </label>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <div class="form-check option-card mb-3">
+
+                                        <input
+                                            class="form-check-input"
+                                            type="checkbox"
+                                            name="investments"
+                                            value="mutual_funds"
+                                            id="mf">
+
+                                        <label
+                                            class="form-check-label"
+                                            for="mf">
+
+                                            <h5>🏦 Mutual Funds</h5>
+
+                                            <small class="text-muted">
+
+                                                Professionally managed
+                                                investment funds.
+
+                                            </small>
+
+                                        </label>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <div class="form-check option-card mb-3">
+
+                                        <input
+                                            class="form-check-input"
+                                            type="checkbox"
+                                            name="investments"
+                                            value="gold"
+                                            id="gold">
+
+                                        <label
+                                            class="form-check-label"
+                                            for="gold">
+
+                                            <h5>🥇 Gold</h5>
+
+                                            <small class="text-muted">
+
+                                                Physical Gold or Gold ETFs.
+
+                                            </small>
+
+                                        </label>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <div class="form-check option-card mb-3">
+
+                                        <input
+                                            class="form-check-input"
+                                            type="checkbox"
+                                            name="investments"
+                                            value="ppf"
+                                            id="ppf">
+
+                                        <label
+                                            class="form-check-label"
+                                            for="ppf">
+
+                                            <h5>🏛 PPF</h5>
+
+                                            <small class="text-muted">
+
+                                                Government-backed long-term
+                                                savings scheme.
+
+                                            </small>
+
+                                        </label>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <div class="form-check option-card mb-3">
+
+                                        <input
+                                            class="form-check-input"
+                                            type="checkbox"
+                                            name="investments"
+                                            value="fd"
+                                            id="fd">
+
+                                        <label
+                                            class="form-check-label"
+                                            for="fd">
+
+                                            <h5>🏦 Fixed Deposit</h5>
+
+                                            <small class="text-muted">
+
+                                                Fixed return investment from
+                                                banks.
+
+                                            </small>
+
+                                        </label>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <div class="form-check option-card mb-3">
+
+                                        <input
+                                            class="form-check-input"
+                                            type="checkbox"
+                                            name="investments"
+                                            value="lic"
+                                            id="lic">
+
+                                        <label
+                                            class="form-check-label"
+                                            for="lic">
+
+                                            <h5>🛡 LIC</h5>
+
+                                            <small class="text-muted">
+
+                                                Insurance with savings or
+                                                investment benefits.
+
+                                            </small>
+
+                                        </label>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <div class="form-check option-card mb-3">
+
+                                        <input
+                                            class="form-check-input"
+                                            type="checkbox"
+                                            name="investments"
+                                            value="nps"
+                                            id="nps">
+
+                                        <label
+                                            class="form-check-label"
+                                            for="nps">
+
+                                            <h5>👴 NPS</h5>
+
+                                            <small class="text-muted">
+
+                                                National Pension System for
+                                                retirement planning.
+
+                                            </small>
+
+                                        </label>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="alert alert-info mt-4">
+
+                                <strong>💡 Why do we ask this?</strong>
+
+                                Finacle will recommend investments that
+                                complement your existing portfolio instead of
+                                suggesting the same products again.
+
+                            </div>
+
+                        </div>
+
+                        <!-- ===================================== -->
+                        <!-- Navigation -->
+                        <!-- ===================================== -->
+
+                        <div class="d-flex justify-content-between mt-5">
+
+                            <button
+                                type="button"
+                                class="btn btn-outline-secondary px-4"
+                                id="prevBtn">
+
+                                ← Previous
+
+                            </button>
+
+                            <button
+                                type="button"
+                                class="btn btn-primary px-4"
+                                id="nextBtn">
+
+                                Next →
+
+                            </button>
+
+                            <button
+                                type="submit"
+                                class="btn btn-success px-5 d-none"
+                                id="submitBtn">
+
+                                Save Profile 🚀
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script src="{{ url_for('static',
+filename='js/financial_profile.js') }}"></script>
+
+{% endblock %}

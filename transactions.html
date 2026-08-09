@@ -1,0 +1,590 @@
+{% extends "layouts/app.html" %}
+
+{% block title %}Transactions | Finacle{% endblock %}
+
+{% block extra_css %}
+<style>
+/* =========================================================
+   FINACLE — TRANSACTIONS PAGE
+   ========================================================= */
+
+.transactions-page {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 10px 0 60px;
+}
+
+/* ---------- Header ---------- */
+
+.transactions-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 25px;
+    margin-bottom: 28px;
+}
+
+.transactions-eyebrow {
+    margin-bottom: 7px;
+    color: var(--primary, #2563eb);
+    font-size: .78rem;
+    font-weight: 800;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+
+.transactions-header h1 {
+    margin: 0;
+    color: var(--text, #0f172a);
+    font-size: clamp(2rem, 3vw, 2.7rem);
+    font-weight: 800;
+    letter-spacing: -.035em;
+}
+
+.transactions-header p {
+    margin: 8px 0 0;
+    color: var(--text-muted, #64748b);
+    font-size: .98rem;
+}
+
+/* ---------- Add Button ---------- */
+
+.transaction-add-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    height: 46px;
+    padding: 0 20px;
+    border-radius: 11px;
+    background: var(--primary, #2563eb);
+    color: #fff;
+    text-decoration: none;
+    font-size: .9rem;
+    font-weight: 700;
+    box-shadow: 0 8px 20px rgba(37,99,235,.18);
+    transition: .2s ease;
+}
+
+.transaction-add-btn:hover {
+    color: #fff;
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+/* ---------- Flash ---------- */
+
+.transactions-alert {
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 12px;
+}
+
+/* ---------- Table Card ---------- */
+
+.transactions-table-card {
+    overflow: hidden;
+    border: 1px solid var(--border, #e2e8f0);
+    border-radius: 18px;
+    background: var(--card, #fff);
+    box-shadow: 0 12px 35px rgba(15,23,42,.05);
+}
+
+/* ---------- Table ---------- */
+
+.transactions-table {
+    width: 100%;
+    margin: 0;
+    border-collapse: collapse;
+    color: var(--text, #0f172a);
+}
+
+.transactions-table thead th {
+    height: 58px;
+    padding: 0 20px;
+    border-bottom: 1px solid var(--border, #e2e8f0);
+    background: var(--surface, #f8fafc);
+    color: var(--text-muted, #64748b);
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.transactions-table tbody td {
+    padding: 19px 20px;
+    border-bottom: 1px solid var(--border, #e2e8f0);
+    color: var(--text, #0f172a);
+    font-size: .87rem;
+    vertical-align: middle;
+}
+
+.transactions-table tbody tr {
+    transition: background .18s ease;
+}
+
+.transactions-table tbody tr:hover {
+    background: rgba(37,99,235,.025);
+}
+
+.transactions-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ---------- Date ---------- */
+
+.transaction-date {
+    color: var(--text-muted, #64748b) !important;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Type ---------- */
+
+.transaction-type {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 11px;
+    border-radius: 999px;
+    font-size: .75rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.transaction-type.expense {
+    background: rgba(239,68,68,.09);
+    color: #dc2626;
+}
+
+.transaction-type.income {
+    background: rgba(22,163,74,.10);
+    color: #15803d;
+}
+
+/* ---------- Title ---------- */
+
+.transaction-title {
+    font-weight: 700;
+    color: var(--text, #0f172a) !important;
+}
+
+/* ---------- Category ---------- */
+
+.transaction-category {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 9px;
+    background: var(--surface, #f1f5f9);
+    color: var(--text-muted, #64748b);
+    font-size: .73rem;
+    font-weight: 650;
+}
+
+/* ---------- Amount ---------- */
+
+.transaction-amount {
+    font-weight: 750;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.transaction-amount.expense {
+    color: #dc2626;
+}
+
+.transaction-amount.income {
+    color: #15803d;
+}
+
+/* ---------- Payment ---------- */
+
+.transaction-payment {
+    color: var(--text-muted, #64748b) !important;
+    white-space: nowrap;
+}
+
+/* ---------- Actions ---------- */
+
+.transaction-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.transaction-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 36px;
+    padding: 0 11px;
+    border-radius: 9px;
+    text-decoration: none;
+    font-size: .75rem;
+    font-weight: 700;
+    transition: .2s ease;
+}
+
+.transaction-edit {
+    border: 1px solid rgba(37,99,235,.20);
+    background: rgba(37,99,235,.07);
+    color: #2563eb;
+}
+
+.transaction-edit:hover {
+    background: #2563eb;
+    color: #fff;
+}
+
+.transaction-delete {
+    border: 1px solid rgba(239,68,68,.20);
+    background: rgba(239,68,68,.07);
+    color: #dc2626;
+}
+
+.transaction-delete:hover {
+    background: #dc2626;
+    color: #fff;
+}
+
+/* ---------- Empty State ---------- */
+
+.transaction-empty {
+    padding: 65px 20px !important;
+    text-align: center;
+}
+
+.transaction-empty-icon {
+    width: 52px;
+    height: 52px;
+    margin: 0 auto 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: rgba(37,99,235,.09);
+    color: #2563eb;
+    font-size: 1.2rem;
+}
+
+.transaction-empty strong {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--text, #0f172a);
+    font-size: .95rem;
+}
+
+.transaction-empty span {
+    color: var(--text-muted, #64748b);
+    font-size: .82rem;
+}
+
+/* =========================================================
+   DARK MODE
+   ========================================================= */
+
+body.dark-mode .transactions-table-card {
+    background: var(--card, #111827);
+    border-color: var(--border, #263247);
+    box-shadow: none;
+}
+
+body.dark-mode .transactions-table thead th {
+    background: rgba(255,255,255,.025);
+    border-color: var(--border, #263247);
+    color: #94a3b8;
+}
+
+body.dark-mode .transactions-table tbody td {
+    border-color: var(--border, #263247);
+    color: #f8fafc;
+}
+
+body.dark-mode .transactions-table tbody tr:hover {
+    background: rgba(37,99,235,.055);
+}
+
+body.dark-mode .transaction-category {
+    background: rgba(255,255,255,.055);
+    color: #94a3b8;
+}
+
+body.dark-mode .transaction-date,
+body.dark-mode .transaction-payment {
+    color: #94a3b8 !important;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 1050px) {
+
+    .transactions-table-card {
+        overflow-x: auto;
+    }
+
+    .transactions-table {
+        min-width: 1050px;
+    }
+
+}
+
+@media (max-width: 650px) {
+
+    .transactions-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .transaction-add-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+}
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="transactions-page">
+
+    <!-- HEADER -->
+
+    <div class="transactions-header">
+
+        <div>
+
+            <div class="transactions-eyebrow">
+                Financial Activity
+            </div>
+
+            <h1>
+                Transactions
+            </h1>
+
+            <p>
+                View and manage your income and expenses in one place.
+            </p>
+
+        </div>
+
+        <a
+            href="{{ url_for('transactions.add_transaction') }}"
+            class="transaction-add-btn">
+
+            <i class="bi bi-plus-lg"></i>
+
+            Add Transaction
+
+        </a>
+
+    </div>
+
+
+    <!-- FLASH MESSAGES -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div class="alert alert-{{ category }} transactions-alert">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <!-- TRANSACTIONS TABLE -->
+
+    <div class="transactions-table-card">
+
+        <div class="table-responsive">
+
+            <table class="transactions-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th>Payment</th>
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for transaction in transactions %}
+
+                    <tr>
+
+                        <!-- DATE -->
+
+                        <td class="transaction-date">
+                            {{ transaction.date }}
+                        </td>
+
+
+                        <!-- TYPE -->
+
+                        <td>
+
+                            {% if transaction.type == "Income" %}
+
+                                <span class="transaction-type income">
+
+                                    <i class="bi bi-arrow-down-left"></i>
+
+                                    Income
+
+                                </span>
+
+                            {% else %}
+
+                                <span class="transaction-type expense">
+
+                                    <i class="bi bi-arrow-up-right"></i>
+
+                                    Expense
+
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- TITLE -->
+
+                        <td class="transaction-title">
+                            {{ transaction.title }}
+                        </td>
+
+
+                        <!-- CATEGORY -->
+
+                        <td>
+
+                            <span class="transaction-category">
+                                {{ transaction.category }}
+                            </span>
+
+                        </td>
+
+
+                        <!-- AMOUNT -->
+
+                        <td>
+
+                            {% if transaction.type == "Income" %}
+
+                                <span class="transaction-amount income">
+                                    + ₹ {{ "%.2f"|format(transaction.amount) }}
+                                </span>
+
+                            {% else %}
+
+                                <span class="transaction-amount expense">
+                                    − ₹ {{ "%.2f"|format(transaction.amount) }}
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- PAYMENT -->
+
+                        <td class="transaction-payment">
+                            {{ transaction.payment_method }}
+                        </td>
+
+
+                        <!-- ACTIONS -->
+
+                        <td>
+
+                            <div class="transaction-actions">
+
+                                <a
+                                    href="{{ url_for('transactions.edit_transaction', id=transaction.id) }}"
+                                    class="transaction-action transaction-edit">
+
+                                    <i class="bi bi-pencil"></i>
+
+                                    Edit
+
+                                </a>
+
+                                <a
+                                    href="{{ url_for('transactions.delete_transaction', id=transaction.id) }}"
+                                    class="transaction-action transaction-delete"
+                                    onclick="return confirm('Delete this transaction?')">
+
+                                    <i class="bi bi-trash3"></i>
+
+                                    Delete
+
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+
+                        <td
+                            colspan="7"
+                            class="transaction-empty">
+
+                            <div class="transaction-empty-icon">
+
+                                <i class="bi bi-receipt"></i>
+
+                            </div>
+
+                            <strong>
+                                No transactions yet
+                            </strong>
+
+                            <span>
+                                Add your first transaction to start tracking your finances.
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

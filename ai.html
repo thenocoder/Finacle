@@ -1,0 +1,824 @@
+{% extends "layouts/app.html" %}
+
+{% block title %}AI Financial Insights | Finacle{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/ai.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- ==========================================
+                    PAGE HEADER
+    =========================================== -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+                <i class="bi bi-robot text-primary"></i>
+                AI Financial Insights
+            </h2>
+
+            <p class="text-muted mb-0">
+                Smart analysis of your financial data powered by Finacle AI
+            </p>
+
+        </div>
+
+        <div>
+
+            <button class="btn btn-primary"
+                    id="refreshAI">
+
+                <i class="bi bi-arrow-repeat"></i>
+
+                Refresh Analysis
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- ==========================================
+                FINANCIAL HEALTH SCORE
+    =========================================== -->
+
+    <div class="row mb-4">
+
+        <div class="col-lg-4">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body text-center">
+
+                    <h6 class="text-muted">
+                        Financial Health Score
+                    </h6>
+
+                    <div class="display-2 fw-bold text-{{ ai.health.color }}">
+                        {{ ai.health.score }}
+                    </div>
+
+                    <span class="badge bg-{{ ai.health.color }}">
+                        {{ ai.health.status }}
+                    </span>
+
+                    <hr>
+
+                    <small class="text-muted">
+                        Based on income,
+                        expenses,
+                        savings,
+                        and spending behaviour.
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-8">
+
+            <div class="row g-3">
+
+                <!-- Income -->
+
+                <div class="col-md-6">
+
+                    <div class="card stat-card income-card">
+
+                        <div class="card-body">
+
+                            <small class="text-muted">
+                                Total Income
+                            </small>
+
+                            <h3 class="mt-2 text-success">
+
+                                ₹{{ "{:,.2f}".format(ai.summary.income) }}
+
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Expense -->
+
+                <div class="col-md-6">
+
+                    <div class="card stat-card expense-card">
+
+                        <div class="card-body">
+
+                            <small class="text-muted">
+                                Total Expense
+                            </small>
+
+                            <h3 class="mt-2 text-danger">
+
+                                ₹{{ "{:,.2f}".format(ai.summary.expense) }}
+
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Balance -->
+
+                <div class="col-md-6">
+
+                    <div class="card stat-card balance-card">
+
+                        <div class="card-body">
+
+                            <small class="text-muted">
+                                Net Balance
+                            </small>
+
+                            <h3 class="mt-2 text-primary">
+
+                                ₹{{ "{:,.2f}".format(ai.summary.balance) }}
+
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Savings -->
+
+                <div class="col-md-6">
+
+                    <div class="card stat-card savings-card">
+
+                        <div class="card-body">
+
+                            <small class="text-muted">
+                                Savings Rate
+                            </small>
+
+                            <h3 class="mt-2">
+
+                                {{ ai.summary.savings_rate }}%
+
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ==========================================
+                  QUICK OVERVIEW
+    =========================================== -->
+
+    <div class="row g-4">
+
+        <!-- Top Category -->
+
+        <div class="col-lg-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h5 class="mb-3">
+
+                        <i class="bi bi-pie-chart-fill text-primary"></i>
+
+                        Top Spending Category
+
+                    </h5>
+
+                    {% if ai.top_category %}
+
+                    <h3 class="fw-bold">
+
+                        {{ ai.top_category.category }}
+
+                    </h3>
+
+                    <h5 class="text-danger">
+
+                        ₹{{ "{:,.2f}".format(ai.top_category.amount) }}
+
+                    </h5>
+
+                    {% else %}
+
+                    <p class="text-muted">
+
+                        No expense data available.
+
+                    </p>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Largest Expense -->
+
+        <div class="col-lg-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h5 class="mb-3">
+
+                        <i class="bi bi-wallet2 text-danger"></i>
+
+                        Largest Expense
+
+                    </h5>
+
+                    {% if ai.largest_expense %}
+
+                    <h4>
+
+                        {{ ai.largest_expense.title }}
+
+                    </h4>
+
+                    <p class="mb-1">
+
+                        {{ ai.largest_expense.category }}
+
+                    </p>
+
+                    <h5 class="text-danger">
+
+                        ₹{{ "{:,.2f}".format(ai.largest_expense.amount) }}
+
+                    </h5>
+
+                    {% else %}
+
+                    <p class="text-muted">
+
+                        No expense recorded.
+
+                    </p>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Prediction -->
+
+        <div class="col-lg-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h5 class="mb-3">
+
+                        <i class="bi bi-graph-up-arrow text-success"></i>
+
+                        Next Month Prediction
+
+                    </h5>
+
+                    <h3 class="text-success">
+
+                        ₹{{ "{:,.2f}".format(ai.prediction) }}
+
+                    </h3>
+
+                    <p class="text-muted">
+
+                        Estimated monthly expense
+
+                    </p>
+
+                    <span class="badge bg-info">
+
+                        {{ ai.trend.trend }}
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- ==========================================
+                    CHARTS SECTION
+    =========================================== -->
+
+    <div class="row mt-4">
+
+        <!-- Income vs Expense -->
+
+        <div class="col-xl-6 mb-4">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-header bg-white border-0">
+
+                    <h5 class="mb-0">
+                        <i class="bi bi-bar-chart-fill text-primary"></i>
+                        Income vs Expense
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <canvas id="incomeExpenseChart"
+                            height="300"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Monthly Cash Flow -->
+
+        <div class="col-xl-6 mb-4">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-header bg-white border-0">
+
+                    <h5 class="mb-0">
+                        <i class="bi bi-graph-up-arrow text-success"></i>
+                        Monthly Cash Flow
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <canvas id="cashFlowChart"
+                            height="300"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ==========================================
+                CATEGORY & PAYMENT
+    =========================================== -->
+
+    <div class="row">
+
+        <!-- Category Chart -->
+
+        <div class="col-lg-6 mb-4">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-header bg-white border-0">
+
+                    <h5 class="mb-0">
+
+                        <i class="bi bi-pie-chart-fill text-warning"></i>
+
+                        Expense Categories
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <canvas id="categoryChart"
+                            height="300"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Payment Methods -->
+
+        <div class="col-lg-6 mb-4">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-header bg-white border-0">
+
+                    <h5 class="mb-0">
+
+                        <i class="bi bi-credit-card-fill text-info"></i>
+
+                        Payment Methods
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <canvas id="paymentChart"
+                            height="300"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ==========================================
+                MONTHLY ANALYTICS
+    =========================================== -->
+
+    <div class="row">
+
+        <div class="col-12">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-header bg-white border-0">
+
+                    <h5 class="mb-0">
+
+                        <i class="bi bi-calendar3 text-primary"></i>
+
+                        Monthly Financial Summary
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+
+                        <table class="table table-hover align-middle">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>Month</th>
+
+                                    <th class="text-success">
+                                        Income
+                                    </th>
+
+                                    <th class="text-danger">
+                                        Expense
+                                    </th>
+
+                                    <th class="text-primary">
+                                        Balance
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                {% for month in ai.cashflow %}
+
+                                <tr>
+
+                                    <td>
+
+                                        {{ month.month }}
+
+                                    </td>
+
+                                    <td class="text-success fw-semibold">
+
+                                        ₹{{ "{:,.2f}".format(month.income) }}
+
+                                    </td>
+
+                                    <td class="text-danger fw-semibold">
+
+                                        ₹{{ "{:,.2f}".format(month.expense) }}
+
+                                    </td>
+
+                                    <td class="fw-bold">
+
+                                        ₹{{ "{:,.2f}".format(month.balance) }}
+
+                                    </td>
+
+                                </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+        <!-- ==========================================
+                    AI INSIGHTS
+    =========================================== -->
+
+    <div class="row mt-4">
+
+        <div class="col-lg-6">
+
+            <div class="card shadow-sm border-0 mb-4">
+
+                <div class="card-header bg-white">
+
+                    <h5 class="mb-0">
+                        <i class="bi bi-lightbulb-fill text-warning"></i>
+                        Smart AI Insights
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    {% if ai.insights %}
+
+                        {% for insight in ai.insights %}
+
+                        <div class="alert alert-{{ insight.type }} mb-3">
+
+                            <h6 class="fw-bold mb-1">
+
+                                {{ insight.title }}
+
+                            </h6>
+
+                            <p class="mb-0">
+
+                                {{ insight.message }}
+
+                            </p>
+
+                        </div>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <div class="text-center py-4">
+
+                            <i class="bi bi-info-circle display-5 text-muted"></i>
+
+                            <p class="mt-3 text-muted">
+
+                                No insights available.
+
+                            </p>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ==========================================
+                AI RECOMMENDATIONS
+        =========================================== -->
+
+        <div class="col-lg-6">
+
+            <div class="card shadow-sm border-0 mb-4">
+
+                <div class="card-header bg-white">
+
+                    <h5 class="mb-0">
+
+                        <i class="bi bi-stars text-primary"></i>
+
+                        AI Recommendations
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    {% if ai.recommendations %}
+
+                    <ul class="list-group list-group-flush">
+
+                        {% for item in ai.recommendations %}
+
+                        <li class="list-group-item">
+
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+
+                            {{ item }}
+
+                        </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                    {% else %}
+
+                    <p class="text-muted">
+
+                        No recommendations available.
+
+                    </p>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ==========================================
+                AI HISTORY
+    =========================================== -->
+
+    <div class="row">
+
+        <div class="col-12">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+
+                    <h5 class="mb-0">
+
+                        <i class="bi bi-clock-history text-secondary"></i>
+
+                        AI Analysis History
+
+                    </h5>
+
+                    <button
+                        id="generateAI"
+                        class="btn btn-primary">
+
+                        <i class="bi bi-robot"></i>
+
+                        Generate AI Analysis
+
+                    </button>
+
+                </div>
+
+                <div class="card-body">
+
+                    {% if ai.history %}
+
+                    <div class="table-responsive">
+
+                        <table class="table table-hover align-middle">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>Date</th>
+
+                                    <th>Analysis Type</th>
+
+                                    <th>Prompt</th>
+
+                                    <th>Response</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                {% for history in ai.history %}
+
+                                <tr>
+
+                                    <td>
+
+                                        {{ history.created_at.strftime('%d %b %Y %I:%M %p') }}
+
+                                    </td>
+
+                                    <td>
+
+                                        {{ history.analysis_type }}
+
+                                    </td>
+
+                                    <td>
+
+                                        {{ history.prompt }}
+
+                                    </td>
+
+                                    <td>
+
+                                        {{ history.response[:100] }}...
+
+                                    </td>
+
+                                </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    {% else %}
+
+                    <div class="text-center py-5">
+
+                        <i class="bi bi-clock-history display-4 text-muted"></i>
+
+                        <h5 class="mt-3">
+
+                            No AI History
+
+                        </h5>
+
+                        <p class="text-muted">
+
+                            Click the button above to generate your first AI financial analysis.
+
+                        </p>
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script>
+
+const dashboardData = {{ ai|tojson }};
+
+</script>
+
+<script src="{{ url_for('static', filename='js/ai.js') }}"></script>
+
+{% endblock %}

@@ -1,0 +1,592 @@
+{% extends "layouts/app.html" %}
+
+{% block title %}Finacle AI Assistant{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/ai.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<!-- =========================================================
+                        PREMIUM AI HERO
+========================================================= -->
+
+<section class="ai-hero mb-4">
+
+    <div class="hero-glow"></div>
+
+    <div class="row align-items-center">
+
+        <!-- LEFT -->
+
+        <div class="col-lg-8">
+
+            <div class="hero-content">
+
+                <span class="ai-badge">
+
+                    <i class="bi bi-stars"></i>
+
+                    Powered by Google Gemini AI
+
+                </span>
+
+                <h1 class="hero-title">
+
+                    Finacle AI Financial Assistant
+
+                </h1>
+
+                <p class="hero-subtitle">
+
+                    Your intelligent financial companion that understands
+                    your income, expenses, savings, payment behaviour,
+                    financial trends and spending habits to deliver
+                    personalized recommendations in real time.
+
+                </p>
+
+                <div class="hero-features">
+
+                    <span>
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                        Smart Analysis
+
+                    </span>
+
+                    <span>
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                        Expense Prediction
+
+                    </span>
+
+                    <span>
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                        AI Recommendations
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT -->
+
+        <div class="col-lg-4">
+
+            <div class="hero-panel">
+
+                <div class="hero-status">
+
+                    <span class="status-dot"></span>
+
+                    Gemini AI Online
+
+                </div>
+
+                <div class="hero-model">
+
+                    <small>
+
+                        Current Model
+
+                    </small>
+
+                    <h4>
+
+                        Gemini 2.5
+
+                    </h4>
+
+                </div>
+
+                <button
+
+                    class="btn hero-refresh-btn"
+
+                    id="refreshDashboard">
+
+                    <i class="bi bi-arrow-repeat"></i>
+
+                    Refresh Analysis
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+                    PREMIUM CHAT
+====================================================== -->
+
+<div class="chat-card">
+
+    <!-- Header -->
+
+    <div class="chat-header">
+
+        <div class="chat-title">
+
+            <div class="assistant-avatar">
+
+                <i class="bi bi-stars"></i>
+
+            </div>
+
+            <div>
+
+                <h4>
+
+                    Finacle AI
+
+                </h4>
+
+                <small>
+
+                    Google Gemini Financial Assistant
+
+                </small>
+
+            </div>
+
+        </div>
+
+        <div class="chat-status">
+
+            <span class="status-dot"></span>
+
+            Online
+
+        </div>
+
+    </div>
+
+    <!-- Chat Messages -->
+
+    <div
+        class="chat-body"
+        id="chatBody">
+
+        <div class="message assistant">
+
+            <div class="assistant-avatar">
+
+                <i class="bi bi-robot"></i>
+
+            </div>
+
+            <div class="message-content">
+
+                <h5>
+
+                    Welcome back 👋
+
+                </h5>
+
+                <p>
+
+                    I'm your AI Financial Assistant.
+
+                </p>
+
+                <p>
+
+                    I already understand your income,
+                    expenses, savings,
+                    transaction history,
+                    financial trends,
+                    payment methods and monthly analytics.
+
+                </p>
+
+                <div class="welcome-grid">
+
+                    <div class="welcome-item">
+
+                        📊 Analyze my finances
+
+                    </div>
+
+                    <div class="welcome-item">
+
+                        💰 Increase my savings
+
+                    </div>
+
+                    <div class="welcome-item">
+
+                        📈 Predict next month
+
+                    </div>
+
+                    <div class="welcome-item">
+
+                        💳 Spending habits
+
+                    </div>
+
+                    <div class="welcome-item">
+
+                        📅 Monthly budget
+
+                    </div>
+
+                    <div class="welcome-item">
+
+                        ❤️ Financial health
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Typing -->
+
+    <div
+        class="typing-indicator d-none"
+        id="typingIndicator">
+
+        <div class="assistant-avatar">
+
+            <i class="bi bi-stars"></i>
+
+        </div>
+
+        <div class="typing-dots">
+
+            <span></span>
+
+            <span></span>
+
+            <span></span>
+
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+
+    <div class="chat-footer">
+
+        <div class="chat-input">
+
+            <input
+
+                id="userMessage"
+
+                type="text"
+
+                class="form-control"
+
+                placeholder="Ask Finacle AI anything about your finances..."
+
+                autocomplete="off"
+
+            >
+
+            <button
+
+                id="sendMessage"
+
+                class="send-btn">
+
+                <i class="bi bi-send-fill"></i>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =========================================================
+                    AI OVERVIEW
+========================================================= -->
+
+<section class="ai-dashboard-grid">
+
+    <div class="ai-stat-card">
+
+        <div class="stat-icon blue">
+
+            <i class="bi bi-heart-pulse-fill"></i>
+
+        </div>
+
+        <div class="stat-content">
+
+            <span>
+
+                Financial Health
+
+            </span>
+
+            <h3>
+
+                {{ ai.summary.health_score }}/100
+
+            </h3>
+
+            <small class="text-{{ ai.summary.health_color }}">
+
+                {{ ai.summary.health_status }}
+
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div class="ai-stat-card">
+
+        <div class="stat-icon green">
+
+            <i class="bi bi-wallet2"></i>
+
+        </div>
+
+        <div class="stat-content">
+
+            <span>
+
+                Net Balance
+
+            </span>
+
+            <h3>
+
+                ₹ {{ "{:,.2f}".format(ai.summary.balance) }}
+
+            </h3>
+
+            <small>
+
+                Current Available Funds
+
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div class="ai-stat-card">
+
+        <div class="stat-icon orange">
+
+            <i class="bi bi-piggy-bank-fill"></i>
+
+        </div>
+
+        <div class="stat-content">
+
+            <span>
+
+                Savings Rate
+
+            </span>
+
+            <h3>
+
+                {{ ai.summary.savings_rate }}%
+
+            </h3>
+
+            <small>
+
+                Financial Discipline
+
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div class="ai-stat-card">
+
+        <div class="stat-icon red">
+
+            <i class="bi bi-graph-down-arrow"></i>
+
+        </div>
+
+        <div class="stat-content">
+
+            <span>
+
+                Next Month Prediction
+
+            </span>
+
+            <h3>
+
+                ₹ {{ "{:,.0f}".format(ai.prediction.predicted_expense) }}
+
+            </h3>
+
+            <small>
+
+                AI Forecast
+
+            </small>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================================================
+                    AI INSIGHTS
+========================================================= -->
+
+<section class="ai-insights-section">
+
+    <div class="row g-4">
+
+        <!-- Smart Insights -->
+
+        <div class="col-lg-6">
+
+            <div class="insight-card">
+
+                <div class="card-heading">
+
+                    <div class="heading-icon blue">
+
+                        <i class="bi bi-lightbulb-fill"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h4>
+
+                            Smart Insights
+
+                        </h4>
+
+                        <small>
+
+                            Generated from your financial activity
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <div class="insight-list">
+
+                    {% for item in ai.insights %}
+
+                    <div class="insight-item">
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                        <span>
+
+                            {{ item }}
+
+                        </span>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Recommendations -->
+
+        <div class="col-lg-6">
+
+            <div class="recommendation-card">
+
+                <div class="card-heading">
+
+                    <div class="heading-icon green">
+
+                        <i class="bi bi-robot"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h4>
+
+                            AI Recommendations
+
+                        </h4>
+
+                        <small>
+
+                            Personalized suggestions
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <div class="recommendation-list">
+
+                    {% for item in ai.recommendations %}
+
+                    <div class="recommendation-item">
+
+                        <i class="bi bi-arrow-right-circle-fill"></i>
+
+                        <span>
+
+                            {{ item }}
+
+                        </span>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+{% block extra_js %}
+
+<script src="{{ url_for('static', filename='js/ai.js') }}"></script>
+
+{% endblock %}
+
+{% endblock %} 

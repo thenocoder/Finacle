@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- ==========================================
+                    META TAGS
+    =========================================== -->
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="X-UA-Compatible"
+          content="IE=edge">
+
+    <meta name="description"
+          content="Finacle - AI Powered Personal Finance Management System">
+
+    <meta name="theme-color"
+          content="#2563eb">
+
+    <meta name="author"
+          content="Finacle">
+
+    <meta name="robots"
+          content="index,follow">
+
+    <title>
+
+        {% block title %}
+        Finacle
+        {% endblock %}
+
+    </title>
+
+    <!-- ==========================================
+                    FAVICON
+    =========================================== -->
+
+    <link rel="icon"
+          type="image/png"
+          href="{{ url_for('static', filename='images/favicon.png') }}">
+
+    <!-- ==========================================
+                  GOOGLE FONT
+    =========================================== -->
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <!-- ==========================================
+                 BOOTSTRAP CSS
+    =========================================== -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- ==========================================
+                 BOOTSTRAP ICONS
+    =========================================== -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+          rel="stylesheet">
+
+    <!-- ==========================================
+                 FONT AWESOME
+    =========================================== -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <!-- ==========================================
+                    MAIN CSS
+    =========================================== -->
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+
+    <!-- ==========================================
+                  PAGE CSS
+    =========================================== -->
+
+    {% block extra_css %}
+    {% endblock %}
+
+    <!-- Dashboard override CSS loads LAST so it wins over dashboard.css -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/dashboard_fix.css') }}">
+
+    {% block head %}
+    {% endblock %}
+
+</head>
+
+<body>
+
+<!-- ==========================================
+                APPLICATION
+\=========================================== -->
+
+<div class="app-layout">
+
+    <!-- Sidebar -->
+
+    {% include "partials/sidebar.html" %}
+
+    <!-- Main Content -->
+
+    <main class="main-content">
+
+        <!-- Topbar -->
+
+        {% include "partials/topbar.html" %}
+
+        <!-- Page Content -->
+
+        <div class="content-wrapper">
+
+            {% include "partials/flash.html" %}
+
+            {% block content %}
+            {% endblock %}
+
+        </div>
+
+    </main>
+
+</div>
+
+<!-- ==========================================
+            PAGE LOADER
+\=========================================== -->
+
+<div id="pageLoader"
+     class="page-loader d-none">
+
+    <div class="spinner-border text-primary"
+         role="status">
+
+        <span class="visually-hidden">
+
+            Loading...
+
+        </span>
+
+    </div>
+
+</div>
+
+<!-- ==========================================
+           BACK TO TOP BUTTON
+\=========================================== -->
+
+<button id="backToTop"
+        class="btn btn-primary rounded-circle shadow"
+
+        style="display\:none;
+               position\:fixed;
+               bottom:25px;
+               right:25px;
+               width:50px;
+               height:50px;
+               z-index:999;">
+
+    <i class="bi bi-arrow-up"></i>
+
+</button>
+
+<!-- ==========================================
+             BOOTSTRAP JS
+\=========================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- ==========================================
+                CHART JS
+\=========================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- ==========================================
+          MARKDOWN RENDERER
+\=========================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<!-- ==========================================
+            COMMON JAVASCRIPT
+\=========================================== -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    // Auto close flash messages
+const flashMessages =
+    document.querySelectorAll(".flash-message");
+
+flashMessages.forEach(function(alert){
+    setTimeout(function(){
+        bootstrap.Alert
+            .getOrCreateInstance(alert)
+            .close();
+    },5000);
+});
+    // Back to top
+
+    const backToTop =
+        document.getElementById("backToTop");
+
+    window\.addEventListener("scroll",function(){
+
+        if(window\.scrollY>250){
+
+            backToTop.style.display="block";
+
+        }
+
+        else{
+
+            backToTop.style.display="none";
+
+        }
+
+    });
+
+    backToTop.addEventListener("click",function(){
+
+        window\.scrollTo({
+
+            top:0,
+
+            behavior:"smooth"
+
+        });
+
+    });
+
+});
+
+window\.addEventListener("beforeunload",function(){
+
+    const loader =
+        document.getElementById("pageLoader");
+
+    if(loader){
+
+        loader.classList.remove("d-none");
+
+    }
+
+});
+
+window\.addEventListener("pageshow",function(){
+
+    const loader =
+        document.getElementById("pageLoader");
+
+    if(loader){
+
+        loader.classList.add("d-none");
+
+    }
+
+});
+
+</script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    const btn = document.getElementById("notificationBtn");
+
+    const menu = document.getElementById("notificationDropdown");
+
+    if(btn && menu){
+
+        btn.addEventListener("click", function(e){
+
+            e.stopPropagation();
+
+            menu.classList.toggle("show");
+
+        });
+
+        document.addEventListener("click", function(){
+
+            menu.classList.remove("show");
+
+        });
+
+    }
+
+});
+
+</script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    const toggle = document.getElementById("themeToggle");
+
+    const icon = document.getElementById("themeIcon");
+
+    const savedTheme = localStorage.getItem("theme");
+
+    if(savedTheme === "dark"){
+
+        document.body.classList.add("dark-mode");
+
+        if(icon){
+
+            icon.className = "bi bi-sun-fill";
+
+        }
+
+    }
+
+    if(toggle){
+
+        toggle.addEventListener("click", function(){
+
+            document.body.classList.toggle("dark-mode");
+
+            const isDark = document.body.classList.contains("dark-mode");
+
+            if(isDark){
+
+                icon.className = "bi bi-sun-fill";
+
+                localStorage.setItem("theme","dark");
+
+            }else{
+
+                icon.className = "bi bi-moon-fill";
+
+                localStorage.setItem("theme","light");
+
+            }
+
+        });
+
+    }
+
+});
+
+</script>
+
+<script>
+
+/* ==========================================================
+                    FINACLE GLOBAL SEARCH
+\========================================================== */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const searchInput =
+        document.getElementById("dashboardSearch");
+
+    const searchResults =
+        document.getElementById("searchResults");
+
+
+    /* ------------------------------------------------------
+                        SAFETY CHECK
+    ------------------------------------------------------ */
+
+    if (!searchInput || !searchResults) {
+        return;
+    }
+
+
+    /* ======================================================
+                        SEARCH INDEX
+       All routes below are based on your actual blueprints.
+    ====================================================== */
+
+    const searchIndex = [
+
+        /* ==================================================
+                            WORKSPACE
+        ================================================== */
+
+        {
+            title: "Dashboard",
+            description: "Financial overview, balance and spending activity",
+            category: "Workspace",
+            keywords: "dashboard overview home balance income expense",
+            icon: "bi-grid-1x2-fill",
+            url: "{{ url_for('dashboard.dashboard') }}"
+        },
+
+        {
+            title: "Transactions",
+            description: "View and manage your financial activity",
+            category: "Workspace",
+            keywords: "transactions activity income expense history",
+            icon: "bi-arrow-left-right",
+            url: "{{ url_for('transactions.transactions') }}"
+        },
+
+        {
+            title: "Add Transaction",
+            description: "Record a new income or expense",
+            category: "Actions",
+            keywords: "add transaction income expense create new",
+            icon: "bi-plus-circle-fill",
+            url: "{{ url_for('transactions.add_transaction') }}"
+        },
+
+        {
+            title: "Import Data",
+            description: "Import transactions from a CSV file",
+            category: "Actions",
+            keywords: "csv import upload data transactions file",
+            icon: "bi-cloud-arrow-up-fill",
+            url: "{{ url_for('csv.upload_csv') }}"
+        },
+
+
+        /* ==================================================
+                         AI INTELLIGENCE
+        ================================================== */
+
+        {
+            title: "Finacle AI",
+            description: "Get AI-powered insights about your finances",
+            category: "Intelligence",
+            keywords: "ai artificial intelligence assistant chat insights gemini",
+            icon: "bi-stars",
+            url: "{{ url_for('ai.assistant') }}"
+        },
+
+        {
+            title: "Financial DNA",
+            description: "Understand and manage your financial profile",
+            category: "Intelligence",
+            keywords: "financial dna profile risk goal investment preferences",
+            icon: "bi-person-badge-fill",
+            url: "{{ url_for('financial_profile.onboarding') }}"
+        },
+
+        {
+            title: "Smart Portfolio",
+            description: "Get personalized financial allocation recommendations",
+            category: "Intelligence",
+            keywords: "portfolio allocation investment sip stocks gold ppf fd",
+            icon: "bi-pie-chart-fill",
+            url: "{{ url_for('allocation.dashboard') }}"
+        },
+
+        {
+            title: "Expense Forecast",
+            description: "Predict your future expenses using your transaction history",
+            category: "Intelligence",
+            keywords: "expense prediction forecast future spending prediction",
+            icon: "bi-graph-up-arrow",
+            url: "{{ url_for('prediction.dashboard') }}"
+        },
+
+        {
+            title: "Financial Simulator",
+            description: "Explore future financial scenarios and growth",
+            category: "Intelligence",
+            keywords: "simulator future finance investment return growth scenario",
+            icon: "bi-cpu-fill",
+            url: "{{ url_for('simulator.dashboard') }}"
+        },
+
+
+        /* ==================================================
+                            INSIGHTS
+        ================================================== */
+
+        {
+            title: "Reports & Insights",
+            description: "Analyze your financial performance and trends",
+            category: "Insights",
+            keywords: "reports analytics insights pdf financial report",
+            icon: "bi-bar-chart-line-fill",
+            url: "{{ url_for('reports.dashboard') }}"
+        },
+
+        {
+            title: "Download Financial Report",
+            description: "Generate and download your financial report as PDF",
+            category: "Actions",
+            keywords: "download report pdf financial report generate",
+            icon: "bi-file-earmark-pdf-fill",
+            url: "{{ url_for('reports.generate_pdf') }}"
+        },
+
+
+        /* ==================================================
+                            SETTINGS
+        ================================================== */
+
+        {
+            title: "Settings",
+            description: "Manage your Finacle preferences",
+            category: "Settings",
+            keywords: "settings preferences configuration",
+            icon: "bi-sliders",
+            url: "{{ url_for('settings.settings') }}"
+        }
+
+    ];
+
+
+    /* ======================================================
+                         STATE
+    ====================================================== */
+
+    let activeIndex = -1;
+
+
+    /* ======================================================
+                       NORMALIZE TEXT
+    ====================================================== */
+
+    function normalize(text) {
+
+        return text
+            .toLowerCase()
+            .trim();
+
+    }
+
+
+    /* ======================================================
+                       SEARCH RESULTS
+    ====================================================== */
+
+    function performSearch(query) {
+
+        query = normalize(query);
+
+        activeIndex = -1;
+
+
+        /* Empty search */
+
+        if (!query) {
+
+            closeSearch();
+
+            return;
+
+        }
+
+
+        /* Search */
+
+        const matches =
+            searchIndex.filter(item => {
+
+                const searchableText = normalize(
+
+                    item.title + " " +
+                    item.description + " " +
+                    item.keywords + " " +
+                    item.category
+
+                );
+
+                return searchableText.includes(query);
+
+            });
+
+
+        renderResults(matches);
+
+    }
+
+
+    /* ======================================================
+                       RENDER RESULTS
+    ====================================================== */
+
+    function renderResults(matches) {
+
+        searchResults.innerHTML = "";
+
+
+        /* --------------------------------------------------
+                         NO RESULTS
+        -------------------------------------------------- */
+
+        if (!matches.length) {
+
+            searchResults.innerHTML = \`
+
+                <div class="search-empty">
+
+                    <i class="bi bi-search"></i>
+
+                    <strong>
+                        No results found
+                    </strong>
+
+                    <span>
+                        Try searching for a page or feature.
+                    </span>
+
+                </div>
+
+            \`;
+
+            openSearch();
+
+            return;
+
+        }
+
+
+        /* --------------------------------------------------
+                       GROUP RESULTS
+        -------------------------------------------------- */
+
+        const groups = {};
+
+
+        matches.forEach(item => {
+
+            if (!groups[item.category]) {
+
+                groups[item.category] = [];
+
+            }
+
+            groups[item.category].push(item);
+
+        });
+
+
+        /* --------------------------------------------------
+                       CREATE GROUPS
+        -------------------------------------------------- */
+
+        Object.entries(groups).forEach(
+            ([category, items]) => {
+
+                const group =
+                    document.createElement("div");
+
+                group.className =
+                    "search-result-group";
+
+
+                const label =
+                    document.createElement("span");
+
+                label.className =
+                    "search-result-label";
+
+                label.textContent =
+                    category;
+
+
+                group.appendChild(label);
+
+
+                /* ------------------------------------------
+                           CREATE RESULT ITEMS
+                ------------------------------------------ */
+
+                items.forEach(item => {
+
+                    const button =
+                        document.createElement("button");
+
+                    button.type = "button";
+
+                    button.className =
+                        "search-result-item";
+
+                    button.dataset.url =
+                        item.url;
+
+
+                    button.innerHTML = \`
+
+                        <span class="search-result-icon">
+
+                            <i class="bi ${item.icon}"></i>
+
+                        </span>
+
+
+                        <span class="search-result-content">
+
+                            <span class="search-result-title">
+                                ${item.title}
+                            </span>
+
+                            <span class="search-result-description">
+                                ${item.description}
+                            </span>
+
+                        </span>
+
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    \`;
+
+
+                    /* --------------------------------------
+                               CLICK RESULT
+                    -------------------------------------- */
+
+                    button.addEventListener(
+                        "click",
+                        function () {
+
+                            window\.location.href =
+                                item.url;
+
+                        }
+                    );
+
+
+                    group.appendChild(button);
+
+                });
+
+
+                searchResults.appendChild(group);
+
+            }
+        );
+
+
+        openSearch();
+
+    }
+
+
+    /* ======================================================
+                        OPEN SEARCH
+    ====================================================== */
+
+    function openSearch() {
+
+        searchResults.classList.add("show");
+
+        searchResults.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+    }
+
+
+    /* ======================================================
+                       CLOSE SEARCH
+    ====================================================== */
+
+    function closeSearch() {
+
+        searchResults.classList.remove("show");
+
+        searchResults.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        searchResults.innerHTML = "";
+
+        activeIndex = -1;
+
+    }
+
+
+    /* ======================================================
+                       INPUT EVENT
+    ====================================================== */
+
+    searchInput.addEventListener(
+        "input",
+        function () {
+
+            performSearch(
+                searchInput.value
+            );
+
+        }
+    );
+
+
+    /* ======================================================
+                     KEYBOARD NAVIGATION
+    ====================================================== */
+
+    searchInput.addEventListener(
+        "keydown",
+        function (event) {
+
+            const items =
+                searchResults.querySelectorAll(
+                    ".search-result-item"
+                );
+
+
+            /* No results */
+
+            if (!items.length) {
+                return;
+            }
+
+
+            /* ----------------------------------------------
+                         ARROW DOWN
+            ---------------------------------------------- */
+
+            if (event.key === "ArrowDown") {
+
+                event.preventDefault();
+
+                activeIndex++;
+
+                if (
+                    activeIndex >=
+                    items.length
+                ) {
+
+                    activeIndex = 0;
+
+                }
+
+            }
+
+
+            /* ----------------------------------------------
+                          ARROW UP
+            ---------------------------------------------- */
+
+            else if (
+                event.key === "ArrowUp"
+            ) {
+
+                event.preventDefault();
+
+                activeIndex--;
+
+                if (activeIndex < 0) {
+
+                    activeIndex =
+                        items.length - 1;
+
+                }
+
+            }
+
+
+            /* ----------------------------------------------
+                            ENTER
+            ---------------------------------------------- */
+
+            else if (
+                event.key === "Enter"
+            ) {
+
+                event.preventDefault();
+
+
+                if (
+                    activeIndex >= 0 &&
+                    items[activeIndex]
+                ) {
+
+                    window\.location.href =
+                        items[activeIndex]
+                            .dataset.url;
+
+                }
+
+                return;
+
+            }
+
+
+            /* ----------------------------------------------
+                       UPDATE ACTIVE ITEM
+            ---------------------------------------------- */
+
+            items.forEach(item => {
+
+                item.classList.remove(
+                    "active"
+                );
+
+            });
+
+
+            if (items[activeIndex]) {
+
+                items[activeIndex]
+                    .classList.add("active");
+
+
+                items[activeIndex]
+                    .scrollIntoView({
+                        block: "nearest"
+                    });
+
+            }
+
+        }
+    );
+
+
+    /* ======================================================
+                    CLICK OUTSIDE SEARCH
+    ====================================================== */
+
+    document.addEventListener(
+        "click",
+        function (event) {
+
+            if (
+                !event.target.closest(
+                    ".topbar-search-wrapper"
+                )
+            ) {
+
+                closeSearch();
+
+            }
+
+        }
+    );
+
+
+    /* ======================================================
+                         CTRL + K
+    ====================================================== */
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                event.ctrlKey &&
+                event.key.toLowerCase() === "k"
+            ) {
+
+                event.preventDefault();
+
+                searchInput.focus();
+
+                searchInput.select();
+
+            }
+
+        }
+    );
+
+
+    /* ======================================================
+                          ESCAPE
+    ====================================================== */
+
+    searchInput.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (event.key === "Escape") {
+
+                closeSearch();
+
+                searchInput.blur();
+
+            }
+
+        }
+    );
+
+});
+
+</script>
+<!-- ==========================================
+            PAGE SPECIFIC JS
+\=========================================== -->
+
+{% block extra_js %}
+{% endblock %}
+
+</body>
+
+</html>
