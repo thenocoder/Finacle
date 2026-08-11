@@ -1,0 +1,120 @@
+<header class="topbar">
+
+    <!-- ======================================================
+                         PAGE INFORMATION
+    ======================================================= -->
+
+    <div class="topbar-left">
+
+        <div class="page-header">
+
+            <span class="page-tag">
+                Dashboard
+            </span>
+
+            <h1>
+                Financial Overview
+            </h1>
+
+            <p>
+                Welcome back,
+                <strong>{{ current_user.name }}</strong>.
+                Here's what's happening with your finances today.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ======================================================
+                         TOPBAR ACTIONS
+    ======================================================= -->
+
+    <div class="topbar-right">
+
+
+        <!-- ==================================================
+                             SEARCH
+        =================================================== -->
+
+        <div class="topbar-search-wrapper">
+
+            <div class="topbar-search">
+
+                <i class="bi bi-search"></i>
+
+                <input
+                    id="dashboardSearch"
+                    type="search"
+                    placeholder="Search Finacle..."
+                    autocomplete="off"
+                    aria-label="Search Finacle"
+                >
+
+                <kbd>Ctrl K</kbd>
+
+            </div>
+
+
+            <!-- IMPORTANT:
+                 Only ONE searchResults element -->
+
+            <div
+                id="searchResults"
+                class="global-search-results"
+                aria-hidden="true">
+            </div>
+
+        </div>
+
+
+        <!-- ==================================================
+                             THEME
+        =================================================== -->
+
+        <button
+            class="topbar-btn"
+            id="themeToggle"
+            type="button"
+            aria-label="Toggle theme">
+
+            <i
+                class="bi bi-moon-fill"
+                id="themeIcon">
+            </i>
+
+        </button>
+
+
+        <!-- ==================================================
+                              USER
+        =================================================== -->
+
+        <div class="topbar-user">
+
+            <div class="topbar-avatar">
+
+                {{ current_user.name[0]|upper }}
+
+            </div>
+
+
+            <div class="topbar-user-info">
+
+                <h6>
+                    {{ current_user.name }}
+                </h6>
+
+                <span>
+                    Personal Workspace
+                </span>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</header>

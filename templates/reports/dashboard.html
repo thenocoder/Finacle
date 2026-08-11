@@ -1,0 +1,2069 @@
+{% extends "layouts/app.html" %}
+
+{% block title %}
+Financial Reports | Finacle
+{% endblock %}
+
+{% block extra_css %}
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/reports.css') }}">
+
+{% endblock %}
+
+{% block content %}
+
+<!-- ==========================================================
+                        REPORTS HERO
+========================================================== -->
+
+<section class="reports-hero">
+
+    <div class="reports-hero-left">
+
+        <span class="page-tag">
+            REPORTS
+        </span>
+
+        <h1>
+            Financial Reports
+        </h1>
+
+        <p>
+            Analyze your income, expenses, savings,
+            financial health, cash flow and spending
+            trends from one professional dashboard.
+        </p>
+
+    </div>
+
+   <div class="reports-hero-right">
+
+    <a
+        href="{{ url_for('reports.generate_pdf') }}"
+        class="reports-download-btn"
+    >
+        <i class="bi bi-file-earmark-pdf-fill"></i>
+
+        <span>
+            Download Report
+        </span>
+    </a>
+
+</div>
+
+</section>
+
+
+<!-- ==========================================================
+                    SUMMARY CARDS
+========================================================== -->
+
+<section class="report-summary-grid">
+
+    <!-- ======================================================
+                         TOTAL INCOME
+    ======================================================= -->
+
+    <div class="report-summary-card">
+
+        <div class="summary-icon">
+
+            <i class="bi bi-arrow-down-circle-fill"></i>
+
+        </div>
+
+        <span class="summary-label">
+            Total Income
+        </span>
+
+        <h2>
+            ₹ {{ "{:,.2f}".format(summary.income) }}
+        </h2>
+
+        <small>
+            Lifetime Income
+        </small>
+
+    </div>
+
+
+    <!-- ======================================================
+                         TOTAL EXPENSE
+    ======================================================= -->
+
+    <div class="report-summary-card">
+
+        <div class="summary-icon">
+
+            <i class="bi bi-arrow-up-circle-fill"></i>
+
+        </div>
+
+        <span class="summary-label">
+            Total Expense
+        </span>
+
+        <h2>
+            ₹ {{ "{:,.2f}".format(summary.expense) }}
+        </h2>
+
+        <small>
+            Lifetime Expense
+        </small>
+
+    </div>
+
+
+    <!-- ======================================================
+                         TOTAL SAVINGS
+    ======================================================= -->
+
+    <div class="report-summary-card">
+
+        <div class="summary-icon">
+
+            <i class="bi bi-wallet2"></i>
+
+        </div>
+
+        <span class="summary-label">
+            Total Savings
+        </span>
+
+        <h2>
+            ₹ {{ "{:,.2f}".format(summary.savings) }}
+        </h2>
+
+        <small>
+            Savings Rate
+            {{ "%.2f"|format(summary.saving_rate) }}%
+        </small>
+
+    </div>
+
+
+    <!-- ======================================================
+                       FINANCIAL SCORE
+    ======================================================= -->
+
+    <div class="report-summary-card">
+
+        <div class="summary-icon">
+
+            <i class="bi bi-award-fill"></i>
+
+        </div>
+
+        <span class="summary-label">
+            Financial Score
+        </span>
+
+        <h2>
+            {{ financial_score.score }}/100
+        </h2>
+
+        <small>
+            {{ financial_score.status }}
+        </small>
+
+    </div>
+
+</section>
+
+<!-- ==========================================================
+                    ANALYTICS SECTION
+========================================================== -->
+
+<section class="reports-analytics-grid">
+
+    <!-- ======================================================
+                    MONTHLY FINANCIAL TREND
+    ======================================================= -->
+
+    <div class="report-chart-card report-chart-large">
+
+        <div class="report-chart-header">
+
+            <div>
+
+                <span class="chart-kicker">
+                    ANALYTICS
+                </span>
+
+                <h3>
+                    Monthly Financial Trend
+                </h3>
+
+                <p>
+                    Income, expenses and cash flow over time.
+                </p>
+
+            </div>
+
+            <div class="chart-header-icon">
+
+                <i class="bi bi-bar-chart-line-fill"></i>
+
+            </div>
+
+        </div>
+
+        <div class="report-chart-body">
+
+            <canvas id="monthlyTrendChart"></canvas>
+
+        </div>
+
+    </div>
+
+
+    <!-- ======================================================
+                    EXPENSE DISTRIBUTION
+    ======================================================= -->
+
+    <div class="report-chart-card">
+
+        <div class="report-chart-header">
+
+            <div>
+
+                <span class="chart-kicker">
+                    SPENDING
+                </span>
+
+                <h3>
+                    Expense Distribution
+                </h3>
+
+                <p>
+                    Breakdown of your spending categories.
+                </p>
+
+            </div>
+
+            <div class="chart-header-icon">
+
+                <i class="bi bi-pie-chart-fill"></i>
+
+            </div>
+
+        </div>
+
+        <div class="report-chart-body expense-chart-body">
+
+            <canvas id="expenseDistributionChart"></canvas>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==========================================================
+                PART 3 — FINANCIAL INTELLIGENCE
+========================================================== -->
+
+<section class="reports-section reports-ai-section">
+
+    <!-- Section Header -->
+
+    <div class="reports-section-heading">
+
+        <div>
+
+            <span class="reports-eyebrow">
+                FINANCIAL INTELLIGENCE
+            </span>
+
+            <h2>
+                AI-Powered Financial Insights
+            </h2>
+
+            <p>
+                Understand your future expenses, savings strategy
+                and personal financial behaviour.
+            </p>
+
+        </div>
+
+        <div class="reports-section-icon">
+
+            <i class="bi bi-stars"></i>
+
+        </div>
+
+    </div>
+
+
+    <!-- ======================================================
+                    TOP AI CARDS
+    ======================================================= -->
+
+    <div class="ai-report-grid">
+
+        <!-- ==================================================
+                    EXPENSE PREDICTION
+        =================================================== -->
+
+        <article class="ai-report-card prediction-card">
+
+            <div class="ai-card-header">
+
+                <div>
+
+                    <span class="ai-card-label">
+                        NEXT MONTH
+                    </span>
+
+                    <h3>
+                        Expense Prediction
+                    </h3>
+
+                </div>
+
+                <div class="ai-card-icon prediction-icon">
+
+                    <i class="bi bi-graph-up-arrow"></i>
+
+                </div>
+
+            </div>
+
+
+            <div class="prediction-main">
+
+                <span class="prediction-caption">
+                    Predicted Expense
+                </span>
+
+                <strong class="prediction-value">
+
+                    ₹ {{ "{:,.2f}".format(
+                        prediction.predicted_expense | default(0, true)
+                    ) }}
+
+                </strong>
+
+            </div>
+
+
+            <div class="prediction-metrics">
+
+                <div class="prediction-metric">
+
+                    <span>
+                        Expected Savings
+                    </span>
+
+                    <strong>
+
+                        ₹ {{ "{:,.2f}".format(
+                            prediction.expected_savings | default(0, true)
+                        ) }}
+
+                    </strong>
+
+                </div>
+
+
+                <div class="prediction-metric">
+
+                    <span>
+                        Confidence
+                    </span>
+
+                    <strong>
+
+                        {{ prediction.confidence | default(0, true) }}%
+
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="prediction-trend">
+
+                <span>
+                    Expense Trend
+                </span>
+
+                {% set prediction_trend =
+                    prediction.trend | default("Stable", true)
+                %}
+
+                <span class="trend-badge
+                    {% if prediction_trend == 'Increasing' %}
+                        trend-danger
+                    {% elif prediction_trend == 'Decreasing' %}
+                        trend-success
+                    {% else %}
+                        trend-neutral
+                    {% endif %}
+                ">
+
+                    {% if prediction_trend == "Increasing" %}
+
+                        <i class="bi bi-arrow-up"></i>
+
+                    {% elif prediction_trend == "Decreasing" %}
+
+                        <i class="bi bi-arrow-down"></i>
+
+                    {% else %}
+
+                        <i class="bi bi-dash"></i>
+
+                    {% endif %}
+
+                    {{ prediction_trend }}
+
+                </span>
+
+            </div>
+
+        </article>
+
+
+        <!-- ==================================================
+                    SMART ALLOCATION
+        =================================================== -->
+
+        <article class="ai-report-card allocation-card">
+
+            <div class="ai-card-header">
+
+                <div>
+
+                    <span class="ai-card-label">
+                        SMART PLANNING
+                    </span>
+
+                    <h3>
+                        Recommended Allocation
+                    </h3>
+
+                </div>
+
+                <div class="ai-card-icon allocation-icon">
+
+                    <i class="bi bi-pie-chart-fill"></i>
+
+                </div>
+
+            </div>
+
+
+            <div class="allocation-summary">
+
+                <span>
+                    Available Savings
+                </span>
+
+                <strong>
+
+                    ₹ {{ "{:,.2f}".format(
+                        allocation.available_savings | default(0, true)
+                    ) }}
+
+                </strong>
+
+            </div>
+
+<div class="allocation-list">
+
+    {% if allocation.allocations %}
+
+        {% for item in allocation.allocations %}
+
+            {% set allocation_total =
+                allocation.available_savings | default(0, true)
+            %}
+
+            {% if allocation_total > 0 %}
+
+                {% set allocation_percent =
+                    (item.amount / allocation_total * 100)
+                %}
+
+            {% else %}
+
+                {% set allocation_percent = 0 %}
+
+            {% endif %}
+
+
+            <div class="allocation-item">
+
+                <div class="allocation-item-icon">
+
+                    {% if item.name == "Emergency Fund" %}
+                        <i class="bi bi-shield-check"></i>
+
+                    {% elif item.name == "SIP" %}
+                        <i class="bi bi-graph-up-arrow"></i>
+
+                    {% elif item.name == "Stocks" %}
+                        <i class="bi bi-bar-chart-line"></i>
+
+                    {% elif item.name == "Gold" %}
+                        <i class="bi bi-gem"></i>
+
+                    {% elif item.name == "PPF" %}
+                        <i class="bi bi-bank"></i>
+
+                    {% elif item.name == "FD" %}
+                        <i class="bi bi-safe"></i>
+
+                    {% elif item.name == "Cash Reserve" %}
+                        <i class="bi bi-wallet2"></i>
+
+                    {% else %}
+                        <i class="bi bi-pie-chart"></i>
+                    {% endif %}
+
+                </div>
+
+
+                <div class="allocation-item-info">
+
+                    <span class="allocation-item-name">
+                        {{ item.name }}
+                    </span>
+
+                    <span class="allocation-item-percent">
+                        {{ "%.1f"|format(allocation_percent) }}%
+                    </span>
+
+                </div>
+
+
+                <strong class="allocation-item-amount">
+
+                    ₹ {{ "{:,.2f}".format(
+                        item.amount | default(0, true)
+                    ) }}
+
+                </strong>
+
+            </div>
+
+        {% endfor %}
+
+
+    {% else %}
+
+        <div class="allocation-empty">
+
+            <i class="bi bi-info-circle"></i>
+
+            <span>
+                Complete your financial profile to receive
+                personalized allocation.
+            </span>
+
+        </div>
+
+    {% endif %}
+
+</div>
+         
+      
+    
+
+
+            {% if allocation.advice %}
+
+                <div class="allocation-advice">
+
+                    <i class="bi bi-lightbulb-fill"></i>
+
+                    <div>
+
+                        <strong>
+                            AI Guidance
+                        </strong>
+
+                        {% for advice in allocation.advice[:2] %}
+
+                            <p>
+                                {{ advice }}
+                            </p>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+        </article>
+
+    </div>
+
+
+    <!-- ======================================================
+                    FINANCIAL DNA
+    ======================================================= -->
+
+    <article class="financial-dna-card">
+
+        <div class="dna-header">
+
+            <div>
+
+                <span class="ai-card-label">
+                    YOUR FINANCIAL PROFILE
+                </span>
+
+                <h3>
+                    Financial DNA
+                </h3>
+
+                <p>
+                    A snapshot of how Finacle understands your
+                    financial behaviour and investment profile.
+                </p>
+
+            </div>
+
+            <div class="dna-icon">
+
+                <i class="bi bi-fingerprint"></i>
+
+            </div>
+
+        </div>
+
+
+        <div class="dna-grid">
+
+            <!-- Risk -->
+
+            <div class="dna-item">
+
+                <div class="dna-item-icon">
+
+                    <i class="bi bi-shield-check"></i>
+
+                </div>
+
+                <div>
+
+                    <span>
+                        Risk Profile
+                    </span>
+
+                    <strong>
+                        {{ financial_dna.risk_profile | default("Unknown", true) }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Goal -->
+
+            <div class="dna-item">
+
+                <div class="dna-item-icon">
+
+                    <i class="bi bi-bullseye"></i>
+
+                </div>
+
+                <div>
+
+                    <span>
+                        Financial Goal
+                    </span>
+
+                    <strong>
+                        {{ financial_dna.goal | default("Unknown", true) }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Horizon -->
+
+            <div class="dna-item">
+
+                <div class="dna-item-icon">
+
+                    <i class="bi bi-calendar3"></i>
+
+                </div>
+
+                <div>
+
+                    <span>
+                        Investment Horizon
+                    </span>
+
+                    <strong>
+                        {{ financial_dna.investment_horizon | default("Unknown", true) }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Spender -->
+
+            <div class="dna-item">
+
+                <div class="dna-item-icon">
+
+                    <i class="bi bi-wallet2"></i>
+
+                </div>
+
+                <div>
+
+                    <span>
+                        Spending Style
+                    </span>
+
+                    <strong>
+                        {{ financial_dna.spender_type | default("Unknown", true) }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- Investor -->
+
+            <div class="dna-item">
+
+                <div class="dna-item-icon">
+
+                    <i class="bi bi-bar-chart-line"></i>
+
+                </div>
+
+                <div>
+
+                    <span>
+                        Investor Type
+                    </span>
+
+                    <strong>
+                        {{ financial_dna.investor_type | default("Unknown", true) }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </article>
+
+</section>
+
+<!-- ==========================================================
+        PART 4 — AI RECOMMENDATIONS & FINANCIAL GOALS
+========================================================== -->
+
+<section class="reports-section reports-guidance-section">
+
+    <!-- ======================================================
+                    AI RECOMMENDATIONS
+    ======================================================= -->
+
+    <div class="reports-section-heading">
+
+        <div>
+
+            <span class="reports-eyebrow">
+                PERSONALIZED GUIDANCE
+            </span>
+
+            <h2>
+                AI Recommendations
+            </h2>
+
+            <p>
+                Practical suggestions generated from your financial
+                behaviour, savings pattern and spending trends.
+            </p>
+
+        </div>
+
+        <div class="reports-section-icon recommendation-section-icon">
+
+            <i class="bi bi-lightbulb"></i>
+
+        </div>
+
+    </div>
+
+
+    <article class="recommendations-card">
+
+        <div class="recommendations-card-header">
+
+            <div class="recommendations-title-wrap">
+
+                <div class="recommendations-main-icon">
+
+                    <i class="bi bi-stars"></i>
+
+                </div>
+
+                <div>
+
+                    <span class="recommendations-label">
+                        FINACLE INTELLIGENCE
+                    </span>
+
+                    <h3>
+                        Personalized Suggestions
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="recommendations-list">
+
+            {% if recommendations %}
+
+                {% for recommendation in recommendations %}
+
+                    <div class="recommendation-item">
+
+                        <div class="recommendation-number">
+
+                            {{ loop.index }}
+
+                        </div>
+
+                        <div class="recommendation-content">
+
+                            <p>
+                                {{ recommendation }}
+                            </p>
+
+                        </div>
+
+                        <div class="recommendation-check">
+
+                            <i class="bi bi-arrow-up-right"></i>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="recommendations-empty">
+
+                    <div class="recommendations-empty-icon">
+
+                        <i class="bi bi-bar-chart-line"></i>
+
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            No recommendations available.
+                        </strong>
+
+                        <p>
+                            Continue tracking your finances to receive
+                            personalized advice.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </article>
+
+
+    <!-- ======================================================
+                    FINANCIAL GOALS
+    ======================================================= -->
+
+    <div class="reports-section-heading goals-heading">
+
+        <div>
+
+            <span class="reports-eyebrow">
+                LONG-TERM PLANNING
+            </span>
+
+            <h2>
+                Financial Goals
+            </h2>
+
+            <p>
+                Track the progress of your financial objectives
+                and savings priorities.
+            </p>
+
+        </div>
+
+        <div class="reports-section-icon goals-section-icon">
+
+            <i class="bi bi-bullseye"></i>
+
+        </div>
+
+    </div>
+
+
+    <article class="financial-goals-card">
+
+        <div class="goals-card-header">
+
+            <div>
+
+                <span class="ai-card-label">
+                    GOAL PROGRESS
+                </span>
+
+                <h3>
+                    Your Financial Targets
+                </h3>
+
+            </div>
+
+            <div class="goals-header-icon">
+
+                <i class="bi bi-flag-fill"></i>
+
+            </div>
+
+        </div>
+
+
+        {% if financial_goals %}
+
+            <div class="financial-goals-list">
+
+                {% for goal in financial_goals %}
+
+                    <div class="financial-goal-item">
+
+                        <div class="financial-goal-top">
+
+                            <div class="financial-goal-name">
+
+                                <div class="goal-icon">
+
+                                    <i class="bi bi-bullseye"></i>
+
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        {{ goal.name
+                                            | default(
+                                                goal.title
+                                                | default("Financial Goal", true),
+                                                true
+                                            )
+                                        }}
+                                    </strong>
+
+                                    {% if goal.description %}
+
+                                        <span>
+                                            {{ goal.description }}
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="financial-goal-percentage">
+
+                                {{ goal.progress
+                                    | default(0, true)
+                                    | round(0)
+                                }}%
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="goal-progress-track">
+
+                            <div
+                                class="goal-progress-fill"
+                                style="
+                                    width:
+                                    {{ [
+                                        goal.progress | default(0, true),
+                                        100
+                                    ] | min }}%;
+                                "
+                            ></div>
+
+                        </div>
+
+
+                        <div class="financial-goal-meta">
+
+                            {% if goal.current_amount is defined %}
+
+                                <span>
+
+                                    Current:
+                                    <strong>
+                                        ₹ {{
+                                            "{:,.2f}".format(
+                                                goal.current_amount
+                                                | default(0, true)
+                                            )
+                                        }}
+                                    </strong>
+
+                                </span>
+
+                            {% endif %}
+
+
+                            {% if goal.target_amount is defined %}
+
+                                <span>
+
+                                    Target:
+                                    <strong>
+                                        ₹ {{
+                                            "{:,.2f}".format(
+                                                goal.target_amount
+                                                | default(0, true)
+                                            )
+                                        }}
+                                    </strong>
+
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="financial-goals-empty">
+
+                <div class="financial-goals-empty-icon">
+
+                    <i class="bi bi-flag"></i>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        No financial goals configured.
+                    </strong>
+
+                    <p>
+                        Add financial goals to track your progress
+                        and build a structured savings plan.
+                    </p>
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+    </article>
+
+</section>
+
+
+<!-- ==========================================================
+        PART 5 — TRANSACTIONS & FINANCIAL ACTIVITY
+========================================================== -->
+
+<section class="reports-section transaction-section">
+
+    <!-- ======================================================
+                    SECTION HEADER
+    ======================================================= -->
+
+    <div class="reports-section-heading">
+
+        <div>
+
+            <span class="reports-eyebrow">
+                FINANCIAL ACTIVITY
+            </span>
+
+            <h2>
+                Transactions
+            </h2>
+
+            <p>
+                Review your recent financial activity and identify
+                the transactions having the greatest impact.
+            </p>
+
+        </div>
+
+        <div class="reports-section-icon transaction-section-icon">
+
+            <i class="bi bi-arrow-left-right"></i>
+
+        </div>
+
+    </div>
+
+
+    <!-- ======================================================
+                    LARGEST EXPENSES
+    ======================================================= -->
+
+    <article class="largest-expenses-card">
+
+        <div class="transaction-card-header">
+
+            <div>
+
+                <span class="ai-card-label">
+                    HIGH-IMPACT SPENDING
+                </span>
+
+                <h3>
+                    Largest Expenses
+                </h3>
+
+            </div>
+
+            <div class="transaction-header-icon expense-icon">
+
+                <i class="bi bi-cash-stack"></i>
+
+            </div>
+
+        </div>
+
+
+        {% if largest_expenses %}
+
+            <div class="largest-expenses-list">
+
+                {% for item in largest_expenses %}
+
+                    <div class="largest-expense-item">
+
+                        <div class="largest-expense-rank">
+
+                            {{ loop.index }}
+
+                        </div>
+
+
+                        <div class="largest-expense-info">
+
+                            <strong>
+                                {{ item.title|default("Expense", true) }}
+                            </strong>
+
+                            <span>
+                                {{ item.category|default("Uncategorized", true) }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="largest-expense-date">
+
+                            {{ item.date|default("—", true) }}
+
+                        </div>
+
+
+                        <div class="largest-expense-method">
+
+                            <i class="bi bi-credit-card-2-front"></i>
+
+                            {{ item.payment_method
+                                |default("—", true)
+                            }}
+
+                        </div>
+
+
+                        <div class="largest-expense-amount">
+
+                            ₹{{ "{:,.2f}".format(
+                                item.amount|default(0, true)
+                            ) }}
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="transaction-empty">
+
+                <div class="transaction-empty-icon">
+
+                    <i class="bi bi-receipt"></i>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        No expense data available.
+                    </strong>
+
+                    <p>
+                        Record some expenses to identify your
+                        highest-value transactions.
+                    </p>
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+    </article>
+
+
+    <!-- ======================================================
+                    RECENT TRANSACTIONS
+    ======================================================= -->
+
+    <article class="recent-transactions-card">
+
+        <div class="transaction-card-header">
+
+            <div>
+
+                <span class="ai-card-label">
+                    RECENT ACTIVITY
+                </span>
+
+                <h3>
+                    Recent Transactions
+                </h3>
+
+            </div>
+
+
+            <div class="transaction-header-icon activity-icon">
+
+                <i class="bi bi-clock-history"></i>
+
+            </div>
+
+        </div>
+
+
+        {% if transactions %}
+
+            <div class="transactions-table-wrapper">
+
+                <table class="transactions-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Transaction
+                            </th>
+
+                            <th>
+                                Category
+                            </th>
+
+                            <th>
+                                Type
+                            </th>
+
+                            <th>
+                                Payment
+                            </th>
+
+                            <th class="amount-column">
+                                Amount
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for transaction in transactions %}
+
+                            <tr>
+
+                                <!-- DATE -->
+
+                                <td>
+
+                                    <span class="transaction-date">
+                                        {{ transaction.date
+                                            |default("—", true)
+                                        }}
+                                    </span>
+
+                                </td>
+
+
+                                <!-- TRANSACTION -->
+
+                                <td>
+
+                                    <div class="transaction-name-wrap">
+
+                                        <div class="transaction-type-icon
+                                            {% if transaction.type|lower == 'income' %}
+                                                income-transaction-icon
+                                            {% else %}
+                                                expense-transaction-icon
+                                            {% endif %}
+                                        ">
+
+                                            {% if transaction.type|lower == 'income' %}
+
+                                                <i class="bi bi-arrow-down-left"></i>
+
+                                            {% else %}
+
+                                                <i class="bi bi-arrow-up-right"></i>
+
+                                            {% endif %}
+
+                                        </div>
+
+
+                                        <div class="transaction-name-content">
+
+                                            <strong>
+                                                {{ transaction.title
+                                                    |default("Transaction", true)
+                                                }}
+                                            </strong>
+
+                                            {% if transaction.notes %}
+
+                                                <span>
+                                                    {{ transaction.notes }}
+                                                </span>
+
+                                            {% endif %}
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- CATEGORY -->
+
+                                <td>
+
+                                    <span class="transaction-category">
+
+                                        {{ transaction.category
+                                            |default("Uncategorized", true)
+                                        }}
+
+                                    </span>
+
+                                </td>
+
+
+                                <!-- TYPE -->
+
+                                <td>
+
+                                    {% if transaction.type|lower == 'income' %}
+
+                                        <span class="transaction-type-badge income-badge">
+
+                                            <i class="bi bi-arrow-down"></i>
+
+                                            Income
+
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="transaction-type-badge expense-badge">
+
+                                            <i class="bi bi-arrow-up"></i>
+
+                                            Expense
+
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <!-- PAYMENT -->
+
+                                <td>
+
+                                    <span class="transaction-payment">
+
+                                        <i class="bi bi-wallet2"></i>
+
+                                        {{ transaction.payment_method
+                                            |default("—", true)
+                                        }}
+
+                                    </span>
+
+                                </td>
+
+
+                                <!-- AMOUNT -->
+
+                                <td class="amount-column">
+
+                                    {% if transaction.type|lower == 'income' %}
+
+                                        <span class="transaction-amount income-amount">
+
+                                            +₹{{ "{:,.2f}".format(
+                                                transaction.amount
+                                                |default(0, true)
+                                            ) }}
+
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="transaction-amount expense-amount">
+
+                                            −₹{{ "{:,.2f}".format(
+                                                transaction.amount
+                                                |default(0, true)
+                                            ) }}
+
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        {% else %}
+
+            <div class="transaction-empty">
+
+                <div class="transaction-empty-icon">
+
+                    <i class="bi bi-journal-text"></i>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        No transactions available.
+                    </strong>
+
+                    <p>
+                        Start recording your financial activity
+                        to see it appear here.
+                    </p>
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- ==================================================
+                    TABLE FOOTER
+        =================================================== -->
+
+        {% if transactions %}
+
+            <div class="transactions-footer">
+
+                <span>
+
+                    Showing
+                    <strong>
+                        {{ transactions|length }}
+                    </strong>
+                    transaction{{ '' if transactions|length == 1 else 's' }}
+
+                </span>
+
+
+                <span class="transactions-footer-note">
+
+                    Updated from your latest financial records
+
+                    <i class="bi bi-check-circle-fill"></i>
+
+                </span>
+
+            </div>
+
+        {% endif %}
+
+    </article>
+
+</section>
+
+<!-- ==========================================================
+        PART 6 — REPORT ACTIONS & FINAL SUMMARY
+========================================================== -->
+
+<section class="reports-section report-final-section">
+
+    <!-- ======================================================
+                    FINAL REPORT CTA
+    ======================================================= -->
+
+    <article class="report-final-card">
+
+        <div class="report-final-content">
+
+            <div class="report-final-icon">
+
+                <i class="bi bi-file-earmark-bar-graph"></i>
+
+            </div>
+
+
+            <div class="report-final-text">
+
+                <span class="reports-eyebrow">
+                    FINACLE FINANCIAL REPORT
+                </span>
+
+                <h2>
+                    Your Financial Report is Ready
+                </h2>
+
+                <p>
+                    Generate a complete PDF report containing your
+                    financial performance, analytics, spending behaviour,
+                    AI insights, predictions, recommendations and
+                    transaction activity.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="report-final-actions">
+
+            <a
+                href="{{ url_for('reports.generate_pdf') }}"
+                class="report-primary-button"
+            >
+
+                <i class="bi bi-file-earmark-pdf-fill"></i>
+
+                <span>
+                    Generate PDF Report
+                </span>
+
+                <i class="bi bi-arrow-right"></i>
+
+            </a>
+
+
+            <a
+                href="{{ url_for('reports.download_latest') }}"
+                class="report-secondary-button"
+            >
+
+                <i class="bi bi-download"></i>
+
+                Download Report
+
+            </a>
+
+        </div>
+
+    </article>
+
+
+    <!-- ======================================================
+                    REPORT STATUS
+    ======================================================= -->
+
+    <div class="report-status-grid">
+
+        <!-- REPORT TYPE -->
+
+        <div class="report-status-card">
+
+            <div class="report-status-icon">
+
+                <i class="bi bi-file-earmark-text"></i>
+
+            </div>
+
+            <div>
+
+                <span class="report-status-label">
+                    Report Type
+                </span>
+
+                <strong>
+                    Financial Intelligence
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- DATA SOURCE -->
+
+        <div class="report-status-card">
+
+            <div class="report-status-icon">
+
+                <i class="bi bi-database-check"></i>
+
+            </div>
+
+            <div>
+
+                <span class="report-status-label">
+                    Data Source
+                </span>
+
+                <strong>
+                    Recorded Transactions
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- AI -->
+
+        <div class="report-status-card">
+
+            <div class="report-status-icon ai-status-icon">
+
+                <i class="bi bi-stars"></i>
+
+            </div>
+
+            <div>
+
+                <span class="report-status-label">
+                    Intelligence
+                </span>
+
+                <strong>
+                    AI-Powered Analysis
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- STATUS -->
+
+        <div class="report-status-card">
+
+            <div class="report-status-icon success-status-icon">
+
+                <i class="bi bi-check-circle"></i>
+
+            </div>
+
+            <div>
+
+                <span class="report-status-label">
+                    Report Status
+                </span>
+
+                <strong>
+                    Ready to Generate
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ======================================================
+                    FINAL NOTE
+    ======================================================= -->
+
+    <div class="report-final-note">
+
+        <div class="report-final-note-icon">
+
+            <i class="bi bi-shield-check"></i>
+
+        </div>
+
+        <div>
+
+            <strong>
+                Financial analysis based on your recorded data
+            </strong>
+
+            <p>
+                Keep your income and expense records updated to improve
+                the accuracy of Finacle's analytics, predictions and
+                recommendations.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==========================================================
+                    REPORT FOOTER
+=========================================================== -->
+
+<footer class="finacle-report-footer">
+
+    <div class="finacle-footer-brand">
+
+        <div class="finacle-footer-logo">
+
+            <i class="bi bi-bar-chart-fill"></i>
+
+        </div>
+
+        <div>
+
+            <strong>
+                FINACLE
+            </strong>
+
+            <span>
+                Personal Financial Intelligence
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="finacle-footer-meta">
+
+        <span>
+            <i class="bi bi-clock"></i>
+
+            Generated
+            {{ generated_at|default("Recently", true) }}
+
+        </span>
+
+        <span class="footer-divider">
+            •
+        </span>
+
+        <span>
+            Financial Intelligence Report
+        </span>
+
+    </div>
+
+</footer>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<!-- ==========================================================
+                    CHART.JS
+========================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script>
+
+"use strict";
+
+
+/* ==========================================================
+                    FINACLE REPORT DATA
+========================================================== */
+
+const monthlyTrendData =
+    {{ monthly_trends | default([], true) | tojson }};
+
+
+const categoryData =
+    {{ category_breakdown.categories | default([], true) | tojson }};
+
+
+/* ==========================================================
+                MONTHLY FINANCIAL TREND
+========================================================== */
+
+const monthlyTrendCanvas =
+    document.getElementById("monthlyTrendChart");
+
+
+if (monthlyTrendCanvas) {
+
+    new Chart(
+        monthlyTrendCanvas,
+        {
+
+            type: "line",
+
+            data: {
+
+                labels: monthlyTrendData.map(
+                    item => item.month
+                ),
+
+                datasets: [
+
+                    {
+                        label: "Income",
+
+                        data: monthlyTrendData.map(
+                            item => item.income
+                        ),
+
+                        borderWidth: 3,
+
+                        tension: 0.35,
+
+                        fill: false
+                    },
+
+                    {
+                        label: "Expense",
+
+                        data: monthlyTrendData.map(
+                            item => item.expense
+                        ),
+
+                        borderWidth: 3,
+
+                        tension: 0.35,
+
+                        fill: false
+                    }
+
+                ]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                interaction: {
+
+                    mode: "index",
+
+                    intersect: false
+
+                },
+
+                plugins: {
+
+                    legend: {
+
+                        position: "bottom",
+
+                        labels: {
+
+                            usePointStyle: true,
+
+                            padding: 18
+
+                        }
+
+                    }
+
+                },
+
+                scales: {
+
+                    x: {
+
+                        grid: {
+
+                            display: false
+
+                        }
+
+                    },
+
+                    y: {
+
+                        beginAtZero: true,
+
+                        ticks: {
+
+                            callback: function(value) {
+
+                                return "₹" +
+                                    Number(value).toLocaleString("en-IN");
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+    );
+
+}
+
+
+/* ==========================================================
+                EXPENSE DISTRIBUTION
+========================================================== */
+
+const expenseDistributionCanvas =
+    document.getElementById(
+        "expenseDistributionChart"
+    );
+
+
+if (expenseDistributionCanvas) {
+
+    new Chart(
+        expenseDistributionCanvas,
+        {
+
+            type: "doughnut",
+
+            data: {
+
+                labels: categoryData.map(
+                    item => item.category
+                ),
+
+                datasets: [
+
+                    {
+
+                        data: categoryData.map(
+                            item => item.amount
+                        ),
+
+                        borderWidth: 2
+
+                    }
+
+                ]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                cutout: "62%",
+
+                plugins: {
+
+                    legend: {
+
+                        position: "bottom",
+
+                        labels: {
+
+                            usePointStyle: true,
+
+                            padding: 14
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+    );
+
+}
+
+</script>
+
+{% endblock %}

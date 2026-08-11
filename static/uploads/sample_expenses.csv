@@ -1,0 +1,11 @@
+Title,Merchant,Category,Payment Method,Amount,Expense Date,Description
+Lunch,McDonald's,Food & Dining,UPI,250.0,2026-07-20,Lunch with friends
+Petrol,Indian Oil,Transportation,Credit Card,1800.0,2026-07-19,Fuel refill
+Electricity Bill,MSEDCL,Utilities,Net Banking,2450.5,2026-07-18,Monthly electricity bill
+Groceries,D-Mart,Groceries,Debit Card,3250.75,2026-07-17,Weekly grocery shopping
+Movie,PVR Cinemas,Entertainment,UPI,600.0,2026-07-16,Weekend movie
+Internet,Jio Fiber,Bills,Net Banking,999.0,2026-07-15,Monthly broadband recharge
+Coffee,Starbucks,Food & Dining,Cash,320.0,2026-07-14,Evening coffee
+Medicine,Apollo Pharmacy,Healthcare,UPI,750.0,2026-07-13,Basic medicines
+Shopping,Westside,Shopping,Debit Card,2899.0,2026-07-12,Clothing purchase
+Mobile Recharge,Airtel,Bills,UPI,399.0,2026-07-11,Prepaid recharge

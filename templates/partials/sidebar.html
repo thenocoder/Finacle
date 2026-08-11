@@ -1,0 +1,236 @@
+<!-- ==========================================================
+                         FINACLE SIDEBAR
+========================================================== -->
+
+<aside class="sidebar">
+
+    <!-- ======================================================
+                            BRAND
+    ======================================================= -->
+
+    <div class="sidebar-header">
+
+        <a href="{{ url_for('dashboard.dashboard') }}"
+           class="brand">
+
+            <div class="brand-icon">
+                <i class="bi bi-wallet2"></i>
+            </div>
+
+            <div class="brand-text">
+
+                <h2>FINACLE</h2>
+
+                <p>Intelligent Personal Finance</p>
+
+            </div>
+
+        </a>
+
+    </div>
+
+
+    <!-- ======================================================
+                          NAVIGATION
+    ======================================================= -->
+
+    <nav class="sidebar-nav">
+
+
+        <!-- ==================================================
+                            WORKSPACE
+        =================================================== -->
+
+        <div class="nav-section">
+
+            <h6 class="nav-title">
+                Workspace
+            </h6>
+
+
+            <a href="{{ url_for('dashboard.dashboard') }}"
+               class="nav-item {% if request.endpoint == 'dashboard.dashboard' %}active{% endif %}">
+
+                <i class="bi bi-grid-1x2-fill"></i>
+
+                <span>Overview</span>
+
+            </a>
+
+
+            <a href="{{ url_for('transactions.transactions') }}"
+               class="nav-item {% if request.endpoint == 'transactions.transactions' %}active{% endif %}">
+
+                <i class="bi bi-arrow-left-right"></i>
+
+                <span>Transactions</span>
+
+            </a>
+
+
+            <a href="{{ url_for('csv.upload_csv') }}"
+               class="nav-item {% if request.endpoint == 'csv.upload_csv' %}active{% endif %}">
+
+                <i class="bi bi-cloud-arrow-up-fill"></i>
+
+                <span>Import Data</span>
+
+            </a>
+
+        </div>
+
+
+        <!-- ==================================================
+                          INTELLIGENCE
+        =================================================== -->
+
+        <div class="nav-section">
+
+            <h6 class="nav-title">
+                Intelligence
+            </h6>
+
+
+            <a href="{{ url_for('ai.assistant') }}"
+               class="nav-item {% if request.endpoint == 'ai.assistant' %}active{% endif %}">
+
+                <i class="bi bi-stars"></i>
+
+                <span>Finacle AI</span>
+
+            </a>
+
+
+            <a href="{{ url_for('financial_profile.onboarding') }}"
+               class="nav-item {% if request.endpoint == 'financial_profile.onboarding' %}active{% endif %}">
+
+                <i class="bi bi-person-badge-fill"></i>
+
+                <span>Financial DNA</span>
+
+            </a>
+
+
+            <a href="{{ url_for('allocation.dashboard') }}"
+               class="nav-item {% if request.endpoint == 'allocation.dashboard' %}active{% endif %}">
+
+                <i class="bi bi-pie-chart-fill"></i>
+
+                <span>Smart Portfolio</span>
+
+            </a>
+
+
+            <a href="{{ url_for('prediction.dashboard') }}"
+               class="nav-item {% if request.endpoint == 'prediction.dashboard' %}active{% endif %}">
+
+                <i class="bi bi-graph-up-arrow"></i>
+
+                <span>Expense Forecast</span>
+
+            </a>
+
+
+            <a href="{{ url_for('simulator.dashboard') }}"
+               class="nav-item {% if request.endpoint == 'simulator.dashboard' %}active{% endif %}">
+
+                <i class="bi bi-cpu-fill"></i>
+
+                <span>Financial Simulator</span>
+
+            </a>
+
+        </div>
+
+
+        <!-- ==================================================
+                             INSIGHTS
+        =================================================== -->
+
+        <div class="nav-section">
+
+            <h6 class="nav-title">
+                Insights
+            </h6>
+
+
+            <a href="{{ url_for('reports.dashboard') }}"
+               class="nav-item {% if request.endpoint == 'reports.dashboard' %}active{% endif %}">
+
+                <i class="bi bi-bar-chart-line-fill"></i>
+
+                <span>Reports</span>
+
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ======================================================
+                          BOTTOM AREA
+    ======================================================= -->
+
+    <div class="sidebar-bottom">
+
+
+        <!-- ==================================================
+                            USER
+        =================================================== -->
+
+        <div class="sidebar-profile">
+
+            <div class="profile-avatar">
+
+                {{ current_user.name[0]|upper }}
+
+            </div>
+
+
+            <div class="profile-content">
+
+                <h5>
+                    {{ current_user.name }}
+                </h5>
+
+                <p>
+                    Personal Workspace
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==================================================
+                            SETTINGS
+        =================================================== -->
+
+        <a href="{{ url_for('settings.settings') }}"
+           class="nav-item sidebar-bottom-item
+           {% if request.endpoint == 'settings.settings' %}active{% endif %}">
+
+            <i class="bi bi-sliders"></i>
+
+            <span>Settings</span>
+
+        </a>
+
+
+        <!-- ==================================================
+                            LOGOUT
+        =================================================== -->
+
+        <a href="{{ url_for('auth.logout') }}"
+           class="nav-item sidebar-bottom-item logout">
+
+            <i class="bi bi-box-arrow-right"></i>
+
+            <span>Logout</span>
+
+        </a>
+
+    </div>
+
+</aside>

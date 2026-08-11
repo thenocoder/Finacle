@@ -1,0 +1,430 @@
+{% extends "layouts/app.html" %}
+
+{% block title %}
+Settings | Finacle
+{% endblock %}
+
+{% block extra_css %}
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/settings.css') }}">
+
+{% endblock %}
+
+{% block content %}
+
+<div class="settings-page">
+
+    <!-- =====================================================
+                         SETTINGS HERO
+    ====================================================== -->
+
+    <section class="settings-hero">
+
+        <div class="settings-hero-content">
+
+            <span class="settings-eyebrow">
+                PREFERENCES
+            </span>
+
+            <h1>
+                Settings
+            </h1>
+
+            <p>
+                Manage your Finacle workspace, appearance,
+                account information and security preferences.
+            </p>
+
+        </div>
+
+        <div class="settings-hero-icon">
+
+            <i class="bi bi-sliders2"></i>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+                         ACCOUNT
+    ====================================================== -->
+
+    <section class="settings-section">
+
+        <div class="settings-section-heading">
+
+            <div class="section-icon blue">
+
+                <i class="bi bi-person"></i>
+
+            </div>
+
+            <div>
+
+                <h2>
+                    Account
+                </h2>
+
+                <p>
+                    Your Finacle account information
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="account-card">
+
+            <div class="account-avatar">
+
+                {{ current_user.name[0]|upper }}
+
+            </div>
+
+            <div class="account-main">
+
+                <span class="account-label">
+                    FINACLE USER
+                </span>
+
+                <h3>
+                    {{ current_user.name }}
+                </h3>
+
+                <p>
+                    {{ current_user.email }}
+                </p>
+
+            </div>
+
+            <div class="account-status">
+
+                <span class="status-dot"></span>
+
+                Active
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+                    SETTINGS GRID
+    ====================================================== -->
+
+    <div class="settings-grid">
+
+
+        <!-- =================================================
+                         APPEARANCE
+        ================================================== -->
+
+        <section class="settings-card">
+
+            <div class="settings-card-header">
+
+                <div class="section-icon purple">
+
+                    <i class="bi bi-palette"></i>
+
+                </div>
+
+                <div>
+
+                    <h2>
+                        Appearance
+                    </h2>
+
+                    <p>
+                        Customize your Finacle interface
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div class="setting-row-left">
+
+                    <div class="setting-row-icon">
+
+                        <i class="bi bi-moon-stars"></i>
+
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Dark Mode
+                        </strong>
+
+                        <span>
+                            Switch between light and dark interface
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="settingsThemeToggle"
+                    class="settings-switch"
+                    aria-label="Toggle dark mode">
+
+                    <span></span>
+
+                </button>
+
+            </div>
+
+
+            <div class="settings-note">
+
+                <i class="bi bi-info-circle"></i>
+
+                <span>
+                    Your theme preference is saved in this browser.
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+                          SECURITY
+        ================================================== -->
+
+        <section class="settings-card">
+
+            <div class="settings-card-header">
+
+                <div class="section-icon green">
+
+                    <i class="bi bi-shield-check"></i>
+
+                </div>
+
+                <div>
+
+                    <h2>
+                        Security
+                    </h2>
+
+                    <p>
+                        Keep your Finacle account protected
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="security-status">
+
+                <div class="security-status-icon">
+
+                    <i class="bi bi-shield-check"></i>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        Account Protected
+                    </strong>
+
+                    <span>
+                        Authentication is required to access Finacle.
+                    </span>
+
+                </div>
+
+                <span class="active-badge">
+                    Active
+                </span>
+
+            </div>
+
+
+            <div class="security-item">
+
+                <div class="security-item-icon">
+
+                    <i class="bi bi-lock"></i>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        Login Protection
+                    </strong>
+
+                    <span>
+                        Your financial information is protected
+                        behind your account login.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="security-item">
+
+                <div class="security-item-icon">
+
+                    <i class="bi bi-key"></i>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        Password Protection
+                    </strong>
+
+                    <span>
+                        Your account uses registered login credentials.
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </div>
+
+
+    <!-- =====================================================
+                       DATA & PRIVACY
+    ====================================================== -->
+
+    <section class="settings-section">
+
+        <div class="settings-section-heading">
+
+            <div class="section-icon cyan">
+
+                <i class="bi bi-database-check"></i>
+
+            </div>
+
+            <div>
+
+                <h2>
+                    Data & Privacy
+                </h2>
+
+                <p>
+                    Information about your financial workspace
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="privacy-card">
+
+            <div class="privacy-icon">
+
+                <i class="bi bi-lock-fill"></i>
+
+            </div>
+
+            <div>
+
+                <h3>
+                    Your financial workspace
+                </h3>
+
+                <p>
+                    Finacle uses your account data to provide
+                    financial tracking, analytics, reports and
+                    personalized insights within your workspace.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+                         SETTINGS FOOTER
+    ====================================================== -->
+
+    <div class="settings-footer">
+
+        <i class="bi bi-check-circle-fill"></i>
+
+        <span>
+            Finacle settings are configured for your current workspace.
+        </span>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+                    SETTINGS JAVASCRIPT
+========================================================= -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const toggle =
+        document.getElementById("settingsThemeToggle");
+
+    if (!toggle) {
+        return;
+    }
+
+    function updateToggle() {
+
+        const isDark =
+            document.body.classList.contains("dark-mode");
+
+        toggle.classList.toggle("active", isDark);
+
+    }
+
+    updateToggle();
+
+    toggle.addEventListener("click", function () {
+
+        document.body.classList.toggle("dark-mode");
+
+        const isDark =
+            document.body.classList.contains("dark-mode");
+
+        localStorage.setItem(
+            "theme",
+            isDark ? "dark" : "light"
+        );
+
+        updateToggle();
+
+    });
+
+});
+
+</script>
+
+{% endblock %}

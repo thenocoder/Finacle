@@ -1,0 +1,17 @@
+venv/
+instance/
+__pycache__/
+*.pyc
+.env
+
+uploads/*
+!uploads/.gitkeep
+
+reports/*
+!reports/.gitkeep
+
+*.db
+*.sqlite3
+.vercel
+
+templates.zip

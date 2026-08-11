@@ -1,0 +1,809 @@
+{% extends "layouts/app.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block extra_css %}
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/dashboard.css') }}">
+
+{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-page">
+<!-- ==========================================================
+                    PREMIUM HERO
+=========================================================== -->
+
+<section class="dashboard-hero searchable-section">
+
+    <div class="hero-left">
+
+        <span class="hero-badge">
+
+            <i class="bi bi-stars"></i>
+
+            AI Powered Personal Finance
+
+        </span>
+
+        <h1 class="hero-title">
+
+            Welcome back,
+
+            <span class="hero-name">
+
+                {{ user.name }}
+
+            </span>
+
+            👋
+
+        </h1>
+
+        <p class="hero-subtitle">
+
+            Track income, expenses and savings with real-time AI insights.
+            Everything you need is available from one intelligent dashboard.
+
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="{{ url_for('transactions.transactions') }}"
+               class="hero-btn-primary">
+
+                <i class="bi bi-plus-circle-fill"></i>
+
+                New Transaction
+
+            </a>
+
+            <a href="{{ url_for('csv.upload_csv') }}"
+               class="hero-btn-secondary">
+
+                <i class="bi bi-upload"></i>
+
+                Import CSV
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="hero-right">
+
+        <div class="balance-widget">
+
+            <small>Total Balance</small>
+
+            <h2>
+
+                ₹ {{ "{:,.2f}".format(balance) }}
+
+            </h2>
+
+            <span>
+
+                Healthy Financial Position
+
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ==========================================================
+                    OVERVIEW CARDS
+=========================================================== -->
+<section class="overview-grid searchable-section">
+
+    <!-- Income -->
+
+    <div class="overview-card income-card">
+
+        <div class="overview-header">
+
+            <div class="overview-icon income">
+
+                <i class="bi bi-arrow-down-circle-fill"></i>
+
+            </div>
+
+            <span class="overview-title">
+
+                Total Income
+
+            </span>
+
+        </div>
+
+       <h2 class="money">
+
+    ₹{{ "{:,.2f}".format(total_income) }}
+
+</h2>
+        <div class="card-footer-text">
+
+    Updated automatically from transactions
+
+</div>
+
+    </div>
+
+    <!-- Expense -->
+
+    <div class="overview-card expense-card">
+
+        <div class="overview-header">
+
+            <div class="overview-icon expense">
+
+                <i class="bi bi-arrow-up-circle-fill"></i>
+
+            </div>
+
+            <span class="overview-title">
+
+                Total Expense
+
+            </span>
+
+        </div>
+
+       <h2 class="money">
+
+    ₹{{ "{:,.2f}".format(total_expense) }}
+
+</h2>
+
+       <div class="card-footer-text">
+
+    Total expenses from all recorded entries
+
+</div> 
+
+    </div>
+
+    <!-- Balance -->
+
+    <div class="overview-card balance-card">
+
+        <div class="overview-header">
+
+            <div class="overview-icon balance">
+
+                <i class="bi bi-wallet2"></i>
+
+            </div>
+
+            <span class="overview-title">
+
+                Current Balance
+
+            </span>
+
+        </div>
+
+      <h2 class="money">
+
+    ₹{{ "{:,.2f}".format(balance) }}
+
+</h2>
+
+       <div class="card-footer-text">
+
+    Current available funds
+
+</div>
+
+    </div>
+
+    <!-- Transactions -->
+
+    <div class="overview-card activity-card">
+
+        <div class="overview-header">
+
+            <div class="overview-icon activity">
+
+                <i class="bi bi-receipt-cutoff"></i>
+
+            </div>
+
+            <span class="overview-title">
+
+                Transactions
+
+            </span>
+
+        </div>
+
+        <h2 class="money">
+
+    {{ total_transactions }}
+
+</h2>
+
+<div class="card-footer-text">
+
+    Income and expense records
+
+</div>
+
+    </div>
+
+</section>
+
+<!-- ==========================================================
+                    FINANCIAL SUMMARY
+=========================================================== -->
+
+<section class="financial-summary searchable-section">
+
+    <div class="summary-card">
+
+        <div class="summary-icon">
+
+            <i class="bi bi-calendar-week"></i>
+
+        </div>
+
+        <div class="summary-content">
+
+            <span>
+
+                This Month Expense
+
+            </span>
+
+            <h3>
+
+                ₹ {{ "{:,.2f}".format(this_month_expense) }}
+
+            </h3>
+
+            <p>
+
+                Spending recorded during the current month.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="summary-card">
+
+        <div class="summary-icon">
+
+            <i class="bi bi-pie-chart-fill"></i>
+
+        </div>
+
+        <div class="summary-content">
+
+            <span>
+
+                Highest Spending
+
+            </span>
+
+            <h3>
+
+                {{ top_category }}
+
+            </h3>
+
+            <p>
+
+                Category with the highest overall expense.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="summary-card">
+
+        <div class="summary-icon">
+
+            <i class="bi bi-piggy-bank-fill"></i>
+
+        </div>
+
+        <div class="summary-content">
+
+            <span>
+
+                Savings Rate
+
+            </span>
+
+            <h3>
+
+                {{ "%.1f"|format(savings_percentage) }}%
+
+            </h3>
+
+            <p>
+
+                Percentage of your income currently saved.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ==========================================================
+                    ANALYTICS
+=========================================================== -->
+
+<section class="analytics-grid searchable-section">
+
+    <!-- Income Expense Chart -->
+
+    <div class="chart-card">
+
+        <div class="chart-header">
+
+            <div>
+
+                <span class="section-label">
+
+                    Analytics
+
+                </span>
+
+                <h3>
+
+                    Monthly Income vs Expense
+
+                </h3>
+
+            </div>
+
+            <i class="bi bi-bar-chart-line-fill"></i>
+
+        </div>
+
+        <div class="chart-body">
+
+            <canvas id="incomeExpenseChart"></canvas>
+
+        </div>
+
+    </div>
+
+    <!-- Expense Distribution -->
+
+    <div class="chart-card">
+
+        <div class="chart-header">
+
+            <div>
+
+                <span class="section-label">
+
+                    Spending
+
+                </span>
+
+                <h3>
+
+                    Expense Distribution
+
+                </h3>
+
+            </div>
+
+            <i class="bi bi-pie-chart-fill"></i>
+
+        </div>
+
+        <div class="chart-body">
+
+            <canvas id="categoryChart"></canvas>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ==========================================================
+                    RECENT TRANSACTIONS
+=========================================================== -->
+
+<section class="transactions-section searchable-section">
+
+    <div class="section-header">
+
+        <div>
+
+            <span class="section-label">
+
+                Activity
+
+            </span>
+
+            <h2>
+
+                Recent Transactions
+
+            </h2>
+
+        </div>
+
+        <a href="{{ url_for('transactions.transactions') }}"
+           class="view-all-btn">
+
+            View All
+
+            <i class="bi bi-arrow-right"></i>
+
+        </a>
+
+    </div>
+
+    <div class="transaction-table-card">
+
+        <table class="transaction-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Category</th>
+
+                    <th>Type</th>
+
+                    <th>Date</th>
+
+                    <th style="text-align:right;">Amount</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for transaction in recent_transactions %}
+
+                <tr>
+
+                    <td>
+
+                        <span class="category-badge">
+
+                            {{ transaction.category }}
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        {% if transaction.type == "Income" %}
+
+                            <span class="income-badge">
+
+                                Income
+
+                            </span>
+
+                        {% else %}
+
+                            <span class="expense-badge">
+
+                                Expense
+
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        {{ transaction.date.strftime("%d %b %Y") }}
+
+                    </td>
+
+                    <td class="amount-column">
+
+                        {% if transaction.type == "Income" %}
+
+                            <span class="amount-income">
+
+                                + ₹{{ "{:,.2f}".format(transaction.amount) }}
+
+                            </span>
+
+                        {% else %}
+
+                            <span class="amount-expense">
+
+                                - ₹{{ "{:,.2f}".format(transaction.amount) }}
+
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+<!-- ==========================================================
+                    AI INSIGHTS
+=========================================================== -->
+
+<!-- ==========================================================
+                    FINACLE AI
+=========================================================== -->
+
+<section class="ai-insights searchable-section">
+
+    <div class="section-header">
+
+        <div>
+
+            <span class="section-label">
+
+                Finacle AI
+
+            </span>
+
+            <h2>
+
+                AI Financial Assistant
+
+            </h2>
+
+        </div>
+
+    </div>
+
+    <div class="ai-grid">
+
+        <!-- Financial Health -->
+
+        <div class="ai-card">
+
+            <div class="ai-icon">
+
+                <i class="bi bi-heart-pulse-fill"></i>
+
+            </div>
+
+            <h5>
+
+                Financial Health
+
+            </h5>
+
+            <div class="health-score">
+
+                {{ dashboard.health_score }}/100
+
+            </div>
+
+            <span class="health-status {{ dashboard.health_color }}">
+
+                {{ dashboard.status }}
+
+            </span>
+
+        </div>
+
+        <!-- Risk -->
+
+        <div class="ai-card">
+
+            <div class="ai-icon">
+
+                <i class="bi bi-shield-check"></i>
+
+            </div>
+
+            <h5>
+
+                Risk Level
+
+            </h5>
+
+            <div class="risk-level">
+
+                {{ dashboard.risk_level }}
+
+            </div>
+
+            <p>
+
+                Expense Ratio :
+                {{ dashboard.expense_ratio }}%
+
+            </p>
+
+        </div>
+
+        <!-- Recommendation -->
+
+        <div class="ai-card recommendation-card">
+
+            <div class="ai-icon">
+
+                <i class="bi bi-robot"></i>
+
+            </div>
+
+            <h5>
+
+                Smart Recommendation
+
+            </h5>
+
+            <p>
+
+                {{ dashboard.recommendation }}
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ==========================================================
+                    QUICK ACTIONS
+=========================================================== -->
+<section class="quick-actions searchable-section">
+
+    <div class="quick-actions-header">
+
+        <span class="section-label">
+
+            Productivity
+
+        </span>
+
+        <h2>
+
+            Quick Actions
+
+        </h2>
+
+    </div>
+
+    <div class="quick-actions-grid">
+
+        <a href="{{ url_for('transactions.transactions') }}"
+           class="quick-card">
+
+            <div class="quick-icon">
+
+                <i class="bi bi-plus-circle"></i>
+
+            </div>
+
+            <h4>New Transaction</h4>
+
+            <p>Add an income or expense record.</p>
+
+        </a>
+
+        <a href="{{ url_for('csv.upload_csv') }}"
+           class="quick-card">
+
+            <div class="quick-icon">
+
+                <i class="bi bi-upload"></i>
+
+            </div>
+
+            <h4>Import CSV</h4>
+
+            <p>Import transactions from a CSV file.</p>
+
+        </a>
+
+        <a href="{{ url_for('reports.dashboard') }}"
+           class="quick-card">
+
+            <div class="quick-icon">
+
+                <i class="bi bi-file-earmark-bar-graph"></i>
+
+            </div>
+
+            <h4>Reports</h4>
+
+            <p>Generate financial reports.</p>
+
+        </a>
+
+        <a href="{{ url_for('ai.assistant') }}"
+           class="quick-card">
+
+            <div class="quick-icon">
+
+                <i class="bi bi-robot"></i>
+
+            </div>
+
+            <h4>AI Insights</h4>
+
+            <p>View personalized AI recommendations.</p>
+
+        </a>
+
+    </div>
+
+</section>
+<!-- ==========================================================
+                    DASHBOARD FOOTER
+=========================================================== -->
+
+<footer class="dashboard-footer">
+
+    <div>
+
+        <strong>Finacle</strong>
+
+        <span>
+
+            AI Powered Personal Finance Management
+
+        </span>
+
+    </div>
+
+    <div>
+
+        Dashboard updated using your latest financial records.
+
+    </div>
+
+</footer>
+
+
+<script>
+
+const monthLabels = {{ month_labels | tojson }};
+const monthlyIncome = {{ monthly_income | tojson }};
+const monthlyExpense = {{ monthly_expense | tojson }};
+
+const categoryLabels = {{ category_labels | tojson }};
+const categoryAmounts = {{ category_amounts | tojson }};
+
+</script>
+
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+
+
+
+</div>
+
+{% endblock %}
